@@ -92,6 +92,16 @@
 
 </div>
 
+<script>
+function copyImageLink(image) {
+    const link = image.src;
+
+    navigator.clipboard.writeText(link).then(() => {
+        alert("Ссылка на изображение скопирована!");
+    });
+}
+</script>
+
 </body>
 
 </html>
