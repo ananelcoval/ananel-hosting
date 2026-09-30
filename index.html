@@ -2,724 +2,429 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Ananel Coval</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-
-        /* =========================
-           ОСНОВА
-        ========================= */
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 8px;
-            background-color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
-            color: #111111;
-        }
-
-
-        /* =========================
-           ШАПКА
-        ========================= */
-
-        .header {
-            position: relative;
-            z-index: 100;
-
-            border: 4px solid #D4007E;
-            border-radius: 15px;
-
-            padding: 25px 35px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            margin: 0;
-
-            color: #005500;
-
-            font-size: 56px;
-            font-weight: 700;
-        }
-
-
-        /* =========================
-           НАВИГАЦИЯ
-        ========================= */
-
-        .navigation {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .navigation a {
-            color: #005500;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .nav-dropdown {
-            position: relative;
-        }
-
-        .nav-title {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-
-            color: #005500;
-
-            font-weight: 600;
-            cursor: default;
-        }
-
-        .nav-title::after {
-            content: "⌄";
-            font-size: 14px;
-            transform: translateY(-2px);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 0;
-
-            min-width: 220px;
-
-            padding: 8px;
-
-            background-color: #ffffff;
-
-            border: 1px solid #e5e5e5;
-            border-radius: 12px;
-
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
-
-            opacity: 0;
-            visibility: hidden;
-
-            transform: translateY(-5px);
-
-            transition:
-                opacity 0.2s ease,
-                transform 0.2s ease,
-                visibility 0.2s;
-
-            z-index: 200;
-        }
-
-        .dropdown-menu::before {
-            content: "";
-
-            position: absolute;
-
-            height: 12px;
-
-            left: 0;
-            right: 0;
-            top: -12px;
-        }
-
-        .nav-dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-
-            transform: translateY(0);
-        }
-
-        .dropdown-menu a {
-            display: block;
-
-            padding: 10px 14px;
-
-            border-radius: 8px;
-
-            color: #222222;
-
-            font-size: 14px;
-            font-weight: 500;
-
-            white-space: nowrap;
-        }
-
-        .dropdown-menu a:hover {
-            background-color: #f7f3f5;
-            color: #D4007E;
-        }
-
-
-        /* =========================
-           МАГАЗИН И КОЛЛЕКЦИЯ
-        ========================= */
-
-        .collection-header {
-            margin: 55px 0 15px;
-
-            text-align: center;
-        }
-
-        .shop-title {
-            margin: 0 0 8px;
-
-            color: #005500;
-
-            font-size: 36px;
-            font-weight: 700;
-        }
-
-        .pink-line {
-            width: 50px;
-            height: 3px;
-
-            margin: 0 auto 25px;
-
-            background-color: #D4007E;
-
-            border-radius: 10px;
-        }
-
-        .collection-title {
-            margin: 0;
-
-            color: #222222;
-
-            font-size: 30px;
-            font-weight: 600;
-        }
-
-
-        /* =========================
-           ПОДРАЗДЕЛЫ
-        ========================= */
-
-        .section-title {
-            margin: 42px 0 22px;
-
-            text-align: center;
-
-            color: #666666;
-
-            font-size: 16px;
-            font-weight: 600;
-
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-
-        /* =========================
-           МОДЕЛИ
-        ========================= */
-
-        .models-gallery {
-            display: grid;
-
-            grid-template-columns: repeat(5, 230px);
-
-            justify-content: center;
-
-            column-gap: 15px;
-            row-gap: 30px;
-        }
-
-        .model-card {
-            width: 230px;
-
-            text-align: center;
-        }
-
-        .model-image-box {
-            height: 230px;
-
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-
-            padding: 10px;
-        }
-
-        .model-image {
-            max-width: 100%;
-            max-height: 100%;
-
-            width: auto;
-            height: auto;
-
-            cursor: pointer;
-        }
-
-
-        /* =========================
-           НАЗВАНИЯ
-        ========================= */
-
-        .item-name {
-            margin: 15px 0 0;
-
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-
-        /* =========================
-           ДЕКОР
-        ========================= */
-
-        .decor-gallery {
-            display: grid;
-
-            grid-template-columns: repeat(4, 300px);
-
-            justify-content: center;
-
-            gap: 30px;
-
-            margin-bottom: 70px;
-        }
-
-        .decor-card {
-            width: 300px;
-
-            text-align: center;
-        }
-
-        .decor-image-box {
-            height: 260px;
-
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-
-            padding: 15px;
-        }
-
-        .decor-image {
-            max-width: 100%;
-            max-height: 100%;
-
-            width: auto;
-            height: auto;
-
-            cursor: pointer;
-        }
-
-
-        /* =========================
-           АДАПТАЦИЯ
-        ========================= */
-
-        @media (max-width: 1250px) {
-
-            .models-gallery {
-                grid-template-columns: repeat(4, 230px);
-            }
-
-        }
-
-
-        @media (max-width: 1000px) {
-
-            .models-gallery {
-                grid-template-columns: repeat(3, 230px);
-            }
-
-            .decor-gallery {
-                grid-template-columns: repeat(2, 300px);
-            }
-
-        }
-
-
-        @media (max-width: 760px) {
-
-            .header {
-                padding: 20px;
-
-                flex-direction: column;
-
-                gap: 20px;
-            }
-
-            .logo {
-                font-size: 40px;
-            }
-
-            .navigation {
-                gap: 25px;
-            }
-
-            .dropdown-menu {
-                left: 50%;
-                right: auto;
-
-                transform: translate(-50%, -5px);
-            }
-
-            .nav-dropdown:hover .dropdown-menu {
-                transform: translate(-50%, 0);
-            }
-
-            .collection-title {
-                font-size: 26px;
-            }
-
-            .models-gallery {
-                grid-template-columns: repeat(2, 200px);
-            }
-
-            .model-card {
-                width: 200px;
-            }
-
-            .decor-gallery {
-                grid-template-columns: 300px;
-            }
-
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ananel Coval</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 8px;
+    background: #fff;
+    font-family: 'Montserrat', sans-serif;
+    color: #111;
+}
+
+/* ШАПКА */
+
+.header {
+    position: relative;
+    z-index: 100;
+    border: 4px solid #D4007E;
+    border-radius: 15px;
+    padding: 25px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin: 0;
+    color: #005500;
+    font-size: 56px;
+    font-weight: 700;
+}
+
+/* НАВИГАЦИЯ */
+
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.nav-dropdown { position: relative; }
+
+.nav-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #005500;
+    font-weight: 600;
+    cursor: default;
+}
+
+.nav-title::after {
+    content: "⌄";
+    font-size: 14px;
+    transform: translateY(-2px);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 220px;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.10);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: .2s ease;
+    z-index: 200;
+}
+
+.dropdown-menu::before {
+    content: "";
+    position: absolute;
+    height: 12px;
+    left: 0;
+    right: 0;
+    top: -12px;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: #222;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+    background: #f7f3f5;
+    color: #D4007E;
+}
+
+/* МАГАЗИН */
+
+.shop-header {
+    margin: 55px 0 35px;
+    text-align: center;
+}
+
+.shop-title {
+    margin: 0 0 8px;
+    color: #005500;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.pink-line {
+    width: 50px;
+    height: 3px;
+    margin: 0 auto;
+    background: #D4007E;
+    border-radius: 10px;
+}
+
+/* КОЛЛЕКЦИИ */
+
+.collection {
+    margin-bottom: 80px;
+    scroll-margin-top: 20px;
+}
+
+.collection-title {
+    margin: 0 0 35px;
+    text-align: center;
+    color: #222;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.section-title {
+    margin: 42px 0 22px;
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* МОДЕЛИ */
+
+.models-gallery {
+    display: grid;
+    grid-template-columns: repeat(5, 230px);
+    justify-content: center;
+    gap: 30px 15px;
+}
+
+.model-card {
+    width: 230px;
+    text-align: center;
+}
+
+.model-image-box {
+    height: 230px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.model-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+/* ДЕКОР */
+
+.decor-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 300px);
+    justify-content: center;
+    gap: 30px;
+}
+
+.decor-card {
+    width: 300px;
+    text-align: center;
+}
+
+.decor-image-box {
+    height: 260px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.decor-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+.item-name {
+    margin: 15px 0 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* АДАПТАЦИЯ */
+
+@media (max-width: 1250px) {
+    .models-gallery { grid-template-columns: repeat(4,230px); }
+    .decor-gallery { grid-template-columns: repeat(3,300px); }
+}
+
+@media (max-width: 1000px) {
+    .models-gallery { grid-template-columns: repeat(3,230px); }
+    .decor-gallery { grid-template-columns: repeat(2,300px); }
+}
+
+@media (max-width: 760px) {
+    .header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .logo { font-size: 40px; }
+    .navigation { gap: 25px; }
+
+    .models-gallery { grid-template-columns: repeat(2,200px); }
+    .model-card { width: 200px; }
+    .decor-gallery { grid-template-columns: 300px; }
+}
+</style>
 </head>
-
 
 <body>
 
-    <!-- =========================
-         ШАПКА
-    ========================== -->
+<header class="header">
+    <h1 class="logo">Ananel Coval</h1>
 
-    <header class="header">
-
-        <h1 class="logo">
-            Ananel Coval
-        </h1>
-
-
-        <nav class="navigation">
-
-            <!-- SÓLE -->
-
-            <div class="nav-dropdown">
-
-                <span class="nav-title">
-                    SÓLE
-                </span>
-
-                <div class="dropdown-menu">
-
-                    <a href="#architecture">
-                        Архитектура
-                    </a>
-
-                </div>
-
+    <nav class="navigation">
+        <div class="nav-dropdown">
+            <span class="nav-title">SÓLE</span>
+            <div class="dropdown-menu">
+                <a href="#architecture">Архитектура</a>
+                <a href="#hufflepuff-day">День Пуффендуя 2026</a>
             </div>
+        </div>
 
-
-            <!-- EXTRA -->
-
-            <div class="nav-dropdown">
-
-                <span class="nav-title">
-                    EXTRA
-                </span>
-
-                <div class="dropdown-menu">
-
-                    <a href="#extra">
-                        Основная коллекция
-                    </a>
-
-                </div>
-
+        <div class="nav-dropdown">
+            <span class="nav-title">EXTRA</span>
+            <div class="dropdown-menu">
+                <a href="#extra">Основная коллекция</a>
             </div>
+        </div>
+    </nav>
+</header>
 
-        </nav>
+<main>
 
-    </header>
+    <div class="shop-header">
+        <h2 class="shop-title">SÓLE</h2>
+        <div class="pink-line"></div>
+    </div>
+
+    <!-- АРХИТЕКТУРА -->
+
+    <section id="architecture" class="collection">
+        <h3 class="collection-title">Архитектура</h3>
+
+        <h4 class="section-title">Модели</h4>
+        <div id="architecture-models" class="models-gallery"></div>
+
+        <h4 class="section-title">Декор</h4>
+        <div id="architecture-decor" class="decor-gallery"></div>
+    </section>
+
+    <!-- ДЕНЬ ПУФФЕНДУЯ -->
+
+    <section id="hufflepuff-day" class="collection">
+        <h3 class="collection-title">День Пуффендуя 2026</h3>
+
+        <h4 class="section-title">Модели</h4>
+        <div id="hufflepuff-models" class="models-gallery"></div>
+
+        <h4 class="section-title">Декор</h4>
+        <div id="hufflepuff-decor" class="decor-gallery"></div>
+    </section>
+
+</main>
+
+<script>
+
+/* ДАННЫЕ */
+
+const architectureModels = [
+    ["01-stairs.png", "01. Лестницы"],
+    ["02-north-wing.png", "02. Северное крыло"],
+    ["03-astronomy-tower.png", "03. Астрономическая башня"],
+    ["04-map.png", "04. Карта Мародёров"],
+    ["05-greenhouse.png", "05. Оранжерея"],
+    ["06-keyhole.png", "06. Ключница"],
+    ["07-letter.png", "07. Письмо"],
+    ["08-hogsmeade.png", "08. Хогсмид"],
+    ["09-candelabra.png", "09. Канделябр"],
+    ["10-hat.png", "10. Шляпа"]
+];
+
+const architectureDecor = [
+    ["base-bag.png", "Средний пакет"],
+    ["base-l.bag.png", "Большой пакет"],
+    ["base-card.png", "Карточка"],
+    ["base-preview.jpeg", "Превью"]
+];
+
+const hufflepuffModels = [
+    ["01-herbarium.png", "01. Гербарий"],
+    ["02-cactus.png", "02. Кактус"],
+    ["03-caramel.png", "03. Карамель"],
+    ["04-oak.png", "04. Дуб"],
+    ["05-cowboy.png", "05. Ковбой"],
+    ["06-bun.png", "06. Плюшка"]
+];
+
+const hufflepuffDecor = [
+    ["01-hufflepuff-day-bag-herbarium.png", "Пакет — Гербарий"],
+    ["02-hufflepuff-day-bag-cactus.png", "Пакет — Кактус"],
+    ["03-hufflepuff-day-bag-caramel.png", "Пакет — Карамель"],
+    ["04-hufflepuff-day-bag-oak.png", "Пакет — Дуб"],
+    ["05-hufflepuff-day-bag-cowboy.png", "Пакет — Ковбой"],
+    ["06-hufflepuff-day-bag-bun.png", "Пакет — Плюшка"],
+    ["07-hufflepuff-day-bag-all.png", "Общий пакет"],
+    ["hufflepuff-day-preview.jpeg", "Превью"]
+];
 
 
-    <!-- =========================
-         SÓLE
-    ========================== -->
+/* УНИВЕРСАЛЬНАЯ ГАЛЕРЕЯ */
 
-    <main>
+function createGallery(targetId, path, items, type) {
+    const gallery = document.getElementById(targetId);
+    const isModel = type === "model";
 
-        <section>
+    items.forEach(([file, name]) => {
+        const card = document.createElement("div");
+        card.className = isModel ? "model-card" : "decor-card";
 
-            <!-- НАЗВАНИЕ МАГАЗИНА И КОЛЛЕКЦИИ -->
-
-            <div class="collection-header">
-
-                <h2 class="shop-title">
-                    SÓLE
-                </h2>
-
-                <div class="pink-line"></div>
-
-                <h3
-                    id="architecture"
-                    class="collection-title">
-                    Архитектура
-                </h3>
-
+        card.innerHTML = `
+            <div class="${isModel ? "model-image-box" : "decor-image-box"}">
+                <img
+                    class="${isModel ? "model-image" : "decor-image"}"
+                    src="${path}/${file}"
+                    alt="${name}"
+                    title="Нажмите, чтобы скопировать ссылку"
+                    onclick="copyImageLink(this)"
+                >
             </div>
-
-
-            <!-- =========================
-                 МОДЕЛИ
-            ========================== -->
-
-            <h4 class="section-title">
-                Модели
-            </h4>
-
-            <div
-                id="architecture-gallery"
-                class="models-gallery">
-            </div>
-
-
-            <!-- =========================
-                 ДЕКОР
-            ========================== -->
-
-            <h4 class="section-title">
-                Декор
-            </h4>
-
-            <div
-                id="architecture-decor"
-                class="decor-gallery">
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <script>
-
-        /* =========================
-           ДАННЫЕ МОДЕЛЕЙ
-        ========================= */
-
-        const architecture = [
-
-            {
-                file: "01-stairs.png",
-                name: "01. Лестницы"
-            },
-
-            {
-                file: "02-north-wing.png",
-                name: "02. Северное крыло"
-            },
-
-            {
-                file: "03-astronomy-tower.png",
-                name: "03. Астрономическая башня"
-            },
-
-            {
-                file: "04-map.png",
-                name: "04. Карта Мародёров"
-            },
-
-            {
-                file: "05-greenhouse.png",
-                name: "05. Оранжерея"
-            },
-
-            {
-                file: "06-keyhole.png",
-                name: "06. Ключница"
-            },
-
-            {
-                file: "07-letter.png",
-                name: "07. Письмо"
-            },
-
-            {
-                file: "08-hogsmeade.png",
-                name: "08. Хогсмид"
-            },
-
-            {
-                file: "09-candelabra.png",
-                name: "09. Канделябр"
-            },
-
-            {
-                file: "10-hat.png",
-                name: "10. Шляпа"
-            }
-
-        ];
-
-
-        /* =========================
-           ДАННЫЕ ДЕКОРА
-        ========================= */
-
-        const architectureDecor = [
-
-            {
-                file: "base-bag.png",
-                name: "Средний пакет"
-            },
-            
-            {
-                file: "base-l.bag.png",
-                name: "Большой пакет"
-            },
-
-            {
-                file: "base-card.png",
-                name: "Карточка"
-            },
-
-            {
-                file: "base-preview.jpeg",
-                name: "Превью"
-            }
-
-        ];
-
-
-        /* =========================
-           СОЗДАЁМ МОДЕЛИ
-        ========================= */
-
-        const gallery =
-            document.getElementById("architecture-gallery");
-
-
-        architecture.forEach(item => {
-
-            const card =
-                document.createElement("div");
-
-            card.className = "model-card";
-
-
-            card.innerHTML = `
-
-                <div class="model-image-box">
-
-                    <img
-                        class="model-image"
-
-                        src="sole/products/2026-06-architecture/models/${item.file}"
-
-                        alt="${item.name}"
-
-                        title="Нажмите, чтобы скопировать ссылку"
-
-                        onclick="copyImageLink(this)"
-                    >
-
-                </div>
-
-                <p class="item-name">
-                    ${item.name}
-                </p>
-
-            `;
-
-
-            gallery.appendChild(card);
-
-        });
-
-
-        /* =========================
-           СОЗДАЁМ ДЕКОР
-        ========================= */
-
-        const decorGallery =
-            document.getElementById("architecture-decor");
-
-
-        architectureDecor.forEach(item => {
-
-            const card =
-                document.createElement("div");
-
-            card.className = "decor-card";
-
-
-            card.innerHTML = `
-
-                <div class="decor-image-box">
-
-                    <img
-                        class="decor-image"
-
-                        src="sole/products/2026-06-architecture/decor/${item.file}"
-
-                        alt="${item.name}"
-
-                        title="Нажмите, чтобы скопировать ссылку"
-
-                        onclick="copyImageLink(this)"
-                    >
-
-                </div>
-
-                <p class="item-name">
-                    ${item.name}
-                </p>
-
-            `;
-
-
-            decorGallery.appendChild(card);
-
-        });
-
-
-        /* =========================
-           КОПИРОВАНИЕ ССЫЛКИ
-        ========================= */
-
-        function copyImageLink(image) {
-
-            const link = image.src;
-
-            navigator.clipboard
-                .writeText(link)
-                .then(() => {
-
-                    alert(
-                        "Ссылка на изображение скопирована!"
-                    );
-
-                });
-
-        }
-
-    </script>
-
+            <p class="item-name">${name}</p>
+        `;
+
+        gallery.appendChild(card);
+    });
+}
+
+
+/* СОЗДАЁМ ГАЛЕРЕИ */
+
+createGallery(
+    "architecture-models",
+    "sole/products/2026-06-architecture/models",
+    architectureModels,
+    "model"
+);
+
+createGallery(
+    "architecture-decor",
+    "sole/products/2026-06-architecture/decor",
+    architectureDecor,
+    "decor"
+);
+
+createGallery(
+    "hufflepuff-models",
+    "sole/products/2026-06-hufflepuff-day/models",
+    hufflepuffModels,
+    "model"
+);
+
+createGallery(
+    "hufflepuff-decor",
+    "sole/products/2026-06-hufflepuff-day/decor",
+    hufflepuffDecor,
+    "decor"
+);
+
+
+/* КОПИРОВАНИЕ */
+
+function copyImageLink(image) {
+    navigator.clipboard.writeText(image.src).then(() => {
+        alert("Ссылка на изображение скопирована!");
+    });
+}
+
+</script>
 </body>
-
 </html>
