@@ -112,9 +112,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform .2s ease,
-                border-color .2s ease,
-                box-shadow .2s ease;
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
 }
 
 .module.active {
@@ -160,21 +161,6 @@ body {
     color: #777;
     font-size: 14px;
     line-height: 1.6;
-}
-
-.module.disabled {
-    opacity: .48;
-}
-
-.soon {
-    padding: 6px 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    color: #888;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
 }
 
 /* ПОДВАЛ */
@@ -275,11 +261,11 @@ body {
 
             <!-- MANAGER -->
 
-            <div class="module disabled">
+            <a class="module active" href="manager/orders.html">
 
                 <div class="module-top">
                     <span class="module-number">02</span>
-                    <span class="soon">Скоро</span>
+                    <span class="arrow">↗</span>
                 </div>
 
                 <div>
@@ -291,7 +277,7 @@ body {
                     </p>
                 </div>
 
-            </div>
+            </a>
 
         </div>
 
