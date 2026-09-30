@@ -14,7 +14,7 @@
     <style>
 
         /* =========================
-           ОСНОВА СТРАНИЦЫ
+           ОСНОВА
         ========================= */
 
         * {
@@ -38,6 +38,9 @@
         ========================= */
 
         .header {
+            position: relative;
+            z-index: 100;
+
             border: 4px solid #D4007E;
             border-radius: 15px;
 
@@ -57,107 +60,120 @@
             font-weight: 700;
         }
 
+
+        /* =========================
+           НАВИГАЦИЯ
+        ========================= */
+
         .navigation {
             display: flex;
+            align-items: center;
             gap: 40px;
         }
 
         .navigation a {
             color: #005500;
-
             text-decoration: none;
             font-weight: 600;
         }
-/* =========================
-   ВЫПАДАЮЩЕЕ МЕНЮ
-========================= */
 
-.nav-dropdown {
-    position: relative;
-}
+        .nav-dropdown {
+            position: relative;
+        }
 
-.nav-title {
-    color: #005500;
-    font-weight: 600;
-    cursor: default;
+        .nav-title {
+            display: flex;
+            align-items: center;
+            gap: 7px;
 
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+            color: #005500;
 
-.nav-title::after {
-    content: "⌄";
-    font-size: 14px;
-}
+            font-weight: 600;
+            cursor: default;
+        }
 
-.dropdown-menu {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
+        .nav-title::after {
+            content: "⌄";
+            font-size: 14px;
+            transform: translateY(-2px);
+        }
 
-    min-width: 220px;
-    padding: 8px;
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
 
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 12px;
+            min-width: 220px;
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+            padding: 8px;
 
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-5px);
+            background-color: #ffffff;
 
-    transition: 0.2s;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
 
-    z-index: 100;
-}
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
 
-/* невидимый мостик, чтобы меню не закрывалось
-   пока мышь идёт от SÓLE к меню */
-.dropdown-menu::before {
-    content: "";
-    position: absolute;
-    height: 12px;
-    left: 0;
-    right: 0;
-    top: -12px;
-}
+            opacity: 0;
+            visibility: hidden;
 
-.nav-dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
+            transform: translateY(-5px);
 
-.dropdown-menu a {
-    display: block;
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease,
+                visibility 0.2s;
 
-    padding: 10px 14px;
+            z-index: 200;
+        }
 
-    border-radius: 8px;
+        .dropdown-menu::before {
+            content: "";
 
-    color: #222222;
+            position: absolute;
 
-    font-size: 14px;
-    font-weight: 500;
+            height: 12px;
 
-    white-space: nowrap;
-}
+            left: 0;
+            right: 0;
+            top: -12px;
+        }
 
-.dropdown-menu a:hover {
-    background-color: #f7f3f5;
-    color: #D4007E;
-}
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+
+            padding: 10px 14px;
+
+            border-radius: 8px;
+
+            color: #222222;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            white-space: nowrap;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f7f3f5;
+            color: #D4007E;
+        }
 
 
         /* =========================
-           ЗАГОЛОВОК КОЛЛЕКЦИИ
+           МАГАЗИН И КОЛЛЕКЦИЯ
         ========================= */
 
         .collection-header {
-            margin: 55px 0 35px;
+            margin: 55px 0 15px;
+
             text-align: center;
         }
 
@@ -174,17 +190,39 @@
             width: 50px;
             height: 3px;
 
-            margin: 0 auto 22px;
+            margin: 0 auto 25px;
 
             background-color: #D4007E;
+
             border-radius: 10px;
         }
 
         .collection-title {
             margin: 0;
 
-            font-size: 22px;
-            font-weight: 500;
+            color: #222222;
+
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           ПОДРАЗДЕЛЫ
+        ========================= */
+
+        .section-title {
+            margin: 42px 0 22px;
+
+            text-align: center;
+
+            color: #666666;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
 
@@ -205,6 +243,7 @@
 
         .model-card {
             width: 230px;
+
             text-align: center;
         }
 
@@ -228,6 +267,11 @@
             cursor: pointer;
         }
 
+
+        /* =========================
+           НАЗВАНИЯ
+        ========================= */
+
         .item-name {
             margin: 15px 0 0;
 
@@ -240,15 +284,6 @@
            ДЕКОР
         ========================= */
 
-        .decor-title {
-            margin: 60px 0 25px;
-
-            text-align: center;
-
-            font-size: 22px;
-            font-weight: 500;
-        }
-
         .decor-gallery {
             display: grid;
 
@@ -258,11 +293,12 @@
 
             gap: 30px;
 
-            margin-bottom: 60px;
+            margin-bottom: 70px;
         }
 
         .decor-card {
             width: 300px;
+
             text-align: center;
         }
 
@@ -299,6 +335,7 @@
 
         }
 
+
         @media (max-width: 1000px) {
 
             .models-gallery {
@@ -311,17 +348,38 @@
 
         }
 
+
         @media (max-width: 760px) {
 
             .header {
                 padding: 20px;
 
                 flex-direction: column;
+
                 gap: 20px;
             }
 
             .logo {
                 font-size: 40px;
+            }
+
+            .navigation {
+                gap: 25px;
+            }
+
+            .dropdown-menu {
+                left: 50%;
+                right: auto;
+
+                transform: translate(-50%, -5px);
+            }
+
+            .nav-dropdown:hover .dropdown-menu {
+                transform: translate(-50%, 0);
+            }
+
+            .collection-title {
+                font-size: 26px;
             }
 
             .models-gallery {
@@ -344,7 +402,9 @@
 
 <body>
 
-    <!-- ШАПКА -->
+    <!-- =========================
+         ШАПКА
+    ========================== -->
 
     <header class="header">
 
@@ -352,66 +412,114 @@
             Ananel Coval
         </h1>
 
+
         <nav class="navigation">
 
-            <a href="#sole">
-                SÓLE
-            </a>
+            <!-- SÓLE -->
 
-            <a href="#extra">
-                EXTRA
-            </a>
+            <div class="nav-dropdown">
+
+                <span class="nav-title">
+                    SÓLE
+                </span>
+
+                <div class="dropdown-menu">
+
+                    <a href="#architecture">
+                        Архитектура
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXTRA -->
+
+            <div class="nav-dropdown">
+
+                <span class="nav-title">
+                    EXTRA
+                </span>
+
+                <div class="dropdown-menu">
+
+                    <a href="#extra">
+                        Основная коллекция
+                    </a>
+
+                </div>
+
+            </div>
 
         </nav>
 
     </header>
 
 
-    <!-- SÓLE -->
+    <!-- =========================
+         SÓLE
+    ========================== -->
 
-    <section>
+    <main>
 
-        <div class="collection-header">
+        <section>
 
-            <h2 id="sole" class="shop-title">
-                SÓLE
-            </h2>
+            <!-- НАЗВАНИЕ МАГАЗИНА И КОЛЛЕКЦИИ -->
 
-            <div class="pink-line"></div>
+            <div class="collection-header">
 
-            <h3 class="collection-title">
-                Архитектура
-            </h3>
+                <h2 class="shop-title">
+                    SÓLE
+                </h2>
 
-        </div>
+                <div class="pink-line"></div>
 
+                <h3
+                    id="architecture"
+                    class="collection-title">
+                    Архитектура
+                </h3>
 
-        <!-- МОДЕЛИ -->
-
-        <div
-            id="architecture-gallery"
-            class="models-gallery">
-        </div>
+            </div>
 
 
-        <!-- ДЕКОР -->
+            <!-- =========================
+                 МОДЕЛИ
+            ========================== -->
 
-        <h3 class="decor-title">
-            Декор
-        </h3>
+            <h4 class="section-title">
+                Модели
+            </h4>
 
-        <div
-            id="architecture-decor"
-            class="decor-gallery">
-        </div>
+            <div
+                id="architecture-gallery"
+                class="models-gallery">
+            </div>
 
-    </section>
+
+            <!-- =========================
+                 ДЕКОР
+            ========================== -->
+
+            <h4 class="section-title">
+                Декор
+            </h4>
+
+            <div
+                id="architecture-decor"
+                class="decor-gallery">
+            </div>
+
+        </section>
+
+    </main>
 
 
     <script>
 
         /* =========================
-           ДАННЫЕ
+           ДАННЫЕ МОДЕЛЕЙ
         ========================= */
 
         const architecture = [
@@ -469,6 +577,10 @@
         ];
 
 
+        /* =========================
+           ДАННЫЕ ДЕКОРА
+        ========================= */
+
         const architectureDecor = [
 
             {
@@ -490,7 +602,7 @@
 
 
         /* =========================
-           ГАЛЕРЕЯ МОДЕЛЕЙ
+           СОЗДАЁМ МОДЕЛИ
         ========================= */
 
         const gallery =
@@ -523,7 +635,6 @@
 
                 </div>
 
-
                 <p class="item-name">
                     ${item.name}
                 </p>
@@ -537,7 +648,7 @@
 
 
         /* =========================
-           ГАЛЕРЕЯ ДЕКОРА
+           СОЗДАЁМ ДЕКОР
         ========================= */
 
         const decorGallery =
@@ -569,7 +680,6 @@
                     >
 
                 </div>
-
 
                 <p class="item-name">
                     ${item.name}
