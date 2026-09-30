@@ -417,14 +417,6 @@ const baseEvents=(window.CALENDAR_DATA?.hogwarts||[]).map(e=>({
     locked:true
 }));
 
-/* EVENTS */
-
-function allEvents(){
-
-function saveLocal(){
-    localStorage.setItem("ananelCalendar",JSON.stringify(customEvents));
-}
-
 /* TABS */
 
 document.querySelectorAll(".tab").forEach(tab=>{
