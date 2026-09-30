@@ -4,266 +4,114 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Calendar — Ananel Coval</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-    --green:#005500;--pink:#D4007E;--bg:#f7f5f6;
-    --text:#171717;--muted:#8c898b;--line:#e4e0e3;
-    --sole:#f5e4eb;--extra:#e6eee9;--hog:#eee8f3
-}
+:root{--green:#005500;--pink:#D4007E;--bg:#f7f5f6;--text:#171717;--muted:#8c898b;--line:#e4e0e3}
 *{box-sizing:border-box}
-body{
-    margin:0;background:var(--bg);color:var(--text);
-    font-family:'Montserrat',sans-serif
-}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
 .page{max-width:1450px;margin:auto;padding:24px}
 
 /* HEADER */
+.header{padding:22px 30px;background:#fff;border:1px solid var(--line);border-radius:18px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:baseline;gap:14px}.logo{margin:0;color:var(--green);font-size:30px}
+.label{color:#aaa;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.back{color:#999;font-size:12px;font-weight:600;text-decoration:none}.back:hover{color:var(--pink)}
 
-.header{
-    padding:22px 30px;background:#fff;border:1px solid var(--line);
-    border-radius:18px;display:flex;justify-content:space-between;align-items:center
-}
-.brand{display:flex;align-items:baseline;gap:14px}
-.logo{margin:0;color:var(--green);font-size:30px}
-.label{
-    color:#aaa;font-size:10px;font-weight:600;
-    letter-spacing:2px;text-transform:uppercase
-}
-.back{color:#999;font-size:12px;font-weight:600;text-decoration:none}
-.back:hover{color:var(--pink)}
-
-/* TOP */
-
-.top{
-    margin:55px 0 28px;
-    display:flex;justify-content:space-between;align-items:end
-}
-.top h2{margin:0;color:var(--green);font-size:38px}
-.top p{margin:8px 0 0;color:var(--muted);font-size:13px}
-
-.add{
-    padding:12px 18px;border:0;border-radius:10px;
-    background:var(--green);color:#fff;font-weight:600
-}
-.add:hover{background:var(--pink)}
+.top{margin:55px 0 28px;display:flex;justify-content:space-between;align-items:end}
+.top h2{margin:0;color:var(--green);font-size:38px}.top p{margin:8px 0 0;color:var(--muted);font-size:13px}
+.add{padding:12px 18px;border:0;border-radius:10px;background:var(--green);color:#fff;font-weight:600}.add:hover{background:var(--pink)}
 
 /* TABS */
+.tabs{margin-bottom:20px;padding:5px;background:#ece9eb;border-radius:12px;display:inline-flex;gap:3px}
+.tab{padding:10px 17px;border:0;border-radius:9px;background:transparent;color:#777;font-size:12px;font-weight:600}
+.tab.active{background:#fff;color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,.04)}
 
-.tabs{
-    margin-bottom:20px;padding:5px;background:#ece9eb;
-    border-radius:12px;display:inline-flex;gap:3px
-}
-.tab{
-    padding:10px 17px;border:0;border-radius:9px;
-    background:transparent;color:#777;font-size:12px;font-weight:600
-}
-.tab.active{
-    background:#fff;color:var(--green);
-    box-shadow:0 2px 8px rgba(0,0,0,.04)
-}
-
-/* CALENDAR HEADER */
-
-.calendar-box{
-    background:#fff;border:1px solid var(--line);
-    border-radius:18px;overflow:hidden
-}
-.calendar-head{
-    padding:22px 25px;border-bottom:1px solid var(--line);
-    display:flex;justify-content:space-between;align-items:center
-}
-.month-title{font-size:20px;font-weight:700}
-.month-nav{display:flex;align-items:center;gap:7px}
-.month-nav button{
-    width:34px;height:34px;border:1px solid var(--line);
-    border-radius:9px;background:#fff;color:#777;font-size:17px
-}
+/* CALENDAR */
+.calendar-box{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.calendar-head{padding:22px 25px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.month-title{font-size:20px;font-weight:700}.month-nav{display:flex;align-items:center;gap:7px}
+.month-nav button{height:34px;min-width:34px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#777}
 .month-nav button:hover{border-color:var(--pink);color:var(--pink)}
+.today{font-size:11px;font-weight:600}
 
-.today{
-    width:auto!important;padding:0 12px;
-    font-size:11px!important;font-weight:600
-}
+.weekdays{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--line)}
+.weekday{padding:12px;text-align:center;color:#aaa;font-size:10px;font-weight:700;letter-spacing:1px}
 
-/* GRID */
+/* НЕДЕЛЯ */
+.week{position:relative;display:grid;grid-template-columns:repeat(7,1fr);min-height:145px;border-bottom:1px solid var(--line)}
+.week:last-child{border-bottom:0}
+.day{position:relative;min-width:0;padding:10px;border-right:1px solid var(--line);background:#fff}
+.day:last-of-type{border-right:0}.day.other{background:#fafafa;color:#bbb}
+.day-number{width:27px;height:27px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:12px;font-weight:600}
+.day.today .day-number{background:var(--pink);color:#fff}
 
-.weekdays,.calendar-grid{
-    display:grid;grid-template-columns:repeat(7,1fr)
-}
-.weekdays{
-    border-bottom:1px solid var(--line)
-}
-.weekday{
-    padding:12px;text-align:center;color:#aaa;
-    font-size:10px;font-weight:700;letter-spacing:1px
-}
+/* EVENT LAYER */
+.event-layer{position:absolute;left:0;right:0;top:45px;bottom:6px;display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:28px;gap:4px 0;pointer-events:none;padding:0 6px}
 
-.day{
-    position:relative;min-height:135px;padding:10px;
-    border-right:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    background:#fff
-}
-.day:nth-child(7n){border-right:0}
-.day.other{background:#fafafa;color:#bbb}
+.event-bar{position:relative;z-index:5;min-width:0;height:26px;padding:6px 10px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;pointer-events:auto;border-radius:7px;color:#554c51}
+.event-bar.cont-left{border-radius:0 7px 7px 0;margin-left:-6px}
+.event-bar.cont-right{border-radius:7px 0 0 7px;margin-right:-6px}
+.event-bar.cont-left.cont-right{border-radius:0;margin-left:-6px;margin-right:-6px}
 
-.day-number{
-    width:27px;height:27px;display:flex;
-    align-items:center;justify-content:center;
-    border-radius:50%;font-size:12px;font-weight:600
-}
-.day.today .day-number{
-    background:var(--pink);color:#fff
-}
-
-/* EVENTS */
-
-.day-events{
-    margin-top:7px;display:flex;flex-direction:column;gap:4px
-}
-.event{
-    padding:6px 7px;border-radius:6px;
-    font-size:10px;font-weight:600;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    cursor:pointer
-}
-.event.sole{background:var(--sole);color:#754557}
-.event.extra{background:var(--extra);color:#456354}
-.event.hogwarts{background:var(--hog);color:#604c70}
-
-.more{
-    padding:3px 5px;color:#999;font-size:9px;font-weight:600
-}
+/* RESIZE */
+.resize{position:absolute;top:0;bottom:0;width:11px;z-index:7;cursor:ew-resize}
+.resize.left{left:0}.resize.right{right:0}
+.resize:hover::after{content:"";position:absolute;top:5px;bottom:5px;width:2px;background:rgba(0,0,0,.22)}
+.resize.left:hover::after{left:4px}.resize.right:hover::after{right:4px}
 
 /* OVERVIEW */
-
-.overview{
-    display:none;padding:28px
-}
-.overview.open{display:block}
-
-.overview-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:16px
-}
-.overview-card{
-    padding:20px;border:1px solid var(--line);
-    border-radius:14px;background:#fff
-}
-.overview-card h3{margin:0 0 5px;font-size:15px}
-.overview-date{color:#999;font-size:10px}
+.overview{display:none;padding:28px}.overview.open{display:block}
+.overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.overview-card{padding:20px;border:1px solid var(--line);border-radius:14px;background:#fff;cursor:pointer}
+.overview-card:hover{border-color:#ccc}
+.overview-card h3{margin:0 0 5px;font-size:15px}.overview-date{color:#999;font-size:10px}
 .overview-tags{margin-top:14px;display:flex;gap:6px;flex-wrap:wrap}
-.tag{
-    padding:5px 8px;border-radius:20px;
-    background:#f4f1f3;color:#777;font-size:9px;font-weight:600
-}
+.tag{padding:5px 8px;border-radius:20px;background:#f4f1f3;color:#777;font-size:9px;font-weight:600}
+.empty{grid-column:1/-1;padding:50px;text-align:center;color:#aaa}
 
 /* MODAL */
-
-.modal{
-    display:none;position:fixed;inset:0;z-index:1000;
-    padding:25px;background:rgba(20,20,20,.4);
-    align-items:center;justify-content:center
-}
+.modal{display:none;position:fixed;inset:0;z-index:1000;padding:25px;background:rgba(20,20,20,.4);align-items:center;justify-content:center}
 .modal.open{display:flex}
+.modal-box{width:min(650px,100%);max-height:90vh;overflow:auto;padding:28px;background:#fff;border-radius:18px;box-shadow:0 25px 80px rgba(0,0,0,.18)}
+.modal-head{margin-bottom:22px;display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{margin:0;color:var(--green);font-size:22px}.close{border:0;background:none;color:#aaa;font-size:24px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.field{display:flex;flex-direction:column;gap:6px}.full{grid-column:1/-1}
+label{color:#777;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d9d5d8;border-radius:9px;background:#fff}
+textarea{min-height:75px;resize:vertical}input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 
-.modal-box{
-    width:min(600px,100%);max-height:90vh;overflow:auto;
-    padding:28px;background:#fff;border-radius:18px;
-    box-shadow:0 25px 80px rgba(0,0,0,.18)
-}
-.modal-head{
-    margin-bottom:22px;display:flex;
-    justify-content:space-between;align-items:center
-}
-.modal-head h3{margin:0;color:var(--green);font-size:22px}
-.close{border:0;background:none;color:#aaa;font-size:24px}
-
-.form-grid{
-    display:grid;grid-template-columns:repeat(2,1fr);gap:16px
-}
-.field{display:flex;flex-direction:column;gap:6px}
-.full{grid-column:1/-1}
-
-label{
-    color:#777;font-size:10px;font-weight:700;
-    letter-spacing:1px;text-transform:uppercase
-}
-input,select,textarea{
-    width:100%;padding:11px 12px;border:1px solid #d9d5d8;
-    border-radius:9px;background:#fff
-}
-textarea{min-height:80px;resize:vertical}
-input:focus,select:focus,textarea:focus{
-    outline:none;border-color:var(--pink)
-}
-
-.actions{
-    margin-top:20px;display:flex;justify-content:flex-end;gap:8px
-}
-.save,.delete{
-    padding:10px 15px;border-radius:9px;font-weight:600
-}
-.save{border:0;background:var(--pink);color:#fff}
-.delete{
-    display:none;border:1px solid #ddd;background:#fff;color:#999
-}
-.delete.visible{display:block}
-
-/* EVENT DETAILS */
-
-.details{
-    display:none;margin-top:20px;padding:18px;
-    background:#faf8f9;border-radius:12px
-}
-.details.open{display:block}
-.details-title{
-    margin-bottom:12px;color:#999;font-size:10px;
-    font-weight:700;letter-spacing:1px;text-transform:uppercase
-}
-
-.idea-row{
-    padding:10px 0;border-top:1px solid #eee;
-    display:flex;justify-content:space-between;gap:15px
-}
-.idea-row:first-of-type{border-top:0}
+.details{display:none;margin-top:20px;padding:18px;background:#faf8f9;border-radius:12px}.details.open{display:block}
+.details-title{margin-bottom:12px;color:#999;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.shop-plan{padding:13px 0;border-top:1px solid #eee}.shop-plan:first-of-type{border-top:0}
+.plan-head{display:grid;grid-template-columns:80px 1fr;gap:12px;align-items:center;margin-bottom:9px}
 .idea-shop{font-size:12px;font-weight:700;color:var(--green)}
-.idea-status{font-size:11px;color:#888}
+.plan-input{margin-left:92px;width:calc(100% - 92px)}
 
-/* MOBILE */
+.actions{margin-top:20px;display:flex;justify-content:flex-end;gap:8px}
+.save,.delete{padding:10px 15px;border-radius:9px;font-weight:600}
+.save{border:0;background:var(--pink);color:#fff}.delete{display:none;border:1px solid #ddd;background:#fff;color:#999}.delete.visible{display:block}
 
 @media(max-width:800px){
-    .page{padding:12px}
-    .day{min-height:100px;padding:6px}
-    .event{font-size:8px;padding:5px}
-    .overview-grid{grid-template-columns:1fr}
+    .page{padding:12px}.week{min-height:120px}.event-bar{font-size:8px;padding:6px}
+    .overview-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}
 }
 </style>
 </head>
 
 <body>
-
 <div class="page">
 
 <header class="header">
-    <div class="brand">
-        <h1 class="logo">Ananel Coval</h1>
-        <span class="label">Calendar</span>
-    </div>
+    <div class="brand"><h1 class="logo">Ananel Coval</h1><span class="label">Calendar</span></div>
     <a class="back" href="../">← Workspace</a>
 </header>
 
 <div class="top">
-    <div>
-        <h2>Календарь</h2>
-        <p>События, выпуски и планы</p>
-    </div>
+    <div><h2>Календарь</h2><p>События, выпуски и планы</p></div>
     <button class="add" onclick="openNewEvent()">+ Событие</button>
 </div>
 
@@ -275,10 +123,8 @@ input:focus,select:focus,textarea:focus{
 </nav>
 
 <div class="calendar-box">
-
     <div class="calendar-head">
         <div id="month-title" class="month-title"></div>
-
         <div class="month-nav">
             <button onclick="changeMonth(-1)">‹</button>
             <button class="today" onclick="goToday()">Сегодня</button>
@@ -288,101 +134,65 @@ input:focus,select:focus,textarea:focus{
 
     <div id="calendar-view">
         <div class="weekdays">
-            <div class="weekday">ПН</div>
-            <div class="weekday">ВТ</div>
-            <div class="weekday">СР</div>
-            <div class="weekday">ЧТ</div>
-            <div class="weekday">ПТ</div>
-            <div class="weekday">СБ</div>
-            <div class="weekday">ВС</div>
+            <div class="weekday">ПН</div><div class="weekday">ВТ</div><div class="weekday">СР</div>
+            <div class="weekday">ЧТ</div><div class="weekday">ПТ</div><div class="weekday">СБ</div><div class="weekday">ВС</div>
         </div>
-
-        <div id="calendar-grid" class="calendar-grid"></div>
+        <div id="weeks"></div>
     </div>
 
-    <div id="overview" class="overview">
-        <div id="overview-grid" class="overview-grid"></div>
-    </div>
-
+    <div id="overview" class="overview"><div id="overview-grid" class="overview-grid"></div></div>
 </div>
-
 </div>
-
-<!-- EVENT MODAL -->
 
 <div id="event-modal" class="modal">
 <div class="modal-box">
-
     <div class="modal-head">
         <h3 id="modal-title">Новое событие</h3>
         <button class="close" onclick="closeModal()">×</button>
     </div>
 
     <div class="form-grid">
+        <div class="field full"><label>Название</label><input id="event-name" placeholder="Сезонная осень"></div>
 
-        <div class="field full">
-            <label>Название</label>
-            <input id="event-name" placeholder="Сезонная осень">
-        </div>
-
-        <div class="field">
-            <label>Раздел</label>
+        <div class="field"><label>Раздел</label>
             <select id="event-category">
-                <option value="sole">SÓLE</option>
-                <option value="extra">EXTRA</option>
-                <option value="hogwarts">Хогвартс</option>
+                <option value="sole">SÓLE</option><option value="extra">EXTRA</option><option value="hogwarts">Хогвартс</option>
             </select>
         </div>
 
-        <div class="field">
-            <label>Статус</label>
+        <div class="field"><label>Статус</label>
             <select id="event-status">
-                <option>Не решено</option>
-                <option>Запланировано</option>
-                <option>В работе</option>
-                <option>Выпущено</option>
-                <option>Пропускаю</option>
+                <option>Не решено</option><option>Запланировано</option><option>В работе</option>
+                <option>Выпущено</option><option>Пропускаю</option>
             </select>
         </div>
 
-        <div class="field">
-            <label>Начало</label>
-            <input id="event-start" type="date">
-        </div>
-
-        <div class="field">
-            <label>Конец</label>
-            <input id="event-end" type="date">
-        </div>
-
-        <div class="field full">
-            <label>Пометка</label>
-            <textarea id="event-note" placeholder="Что нужно сделать, идея, детали..."></textarea>
-        </div>
-
+        <div class="field"><label>Начало</label><input id="event-start" type="date"></div>
+        <div class="field"><label>Конец</label><input id="event-end" type="date"></div>
+        <div class="field full"><label>Пометка</label><textarea id="event-note" placeholder="Что нужно сделать, идея, детали..."></textarea></div>
     </div>
 
     <div id="hogwarts-details" class="details">
-        <div class="details-title">Решения по магазинам</div>
+        <div class="details-title">Что делаем в магазинах</div>
 
-        <div class="idea-row">
-            <span class="idea-shop">SÓLE</span>
-            <select id="sole-decision">
-                <option>Не решено</option>
-                <option>Запланировано</option>
-                <option>Пропускаю</option>
-                <option>Выпущено</option>
-            </select>
+        <div class="shop-plan">
+            <div class="plan-head"><span class="idea-shop">SÓLE</span>
+                <select id="sole-decision">
+                    <option>Не решено</option><option>Запланировано</option><option>В работе</option>
+                    <option>Пропускаю</option><option>Выпущено</option>
+                </select>
+            </div>
+            <input id="sole-plan" class="plan-input" placeholder="Например: мини-дроп из 3 пар">
         </div>
 
-        <div class="idea-row">
-            <span class="idea-shop">EXTRA</span>
-            <select id="extra-decision">
-                <option>Не решено</option>
-                <option>Запланировано</option>
-                <option>Пропускаю</option>
-                <option>Выпущено</option>
-            </select>
+        <div class="shop-plan">
+            <div class="plan-head"><span class="idea-shop">EXTRA</span>
+                <select id="extra-decision">
+                    <option>Не решено</option><option>Запланировано</option><option>В работе</option>
+                    <option>Пропускаю</option><option>Выпущено</option>
+                </select>
+            </div>
+            <input id="extra-plan" class="plan-input" placeholder="Например: тематические аксессуары">
         </div>
     </div>
 
@@ -390,38 +200,84 @@ input:focus,select:focus,textarea:focus{
         <button id="delete-event" class="delete" onclick="deleteEvent()">Удалить</button>
         <button class="save" onclick="saveEvent()">Сохранить</button>
     </div>
-
 </div>
 </div>
 
 <script src="../data/calendar.js"></script>
-
 <script>
-const $=id=>document.getElementById(id);
-const MONTHS=[
-    "Январь","Февраль","Март","Апрель","Май","Июнь",
-    "Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"
+    const $=id=>document.getElementById(id);
+const MONTHS=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+
+const COLORS=[
+    {bg:"#F1DEE6",text:"#70495A"},{bg:"#DFEBE4",text:"#456052"},
+    {bg:"#E8E0EF",text:"#604E70"},{bg:"#F2E5D4",text:"#735B3E"},
+    {bg:"#DDE8EF",text:"#455F70"},{bg:"#EEE4CF",text:"#6B593C"},
+    {bg:"#E4E9D7",text:"#596343"},{bg:"#EFDFDB",text:"#704E48"},
+    {bg:"#DEE8EA",text:"#4B6269"},{bg:"#EADFE9",text:"#694F65"},
+    {bg:"#E7E3D9",text:"#625D4B"},{bg:"#E1E4F0",text:"#505875"}
 ];
 
-let view="sole";
-let current=new Date();
-let editingId=null;
+let view="sole",current=new Date(),editingId=null,drag=null;
+let customEvents=JSON.parse(localStorage.getItem("ananelCalendar"))||[];
 
-let customEvents=
-    JSON.parse(localStorage.getItem("ananelCalendar"))||[];
-
-const baseEvents=(window.CALENDAR_DATA?.hogwarts||[]).map(e=>({
-    ...e,
-    category:"hogwarts",
-    status:"Не решено",
-    locked:true
+const baseEvents=(window.CALENDAR_DATA?.hogwarts||[]).map((e,i)=>({
+    ...e,category:"hogwarts",status:"Не решено",locked:true,
+    color:e.color||COLORS[i%COLORS.length]
 }));
+
+function saveLocal(){localStorage.setItem("ananelCalendar",JSON.stringify(customEvents))}
+function baseSourceEvents(){
+    const overrides=new Set(customEvents.filter(e=>e.override).map(e=>e.id));
+    return [...baseEvents.filter(e=>!overrides.has(e.id)),...customEvents];
+}
+
+/* Виртуальные планы магазинов из событий Хогвартса */
+function allEvents(){
+    const source=baseSourceEvents(),result=[...source];
+    const active=["Запланировано","В работе","Выпущено"];
+
+    source.filter(e=>e.category==="hogwarts").forEach(e=>{
+        if(active.includes(e.soleDecision)) result.push({
+            ...e,id:e.id+"__sole",sourceId:e.id,category:"sole",virtual:true,
+            status:e.soleDecision,name:e.solePlan?`${e.name} · ${e.solePlan}`:e.name
+        });
+
+        if(active.includes(e.extraDecision)) result.push({
+            ...e,id:e.id+"__extra",sourceId:e.id,category:"extra",virtual:true,
+            status:e.extraDecision,name:e.extraPlan?`${e.name} · ${e.extraPlan}`:e.name
+        });
+    });
+    return result;
+}
+
+/* ЦВЕТ: стараемся не повторять в пределах ±2 месяцев */
+function pickColor(date,ignoreId=null){
+    const d=new Date(date+"T00:00:00"),from=new Date(d),to=new Date(d);
+    from.setMonth(from.getMonth()-2);
+    to.setMonth(to.getMonth()+2);
+
+    const used=new Set(
+        baseSourceEvents()
+            .filter(e=>{
+                if(e.id===ignoreId||!e.color)return false;
+                const s=new Date(e.start+"T00:00:00");
+                const en=new Date(e.end+"T00:00:00");
+                return en>=from&&s<=to;
+            })
+            .map(e=>e.color.bg)
+    );
+
+    return COLORS.find(c=>!used.has(c.bg))
+        ||COLORS[Math.floor(Math.random()*COLORS.length)];
+}
 
 /* TABS */
 
 document.querySelectorAll(".tab").forEach(tab=>{
     tab.onclick=()=>{
-        document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+        document.querySelectorAll(".tab")
+            .forEach(x=>x.classList.remove("active"));
+
         tab.classList.add("active");
         view=tab.dataset.view;
         render();
@@ -430,8 +286,12 @@ document.querySelectorAll(".tab").forEach(tab=>{
 
 /* MONTH */
 
-function changeMonth(amount){
-    current=new Date(current.getFullYear(),current.getMonth()+amount,1);
+function changeMonth(n){
+    current=new Date(
+        current.getFullYear(),
+        current.getMonth()+n,
+        1
+    );
     render();
 }
 
@@ -440,7 +300,7 @@ function goToday(){
     render();
 }
 
-/* RENDER */
+/* MAIN RENDER */
 
 function render(){
     $("month-title").textContent=
@@ -448,175 +308,399 @@ function render(){
 
     const overview=view==="overview";
 
-    $("calendar-view").style.display=overview?"none":"block";
-    $("overview").classList.toggle("open",overview);
+    $("calendar-view").style.display=
+        overview?"none":"block";
 
-    overview?renderOverview():renderCalendar();
+    $("overview").classList.toggle(
+        "open",
+        overview
+    );
+
+    overview
+        ?renderOverview()
+        :renderCalendar();
 }
 
+/* КАЛЕНДАРЬ */
+
 function renderCalendar(){
-    const grid=$("calendar-grid");
-    grid.innerHTML="";
+    const holder=$("weeks");
+    holder.innerHTML="";
 
     const year=current.getFullYear();
     const month=current.getMonth();
 
     const first=new Date(year,month,1);
-    const startOffset=(first.getDay()+6)%7;
-    const start=new Date(year,month,1-startOffset);
+    const offset=(first.getDay()+6)%7;
 
-    for(let i=0;i<42;i++){
-        const date=new Date(start);
-        date.setDate(start.getDate()+i);
+    const calendarStart=
+        new Date(year,month,1-offset);
 
-        const iso=toISO(date);
-        const today=iso===toISO(new Date());
+    for(let w=0;w<6;w++){
+        const weekStart=new Date(calendarStart);
+        weekStart.setDate(
+            calendarStart.getDate()+w*7
+        );
+
+        const weekEnd=new Date(weekStart);
+        weekEnd.setDate(
+            weekStart.getDate()+6
+        );
+
+        const week=document.createElement("div");
+        week.className="week";
+
+        /* ДНИ */
+
+        for(let d=0;d<7;d++){
+            const date=new Date(weekStart);
+            date.setDate(
+                weekStart.getDate()+d
+            );
+
+            const iso=toISO(date);
+
+            const day=document.createElement("div");
+
+            day.className=
+                "day"+
+                (date.getMonth()!==month
+                    ?" other"
+                    :"")+
+                (iso===toISO(new Date())
+                    ?" today"
+                    :"");
+
+            day.dataset.date=iso;
+
+            day.innerHTML=`
+                <div class="day-number">
+                    ${date.getDate()}
+                </div>
+            `;
+
+            day.onclick=e=>{
+                if(
+                    e.target.closest(".event-bar") ||
+                    drag
+                ) return;
+
+                openNewEvent(iso);
+            };
+
+            week.appendChild(day);
+        }
+
+        /* ПОЛОСЫ */
+
+        const layer=
+            document.createElement("div");
+
+        layer.className="event-layer";
+
+        const weekStartISO=toISO(weekStart);
+        const weekEndISO=toISO(weekEnd);
 
         const events=allEvents()
             .filter(e=>
                 e.category===view &&
-                iso>=e.start &&
-                iso<=e.end
+                e.end>=weekStartISO &&
+                e.start<=weekEndISO
+            )
+            .sort((a,b)=>
+                a.start.localeCompare(b.start) ||
+                b.end.localeCompare(a.end)
             );
 
-        const day=document.createElement("div");
-        day.className=
-            "day"+
-            (date.getMonth()!==month?" other":"")+
-            (today?" today":"");
+        const occupied=[];
 
-        day.onclick=e=>{
-            if(e.target.closest(".event"))return;
-            openNewEvent(iso);
-        };
+        events.forEach(event=>{
+            const segmentStart=
+                event.start>weekStartISO
+                    ?event.start
+                    :weekStartISO;
 
-        day.innerHTML=`
-            <div class="day-number">${date.getDate()}</div>
-            <div class="day-events">
-                ${events.slice(0,3).map(e=>`
-                    <div class="event ${e.category}"
-                         onclick="openEvent('${e.id}')">
-                        ${e.name}
-                    </div>
-                `).join("")}
-                ${events.length>3
-                    ?`<div class="more">+ ещё ${events.length-3}</div>`
-                    :""}
-            </div>
-        `;
+            const segmentEnd=
+                event.end<weekEndISO
+                    ?event.end
+                    :weekEndISO;
 
-        grid.appendChild(day);
+            const startCol=
+                daysBetween(
+                    weekStartISO,
+                    segmentStart
+                )+1;
+
+            const endCol=
+                daysBetween(
+                    weekStartISO,
+                    segmentEnd
+                )+2;
+
+            /* Ищем свободную строку */
+
+            let row=1;
+
+            while(
+                occupied[row]?.some(range=>
+                    startCol<range.end &&
+                    endCol>range.start
+                )
+            ){
+                row++;
+            }
+
+            if(!occupied[row]){
+                occupied[row]=[];
+            }
+
+            occupied[row].push({
+                start:startCol,
+                end:endCol
+            });
+
+            const bar=
+                document.createElement("div");
+
+            bar.className="event-bar";
+
+            if(event.start<weekStartISO){
+                bar.classList.add("cont-left");
+            }
+
+            if(event.end>weekEndISO){
+                bar.classList.add("cont-right");
+            }
+
+            bar.style.gridColumn=
+                `${startCol} / ${endCol}`;
+
+            bar.style.gridRow=row;
+
+            const color=
+                event.color ||
+                COLORS[0];
+
+            bar.style.background=color.bg;
+            bar.style.color=color.text;
+
+            const realId=
+                event.virtual
+                    ?event.sourceId
+                    :event.id;
+
+            bar.dataset.id=realId;
+
+            bar.innerHTML=`
+                ${event.name}
+
+                ${!event.virtual &&
+                  event.start>=weekStartISO &&
+                  event.start<=weekEndISO
+                    ?'<span class="resize left"></span>'
+                    :''}
+
+                ${!event.virtual &&
+                  event.end>=weekStartISO &&
+                  event.end<=weekEndISO
+                    ?'<span class="resize right"></span>'
+                    :''}
+            `;
+
+            bar.onclick=e=>{
+                if(
+                    e.target.classList
+                        .contains("resize")
+                ) return;
+
+                openEvent(realId);
+            };
+
+            const left=
+                bar.querySelector(".resize.left");
+
+            const right=
+                bar.querySelector(".resize.right");
+
+            if(left){
+                left.onmousedown=e=>
+                    startResize(
+                        e,
+                        realId,
+                        "start"
+                    );
+            }
+
+            if(right){
+                right.onmousedown=e=>
+                    startResize(
+                        e,
+                        realId,
+                        "end"
+                    );
+            }
+
+            layer.appendChild(bar);
+        });
+
+        week.appendChild(layer);
+        holder.appendChild(week);
     }
 }
 
 /* OVERVIEW */
 
 function renderOverview(){
-    const start=toISO(new Date(current.getFullYear(),current.getMonth(),1));
-    const end=toISO(new Date(current.getFullYear(),current.getMonth()+1,0));
-
-    const events=allEvents()
-        .filter(e=>e.end>=start&&e.start<=end)
-        .sort((a,b)=>a.start.localeCompare(b.start));
-
-    $("overview-grid").innerHTML=events.length
-    ?events.map(e=>`
-        <div class="overview-card" onclick="openEvent('${e.id}')">
-            <h3>${e.name}</h3>
-
-            <div class="overview-date">
-                ${formatDate(e.start)}
-                ${e.end!==e.start?" — "+formatDate(e.end):""}
-            </div>
-
-            <div class="overview-tags">
-                <span class="tag">
-                    ${categoryName(e.category)}
-                </span>
-
-                <span class="tag">
-                    ${e.status||"Не решено"}
-                </span>
-
-                ${e.category==="hogwarts"?`
-                    <span class="tag">
-                        SÓLE: ${e.soleDecision||"Не решено"}
-                    </span>
-
-                    <span class="tag">
-                        EXTRA: ${e.extraDecision||"Не решено"}
-                    </span>
-                `:""}
-            </div>
-        </div>
-    `).join("")
-    :`
-        <div class="empty">
-            На этот месяц событий нет.
-        </div>
-    `;
-}
-
-
-/* =========================
-   НОВОЕ СОБЫТИЕ
-========================= */
-
-function openNewEvent(date){
-    editingId=null;
-
-    $("modal-title").textContent="Новое событие";
-
-    $("event-name").value="";
-    $("event-category").value=
-        view==="overview" ? "hogwarts" : view;
-
-    $("event-status").value="Не решено";
-
-    const selectedDate=
-        date || toISO(new Date(
+    const monthStart=
+        toISO(new Date(
             current.getFullYear(),
             current.getMonth(),
             1
         ));
 
-    $("event-start").value=selectedDate;
-    $("event-end").value=selectedDate;
+    const monthEnd=
+        toISO(new Date(
+            current.getFullYear(),
+            current.getMonth()+1,
+            0
+        ));
 
+    const events=
+        baseSourceEvents()
+            .filter(e=>
+                e.end>=monthStart &&
+                e.start<=monthEnd
+            )
+            .sort((a,b)=>
+                a.start.localeCompare(b.start)
+            );
+
+    $("overview-grid").innerHTML=
+        events.length
+        ?events.map(e=>`
+            <div
+                class="overview-card"
+                onclick="openEvent('${e.id}')">
+
+                <h3>${e.name}</h3>
+
+                <div class="overview-date">
+                    ${formatDate(e.start)}
+                    ${e.end!==e.start
+                        ?" — "+formatDate(e.end)
+                        :""}
+                </div>
+
+                <div class="overview-tags">
+
+                    <span class="tag">
+                        ${categoryName(e.category)}
+                    </span>
+
+                    <span class="tag">
+                        ${e.status||"Не решено"}
+                    </span>
+
+                    ${e.category==="hogwarts"
+                        ?`
+                        <span class="tag">
+                            SÓLE:
+                            ${e.soleDecision||"Не решено"}
+                        </span>
+
+                        <span class="tag">
+                            EXTRA:
+                            ${e.extraDecision||"Не решено"}
+                        </span>
+                        `
+                        :""}
+
+                </div>
+            </div>
+        `).join("")
+        :`
+            <div class="empty">
+                На этот месяц событий нет.
+            </div>
+        `;
+}
+
+/* =========================
+   OPEN / CREATE
+========================= */
+
+function openNewEvent(date){
+    editingId=null;
+
+    const selected=
+        date ||
+        toISO(new Date(
+            current.getFullYear(),
+            current.getMonth(),
+            1
+        ));
+
+    $("modal-title").textContent=
+        "Новое событие";
+
+    $("event-name").value="";
+
+    $("event-category").value=
+        view==="overview"
+            ?"hogwarts"
+            :view;
+
+    $("event-status").value=
+        "Не решено";
+
+    $("event-start").value=selected;
+    $("event-end").value=selected;
     $("event-note").value="";
 
     $("sole-decision").value="Не решено";
     $("extra-decision").value="Не решено";
 
-    $("delete-event").classList.remove("visible");
+    $("sole-plan").value="";
+    $("extra-plan").value="";
+
+    $("delete-event")
+        .classList.remove("visible");
 
     updateHogwartsFields();
 
-    $("event-modal").classList.add("open");
+    $("event-modal")
+        .classList.add("open");
 }
 
-
-/* =========================
-   ОТКРЫТЬ СОБЫТИЕ
-========================= */
-
 function openEvent(id){
-    const event=allEvents().find(e=>e.id===id);
+    const event=
+        baseSourceEvents()
+            .find(e=>e.id===id);
 
     if(!event)return;
 
     editingId=id;
 
-    $("modal-title").textContent=event.name;
+    $("modal-title").textContent=
+        event.name;
 
-    $("event-name").value=event.name;
-    $("event-category").value=event.category;
-    $("event-status").value=event.status||"Не решено";
+    $("event-name").value=
+        event.name;
 
-    $("event-start").value=event.start;
-    $("event-end").value=event.end;
+    $("event-category").value=
+        event.category;
 
-    $("event-note").value=event.note||"";
+    $("event-status").value=
+        event.status||"Не решено";
+
+    $("event-start").value=
+        event.start;
+
+    $("event-end").value=
+        event.end;
+
+    $("event-note").value=
+        event.note||"";
 
     $("sole-decision").value=
         event.soleDecision||"Не решено";
@@ -624,11 +708,11 @@ function openEvent(id){
     $("extra-decision").value=
         event.extraDecision||"Не решено";
 
-    /*
-    События из calendar.js можно смотреть
-    и менять решения по магазинам,
-    но удаляем мы только свои события.
-    */
+    $("sole-plan").value=
+        event.solePlan||"";
+
+    $("extra-plan").value=
+        event.extraPlan||"";
 
     $("delete-event")
         .classList.toggle(
@@ -638,43 +722,46 @@ function openEvent(id){
 
     updateHogwartsFields();
 
-    $("event-modal").classList.add("open");
+    $("event-modal")
+        .classList.add("open");
 }
 
+/* HOGWARTS */
 
-/* =========================
-   HOGWARTS FIELDS
-========================= */
-
-$("event-category").addEventListener(
-    "change",
-    updateHogwartsFields
-);
+$("event-category")
+    .addEventListener(
+        "change",
+        updateHogwartsFields
+    );
 
 function updateHogwartsFields(){
-    const isHogwarts=
-        $("event-category").value==="hogwarts";
-
     $("hogwarts-details")
         .classList.toggle(
             "open",
-            isHogwarts
+            $("event-category").value===
+                "hogwarts"
         );
 }
 
-
 /* =========================
-   СОХРАНЕНИЕ
+   SAVE
 ========================= */
 
 function saveEvent(){
-    const name=$("event-name").value.trim();
-    const category=$("event-category").value;
-    const start=$("event-start").value;
-    const end=$("event-end").value;
+    const name=
+        $("event-name").value.trim();
+
+    const category=
+        $("event-category").value;
+
+    const start=
+        $("event-start").value;
+
+    const end=
+        $("event-end").value;
 
     if(!name){
-        alert("Укажи название события.");
+        alert("Укажи название.");
         return;
     }
 
@@ -684,9 +771,17 @@ function saveEvent(){
     }
 
     if(end<start){
-        alert("Дата окончания не может быть раньше начала.");
+        alert(
+            "Дата окончания не может быть раньше начала."
+        );
         return;
     }
+
+    const existing=
+        editingId
+            ?baseSourceEvents()
+                .find(e=>e.id===editingId)
+            :null;
 
     const data={
         name,
@@ -694,8 +789,11 @@ function saveEvent(){
         start,
         end,
 
-        status:$("event-status").value,
-        note:$("event-note").value.trim(),
+        status:
+            $("event-status").value,
+
+        note:
+            $("event-note").value.trim(),
 
         soleDecision:
             category==="hogwarts"
@@ -705,27 +803,34 @@ function saveEvent(){
         extraDecision:
             category==="hogwarts"
                 ?$("extra-decision").value
-                :""
+                :"",
+
+        solePlan:
+            category==="hogwarts"
+                ?$("sole-plan").value.trim()
+                :"",
+
+        extraPlan:
+            category==="hogwarts"
+                ?$("extra-plan").value.trim()
+                :"",
+
+        color:
+            existing?.color ||
+            pickColor(start,editingId)
     };
-
-
-    /*
-    Если редактируем базовое событие Хогвартса,
-    не меняем calendar.js.
-    Создаём локальную копию с тем же ID.
-    */
 
     if(editingId){
 
-        const localIndex=
+        const index=
             customEvents.findIndex(
                 e=>e.id===editingId
             );
 
-        if(localIndex!==-1){
+        if(index!==-1){
 
-            customEvents[localIndex]={
-                ...customEvents[localIndex],
+            customEvents[index]={
+                ...customEvents[index],
                 ...data
             };
 
@@ -737,14 +842,12 @@ function saveEvent(){
                 );
 
             if(original){
-
                 customEvents.push({
                     ...original,
                     ...data,
                     locked:false,
                     override:true
                 });
-
             }
 
         }
@@ -752,11 +855,8 @@ function saveEvent(){
     }else{
 
         customEvents.push({
-            id:
-                "event-"+Date.now(),
-
+            id:"event-"+Date.now(),
             ...data,
-
             locked:false
         });
 
@@ -767,15 +867,12 @@ function saveEvent(){
     render();
 }
 
-
-/* =========================
-   УДАЛЕНИЕ
-========================= */
+/* DELETE */
 
 function deleteEvent(){
     if(!editingId)return;
 
-    if(!confirm("Удалить это событие?")){
+    if(!confirm("Удалить событие?")){
         return;
     }
 
@@ -789,6 +886,113 @@ function deleteEvent(){
     render();
 }
 
+/* =========================
+   RESIZE ПО КРАЯМ
+========================= */
+
+function startResize(e,id,edge){
+    e.preventDefault();
+    e.stopPropagation();
+
+    const event=
+        baseSourceEvents()
+            .find(x=>x.id===id);
+
+    if(!event)return;
+
+    drag={
+        id,
+        edge,
+        originalStart:event.start,
+        originalEnd:event.end
+    };
+
+    document.body.style.userSelect="none";
+}
+
+document.addEventListener(
+    "mousemove",
+    e=>{
+        if(!drag)return;
+
+        const day=
+            document
+                .elementFromPoint(
+                    e.clientX,
+                    e.clientY
+                )
+                ?.closest(".day");
+
+        if(!day)return;
+
+        const date=day.dataset.date;
+
+        if(!date)return;
+
+        const event=
+            getEditableEvent(drag.id);
+
+        if(!event)return;
+
+        if(drag.edge==="start"){
+
+            if(date<=event.end){
+                event.start=date;
+            }
+
+        }else{
+
+            if(date>=event.start){
+                event.end=date;
+            }
+
+        }
+
+        saveLocal();
+        render();
+    }
+);
+
+document.addEventListener(
+    "mouseup",
+    ()=>{
+        if(!drag)return;
+
+        drag=null;
+        document.body.style.userSelect="";
+    }
+);
+
+/*
+Если тянем базовое событие из calendar.js,
+сначала создаём его локальную копию.
+*/
+
+function getEditableEvent(id){
+    let local=
+        customEvents.find(
+            e=>e.id===id
+        );
+
+    if(local)return local;
+
+    const original=
+        baseEvents.find(
+            e=>e.id===id
+        );
+
+    if(!original)return null;
+
+    local={
+        ...original,
+        locked:false,
+        override:true
+    };
+
+    customEvents.push(local);
+
+    return local;
+}
 
 /* =========================
    MODAL
@@ -801,34 +1005,46 @@ function closeModal(){
     editingId=null;
 }
 
-$("event-modal").addEventListener(
-    "click",
-    event=>{
-        if(event.target===$("event-modal")){
-            closeModal();
+$("event-modal")
+    .addEventListener(
+        "click",
+        e=>{
+            if(
+                e.target===
+                $("event-modal")
+            ){
+                closeModal();
+            }
         }
-    }
-);
-
+    );
 
 /* =========================
    HELPERS
 ========================= */
 
 function toISO(date){
-    const year=date.getFullYear();
-
-    const month=
-        String(date.getMonth()+1)
-            .padStart(2,"0");
-
-    const day=
-        String(date.getDate())
-            .padStart(2,"0");
-
-    return `${year}-${month}-${day}`;
+    return [
+        date.getFullYear(),
+        String(
+            date.getMonth()+1
+        ).padStart(2,"0"),
+        String(
+            date.getDate()
+        ).padStart(2,"0")
+    ].join("-");
 }
 
+function daysBetween(a,b){
+    const A=
+        new Date(a+"T00:00:00");
+
+    const B=
+        new Date(b+"T00:00:00");
+
+    return Math.round(
+        (B-A)/86400000
+    );
+}
 
 function formatDate(value){
     if(!value)return"";
@@ -844,7 +1060,6 @@ function formatDate(value){
     );
 }
 
-
 function categoryName(category){
     return {
         sole:"SÓLE",
@@ -853,31 +1068,31 @@ function categoryName(category){
     }[category]||category;
 }
 
-
 /* =========================
-   ВАЖНО:
-   УБИРАЕМ ДУБЛЬ БАЗОВОГО
-   СОБЫТИЯ ПРИ ЛОКАЛЬНОЙ ПРАВКЕ
+   MIGRATION ЦВЕТОВ
 ========================= */
-function allEvents(){
-    const overrides=new Set(
-        customEvents
-            .filter(e=>e.override)
-            .map(e=>e.id)
-    );
 
-    const base=baseEvents.filter(
-        e=>!overrides.has(e.id)
-    );
+/*
+Старые сохранённые события появились
+до системы цветов. Выдаём им цвет один раз.
+*/
 
-    return [
-        ...base,
-        ...customEvents
-    ];
+let changed=false;
+
+customEvents.forEach(event=>{
+    if(!event.color){
+        event.color=
+            pickColor(event.start,event.id);
+
+        changed=true;
+    }
+});
+
+if(changed){
+    saveLocal();
 }
-/* =========================
-   START
-========================= */
+
+/* START */
 
 render();
 
