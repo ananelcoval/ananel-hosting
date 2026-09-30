@@ -988,4 +988,192 @@ function changeStatus(id, status) {
    DELETE
 ========================= */
 
-function deleteOrder(id) {
+function deleteOrder(id){
+    if(!confirm("Удалить этот заказ?")) return;
+
+    orders=orders.filter(order=>order.id!==id);
+    saveOrders();
+    renderOrders();
+}
+
+
+/* СОБРАТЬ ЗАКАЗ — ПОКА ЗАГЛУШКА */
+
+function buildOrder(id){
+    const order=orders.find(order=>order.id===id);
+    if(!order) return;
+
+    console.log("Собрать заказ:",order);
+}
+
+
+/* КАРТОЧКА ЗАКАЗА */
+
+function orderCard(order,active){
+    return `
+        <article class="order-card ${active?"active":""}">
+
+            <div class="order-head">
+                <span class="shop">${order.shop}</span>
+                <span class="price">${order.price||0} G</span>
+            </div>
+
+            <div class="collection-name">
+                ${order.collection||""}
+            </div>
+
+            <h3>
+                ${order.model||order.product||"Без названия"}
+            </h3>
+
+            <div class="recipient">
+                ${order.recipient
+                    ?"Для: "+order.recipient
+                    :"Для себя"}
+            </div>
+
+            ${order.giftNote?`
+                <div class="note">
+                    «${order.giftNote}»
+                </div>
+            `:""}
+
+            ${order.privateNotes?`
+                <div class="note private-note">
+                    <strong>Пометка:</strong>
+                    ${order.privateNotes}
+                </div>
+            `:""}
+
+            <div class="meta">
+                <span>${order.customer}</span>
+                <span>${order.delivery}</span>
+                <span>${formatDate(order.date)}</span>
+            </div>
+
+            <div class="order-actions">
+
+                ${active?`
+                    <button
+                        class="build-order"
+                        onclick="buildOrder(${order.id})">
+                        Собрать заказ
+                    </button>
+                `:""}
+
+                <select onchange="changeStatus(${order.id},this.value)">
+                    ${statuses.map(status=>`
+                        <option
+                            ${status===order.status?"selected":""}>
+                            ${status}
+                        </option>
+                    `).join("")}
+                </select>
+
+                <button
+                    class="delete"
+                    onclick="deleteOrder(${order.id})">
+                    Удалить
+                </button>
+
+            </div>
+
+        </article>
+    `;
+}
+
+
+/* СОРТИРОВКА И ВЫВОД */
+
+function renderOrders(){
+
+    const newest=(a,b)=>
+        new Date(b.date||0)-new Date(a.date||0)
+        || b.id-a.id;
+
+    const active=orders
+        .filter(order=>order.status==="Новый")
+        .sort(newest);
+
+    const archive=orders
+        .filter(order=>
+            order.status==="Доставлен" ||
+            order.status==="Отменён"
+        )
+        .sort(newest);
+
+
+    $("orders").innerHTML=active.length
+        ?active.map(order=>orderCard(order,true)).join("")
+        :'<div class="empty">Активных заказов нет.</div>';
+
+
+    if(archive.length){
+
+        $("archive-section").style.display="block";
+
+        $("archive-count").textContent=
+            archive.length;
+
+        $("archive-orders").innerHTML=
+            archive
+                .map(order=>orderCard(order,false))
+                .join("");
+
+    }else{
+
+        $("archive-section").style.display="none";
+
+    }
+
+    updateStats();
+}
+
+
+/* ДАТА */
+
+function formatDate(date){
+    if(!date) return "";
+
+    return new Date(date+"T00:00:00")
+        .toLocaleDateString("ru-RU");
+}
+
+
+/* СТАТИСТИКА */
+
+function updateStats(){
+
+    $("new-count").textContent=
+        orders.filter(
+            order=>order.status==="Новый"
+        ).length;
+
+    $("delivered-count").textContent=
+        orders.filter(
+            order=>order.status==="Доставлен"
+        ).length;
+
+    $("cancelled-count").textContent=
+        orders.filter(
+            order=>order.status==="Отменён"
+        ).length;
+
+    $("total-money").textContent=
+        orders
+            .filter(order=>order.status!=="Отменён")
+            .reduce(
+                (sum,order)=>
+                    sum+(Number(order.price)||0),
+                0
+            );
+}
+
+
+/* ЗАПУСК */
+
+renderOrders();
+
+</script>
+</body>
+</html>
