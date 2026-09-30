@@ -97,7 +97,7 @@ body {
 
 .modules {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
@@ -175,6 +175,12 @@ body {
 
 /* МОБИЛЬНАЯ ВЕРСИЯ */
 
+    @media (max-width: 1000px) {
+    .modules {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+    
 @media (max-width: 750px) {
     .page {
         padding: 12px;
@@ -237,45 +243,70 @@ body {
 
         <div class="modules">
 
-            <!-- HOSTING -->
+    <!-- HOSTING -->
 
-            <a class="module active" href="hosting/">
+    <a class="module active" href="hosting/">
 
-                <div class="module-top">
-                    <span class="module-number">01</span>
-                    <span class="arrow">↗</span>
-                </div>
+        <div class="module-top">
+            <span class="module-number">01</span>
+            <span class="arrow">↗</span>
+        </div>
 
-                <div>
-                    <h3>Hosting</h3>
+        <div>
+            <h3>Hosting</h3>
 
-                    <p>
-                        Галерея изображений SÓLE и EXTRA.
-                        Просмотр, навигация по коллекциям
-                        и копирование прямых ссылок.
-                    </p>
-                </div>
+            <p>
+                Галерея изображений SÓLE и EXTRA.
+                Коллекции, модели и прямые ссылки.
+            </p>
+        </div>
 
-            </a>
+    </a>
 
 
-            <!-- MANAGER -->
+    <!-- MANAGER -->
 
-            <a class="module active" href="manager/orders.html">
+    <a class="module active" href="manager/orders.html">
 
-                <div class="module-top">
-                    <span class="module-number">02</span>
-                    <span class="arrow">↗</span>
-                </div>
+        <div class="module-top">
+            <span class="module-number">02</span>
+            <span class="arrow">↗</span>
+        </div>
 
-                <div>
-                    <h3>Manager</h3>
+        <div>
+            <h3>Manager</h3>
 
-                    <p>
-                        Заказы, цены, коллекции,
-                        BBCode и управление магазинами.
-                    </p>
-                </div>
+            <p>
+                Заказы, цены, BBCode,
+                доставка и статистика магазинов.
+            </p>
+        </div>
+
+    </a>
+
+
+    <!-- CALENDAR -->
+
+    <a class="module active" href="calendar/">
+
+        <div class="module-top">
+            <span class="module-number">03</span>
+            <span class="arrow">↗</span>
+        </div>
+
+        <div>
+            <h3>Calendar</h3>
+
+            <p>
+                Выпуски SÓLE и EXTRA,
+                мероприятия Хогвартса
+                и планы по месяцам.
+            </p>
+        </div>
+
+    </a>
+
+</div>
 
             </a>
 
