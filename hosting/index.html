@@ -21,7 +21,9 @@
     --white: #ffffff;
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 html {
     scroll-behavior: smooth;
@@ -41,20 +43,15 @@ body {
 }
 
 
-/* =========================
-   ШАПКА
-========================= */
+/* HEADER */
 
 .header {
     position: relative;
     z-index: 100;
-
     padding: 22px 28px;
-
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: 18px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -92,7 +89,7 @@ body {
     font-size: 12px;
     font-weight: 600;
     text-decoration: none;
-    transition: color .2s;
+    transition: .2s;
 }
 
 .home-link:hover {
@@ -100,9 +97,7 @@ body {
 }
 
 
-/* =========================
-   НАВИГАЦИЯ
-========================= */
+/* NAVIGATION */
 
 .navigation {
     display: flex;
@@ -118,11 +113,9 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-
     color: var(--green);
     font-size: 13px;
     font-weight: 700;
-
     cursor: default;
 }
 
@@ -137,24 +130,19 @@ body {
     position: absolute;
     top: calc(100% + 12px);
     right: 0;
-
     min-width: 230px;
     max-height: 400px;
     overflow-y: auto;
-
     padding: 8px;
-
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: 12px;
-
     box-shadow: 0 14px 40px rgba(0,0,0,.09);
-
     opacity: 0;
     visibility: hidden;
     transform: translateY(-5px);
-
     transition: .18s ease;
+    z-index: 200;
 }
 
 .dropdown-menu::before {
@@ -172,18 +160,19 @@ body {
     transform: translateY(0);
 }
 
-.dropdown-menu a {
+.dropdown-menu a,
+.dropdown-empty {
     display: block;
     padding: 10px 12px;
-
     border-radius: 8px;
-
-    color: #333;
     font-size: 13px;
-    font-weight: 500;
-
     text-decoration: none;
     white-space: nowrap;
+}
+
+.dropdown-menu a {
+    color: #333;
+    font-weight: 500;
 }
 
 .dropdown-menu a:hover {
@@ -191,19 +180,20 @@ body {
     color: var(--pink);
 }
 
+.dropdown-empty {
+    color: #aaa;
+}
 
-/* =========================
-   ВСТУПЛЕНИЕ
-========================= */
+
+/* INTRO */
 
 .intro {
-    padding: 75px 0 65px;
+    padding: 75px 0 70px;
     text-align: center;
 }
 
 .eyebrow {
     margin-bottom: 13px;
-
     color: var(--pink);
     font-size: 11px;
     font-weight: 700;
@@ -213,7 +203,6 @@ body {
 
 .intro h2 {
     margin: 0;
-
     color: var(--green);
     font-size: 48px;
     font-weight: 700;
@@ -221,25 +210,22 @@ body {
 }
 
 .intro p {
+    max-width: 540px;
     margin: 16px auto 0;
-    max-width: 520px;
-
     color: var(--muted);
     font-size: 13px;
     line-height: 1.7;
 }
 
 
-/* =========================
-   МАГАЗИН
-========================= */
+/* STORE */
 
 .store {
     margin-bottom: 110px;
 }
 
 .store-heading {
-    margin-bottom: 55px;
+    margin-bottom: 60px;
     display: flex;
     align-items: center;
     gap: 18px;
@@ -247,7 +233,6 @@ body {
 
 .store-heading h2 {
     margin: 0;
-
     color: var(--green);
     font-size: 20px;
     font-weight: 700;
@@ -265,9 +250,7 @@ body {
 }
 
 
-/* =========================
-   КОЛЛЕКЦИЯ
-========================= */
+/* COLLECTION */
 
 .collection {
     margin-bottom: 100px;
@@ -275,14 +258,13 @@ body {
 }
 
 .collection-heading {
-    margin-bottom: 35px;
+    margin-bottom: 38px;
     text-align: center;
 }
 
 .collection-number {
     display: block;
     margin-bottom: 9px;
-
     color: var(--pink);
     font-size: 10px;
     font-weight: 700;
@@ -291,16 +273,13 @@ body {
 
 .collection-title {
     margin: 0;
-
     font-size: 29px;
     font-weight: 600;
 }
 
 .section-title {
     margin: 42px 0 25px;
-
     text-align: center;
-
     color: #8b878a;
     font-size: 11px;
     font-weight: 700;
@@ -309,9 +288,7 @@ body {
 }
 
 
-/* =========================
-   МОДЕЛИ
-========================= */
+/* MODELS */
 
 .models-gallery {
     display: grid;
@@ -327,18 +304,12 @@ body {
 
 .model-image-box {
     height: 230px;
-
     padding: 12px;
-
     display: flex;
     justify-content: center;
     align-items: flex-end;
-
     border-radius: 16px;
-
-    transition:
-        background .2s ease,
-        transform .2s ease;
+    transition: .2s ease;
 }
 
 .model-card:hover .model-image-box {
@@ -349,24 +320,13 @@ body {
 .model-image {
     max-width: 100%;
     max-height: 100%;
-
     width: auto;
     height: auto;
-
     cursor: pointer;
 }
 
-.item-name {
-    margin: 14px 0 0;
 
-    font-size: 13px;
-    font-weight: 600;
-}
-
-
-/* =========================
-   ДЕКОР
-========================= */
+/* DECOR */
 
 .decor-gallery {
     display: grid;
@@ -382,18 +342,12 @@ body {
 
 .decor-image-box {
     height: 245px;
-
     padding: 15px;
-
     display: flex;
     justify-content: center;
     align-items: flex-end;
-
     border-radius: 16px;
-
-    transition:
-        background .2s ease,
-        transform .2s ease;
+    transition: .2s ease;
 }
 
 .decor-card:hover .decor-image-box {
@@ -404,54 +358,56 @@ body {
 .decor-image {
     max-width: 100%;
     max-height: 100%;
-
     width: auto;
     height: auto;
-
     cursor: pointer;
 }
 
+.item-name {
+    margin: 14px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+}
 
-/* =========================
-   РАЗДЕЛИТЕЛЬ
-========================= */
+
+/* DIVIDER */
 
 .collection-divider {
     width: 70px;
     height: 1px;
-
     margin: 90px auto 0;
-
     background: #ddd7db;
 }
 
 
-/* =========================
-   УВЕДОМЛЕНИЕ
-========================= */
+/* EMPTY */
+
+.empty-store {
+    padding: 60px 20px;
+    border: 1px dashed var(--line);
+    border-radius: 18px;
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+}
+
+
+/* TOAST */
 
 .toast {
     position: fixed;
     left: 50%;
     bottom: 30px;
-
     padding: 12px 18px;
-
     background: #171717;
     color: white;
-
     border-radius: 30px;
-
     font-size: 12px;
     font-weight: 600;
-
     opacity: 0;
     pointer-events: none;
-
     transform: translate(-50%, 15px);
-
     transition: .25s ease;
-
     z-index: 500;
 }
 
@@ -461,26 +417,7 @@ body {
 }
 
 
-/* =========================
-   ПУСТОЙ МАГАЗИН
-========================= */
-
-.empty-store {
-    padding: 60px 20px;
-
-    border: 1px dashed var(--line);
-    border-radius: 18px;
-
-    text-align: center;
-
-    color: #aaa;
-    font-size: 13px;
-}
-
-
-/* =========================
-   АДАПТАЦИЯ
-========================= */
+/* MOBILE */
 
 @media (max-width: 1200px) {
     .models-gallery {
@@ -510,14 +447,14 @@ body {
     .header {
         padding: 18px;
         align-items: flex-start;
-        gap: 20px;
     }
 
     .brand {
         display: block;
     }
 
-    .header-label {
+    .header-label,
+    .home-link {
         display: none;
     }
 
@@ -527,10 +464,6 @@ body {
 
     .header-right {
         gap: 18px;
-    }
-
-    .home-link {
-        display: none;
     }
 
     .navigation {
@@ -576,13 +509,8 @@ body {
     </div>
 
     <div class="header-right">
-
         <nav id="navigation" class="navigation"></nav>
-
-        <a class="home-link" href="../">
-            ← Workspace
-        </a>
-
+        <a class="home-link" href="../">← Workspace</a>
     </div>
 
 </header>
@@ -593,12 +521,12 @@ body {
     <section class="intro">
         <div class="eyebrow">Asset Library</div>
         <h2>Hosting</h2>
+
         <p>
             Галерея изображений SÓLE и EXTRA.
             Нажмите на изображение, чтобы скопировать прямую ссылку.
         </p>
     </section>
-
 
     <div id="stores"></div>
 
@@ -606,35 +534,32 @@ body {
 
 </div>
 
-
 <div id="toast" class="toast">
     Ссылка скопирована
 </div>
 
 
-<!-- ЕДИНЫЙ КАТАЛОГ -->
+<!-- ОБЩИЙ КАТАЛОГ -->
 <script src="../data/products.js"></script>
 
 <script>
 
-/* =========================
-   НАСТРОЙКИ
-========================= */
+/* ПОРЯДОК МАГАЗИНОВ */
 
 const STORE_ORDER = ["sole", "extra"];
 
 
-/* =========================
-   СТРОИМ САЙТ
-========================= */
+/* ЗАПУСК */
 
 function buildHosting() {
     const navigation = document.getElementById("navigation");
     const storesContainer = document.getElementById("stores");
 
+    navigation.innerHTML = "";
+    storesContainer.innerHTML = "";
+
     STORE_ORDER.forEach(storeKey => {
         const store = STORES[storeKey];
-
         if (!store) return;
 
         createNavigation(storeKey, store, navigation);
@@ -643,40 +568,37 @@ function buildHosting() {
 }
 
 
-/* =========================
-   НАВИГАЦИЯ
-========================= */
+/* NAVIGATION */
 
-function createNavigation(storeKey, store, navigation) {
+function createNavigation(storeKey, store, container) {
     const dropdown = document.createElement("div");
     dropdown.className = "nav-dropdown";
 
-    const links = store.collections.map(collection => `
-        <a href="#${storeKey}-${collection.id}">
-            ${collection.name}
-        </a>
-    `).join("");
+    const links = store.collections
+        .map(collection => `
+            <a href="#${storeKey}-${collection.id}">
+                ${collection.name}
+            </a>
+        `)
+        .join("");
 
     dropdown.innerHTML = `
         <span class="nav-title">${store.name}</span>
 
         <div class="dropdown-menu">
-            ${links || `<span style="
-                display:block;
-                padding:10px 12px;
-                color:#aaa;
-                font-size:12px;
-            ">Пока пусто</span>`}
+            ${links || `
+                <span class="dropdown-empty">
+                    Пока пусто
+                </span>
+            `}
         </div>
     `;
 
-    navigation.appendChild(dropdown);
+    container.appendChild(dropdown);
 }
 
 
-/* =========================
-   МАГАЗИН
-========================= */
+/* STORE */
 
 function createStore(storeKey, store, container) {
     const section = document.createElement("section");
@@ -684,12 +606,16 @@ function createStore(storeKey, store, container) {
 
     section.innerHTML = `
         <div class="store-heading">
+
             <h2>${store.name}</h2>
+
             <div class="store-line"></div>
+
             <span class="store-count">
                 ${store.collections.length}
                 ${collectionWord(store.collections.length)}
             </span>
+
         </div>
 
         <div class="store-content"></div>
@@ -718,9 +644,7 @@ function createStore(storeKey, store, container) {
 }
 
 
-/* =========================
-   КОЛЛЕКЦИЯ
-========================= */
+/* COLLECTION */
 
 function createCollection(storeKey, collection, index, container) {
     const section = document.createElement("section");
@@ -730,8 +654,13 @@ function createCollection(storeKey, collection, index, container) {
 
     const number = String(index + 1).padStart(2, "0");
 
+    const hasDecor =
+        Array.isArray(collection.decor) &&
+        collection.decor.length > 0;
+
     section.innerHTML = `
         <div class="collection-heading">
+
             <span class="collection-number">
                 COLLECTION ${number}
             </span>
@@ -739,7 +668,9 @@ function createCollection(storeKey, collection, index, container) {
             <h3 class="collection-title">
                 ${collection.name}
             </h3>
+
         </div>
+
 
         <h4 class="section-title">
             Модели
@@ -747,39 +678,33 @@ function createCollection(storeKey, collection, index, container) {
 
         <div class="models-gallery"></div>
 
-        ${
-            collection.decor && collection.decor.length
-                ? `
-                    <h4 class="section-title">
-                        Декор
-                    </h4>
 
-                    <div class="decor-gallery"></div>
-                `
-                : ""
-        }
+        ${hasDecor ? `
+            <h4 class="section-title">
+                Декор
+            </h4>
+
+            <div class="decor-gallery"></div>
+        ` : ""}
+
 
         <div class="collection-divider"></div>
     `;
 
     container.appendChild(section);
 
-    const modelsGallery =
-        section.querySelector(".models-gallery");
 
     createGallery(
-        modelsGallery,
+        section.querySelector(".models-gallery"),
         getPath(storeKey, collection, "models"),
         collection.models || [],
         "model"
     );
 
-    if (collection.decor && collection.decor.length) {
-        const decorGallery =
-            section.querySelector(".decor-gallery");
 
+    if (hasDecor) {
         createGallery(
-            decorGallery,
+            section.querySelector(".decor-gallery"),
             getPath(storeKey, collection, "decor"),
             collection.decor,
             "decor"
@@ -788,20 +713,18 @@ function createCollection(storeKey, collection, index, container) {
 }
 
 
-/* =========================
-   ПУТЬ К ФАЙЛАМ
-========================= */
+/* PATH */
 
 function getPath(storeKey, collection, type) {
     return `../${storeKey}/products/${collection.folder}/${type}`;
 }
 
 
-/* =========================
-   ГАЛЕРЕЯ
-========================= */
+/* GALLERY */
 
 function createGallery(container, path, items, type) {
+    if (!container) return;
+
     const isModel = type === "model";
 
     items.forEach((item, index) => {
@@ -828,9 +751,7 @@ function createGallery(container, path, items, type) {
                     }"
 
                     src="${path}/${item.file}"
-
                     alt="${item.name}"
-
                     title="Нажмите, чтобы скопировать ссылку"
                 >
 
@@ -853,9 +774,56 @@ function createGallery(container, path, items, type) {
 }
 
 
-/* =========================
-   КОПИРОВАНИЕ
-========================= */
+/* COPY */
 
 function copyImageLink(image) {
-    navigator
+    navigator.clipboard.writeText(image.src)
+        .then(showToast)
+        .catch(() => {
+            alert("Не удалось скопировать ссылку.");
+        });
+}
+
+
+/* TOAST */
+
+function showToast() {
+    const toast = document.getElementById("toast");
+
+    toast.classList.add("show");
+
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1600);
+}
+
+
+/* СКЛОНЕНИЕ */
+
+function collectionWord(number) {
+    const lastTwo = number % 100;
+    const last = number % 10;
+
+    if (lastTwo >= 11 && lastTwo <= 14)
+        return "коллекций";
+
+    if (last === 1)
+        return "коллекция";
+
+    if (last >= 2 && last <= 4)
+        return "коллекции";
+
+    return "коллекций";
+}
+
+
+/* ПОЕХАЛИ */
+
+buildHosting();
+
+</script>
+
+</body>
+</html>
