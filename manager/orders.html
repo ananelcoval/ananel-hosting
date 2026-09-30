@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Orders — Ananel Manager</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,154 +10,111 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
+:root{
     --green:#005500;
     --pink:#D4007E;
     --bg:#f7f5f6;
-    --white:#fff;
     --text:#171717;
     --muted:#888;
     --line:#e2dee1;
+    --soft:#faf8f9;
 }
-
-* { box-sizing:border-box; }
-
-body {
+*{box-sizing:border-box}
+body{
     margin:0;
     background:var(--bg);
     color:var(--text);
     font-family:'Montserrat',sans-serif;
 }
-
-.page {
-    max-width:1400px;
-    margin:auto;
-    padding:24px;
-}
+.page{max-width:1400px;margin:auto;padding:24px}
+button{font-family:inherit}
 
 /* HEADER */
 
-.header {
+.header{
     padding:22px 30px;
-    background:var(--white);
+    background:#fff;
     border:1px solid var(--line);
     border-radius:18px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
-
-.logo {
-    margin:0;
-    color:var(--green);
-    font-size:30px;
-}
-
-.back {
+.logo{margin:0;color:var(--green);font-size:30px}
+.back{
     color:#999;
-    text-decoration:none;
     font-size:12px;
     font-weight:600;
+    text-decoration:none;
 }
-
-.back:hover { color:var(--pink); }
+.back:hover{color:var(--pink)}
 
 /* TITLE */
 
-.top {
+.top{
     margin:55px 0 30px;
     display:flex;
     justify-content:space-between;
     align-items:end;
 }
+.top h2{margin:0;color:var(--green);font-size:38px}
+.top p{margin:8px 0 0;color:var(--muted);font-size:13px}
 
-.top h2 {
-    margin:0;
-    color:var(--green);
-    font-size:38px;
-}
-
-.top p {
-    margin:8px 0 0;
-    color:var(--muted);
-    font-size:13px;
-}
-
-button { font-family:inherit; }
-
-.add-button {
+.add-button{
     padding:13px 19px;
     border:0;
     border-radius:11px;
     background:var(--green);
-    color:white;
+    color:#fff;
     font-weight:600;
     cursor:pointer;
 }
-
-.add-button:hover { background:var(--pink); }
+.add-button:hover{background:var(--pink)}
 
 /* FORM */
 
-.form-panel {
+.form-panel{
     display:none;
     margin-bottom:30px;
     padding:28px;
-    background:white;
+    background:#fff;
     border:1px solid var(--line);
     border-radius:18px;
 }
+.form-panel.open{display:block}
+.form-panel h3{margin:0 0 24px;font-size:21px}
 
-.form-panel.open { display:block; }
-
-.form-panel h3 {
-    margin:0 0 24px;
-    font-size:21px;
-}
-
-.form-grid {
+.form-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:18px;
 }
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
 
-.field {
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-}
-
-.field.full { grid-column:1/-1; }
-
-label {
+label{
     color:#777;
     font-size:11px;
     font-weight:600;
     letter-spacing:1px;
     text-transform:uppercase;
 }
-
-input, select, textarea {
+input,select,textarea{
     width:100%;
     padding:12px 13px;
     border:1px solid #d8d4d7;
     border-radius:9px;
-    background:white;
+    background:#fff;
     font:inherit;
     font-size:14px;
 }
-
-textarea {
-    min-height:80px;
-    resize:vertical;
-}
-
-input:focus, select:focus, textarea:focus {
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus{
     outline:none;
     border-color:var(--pink);
 }
 
-.product-fields {
+.product-fields{
     grid-column:1/-1;
     padding:20px;
     background:#faf9fa;
@@ -168,93 +124,86 @@ input:focus, select:focus, textarea:focus {
     gap:18px;
 }
 
-.form-actions {
-    margin-top:22px;
-    display:flex;
-    gap:10px;
-}
-
-.save-button, .cancel-button {
+.form-actions{margin-top:22px;display:flex;gap:10px}
+.save-button,.cancel-button{
     padding:11px 17px;
     border-radius:9px;
     font-weight:600;
     cursor:pointer;
 }
-
-.save-button {
-    border:0;
-    background:var(--pink);
-    color:white;
-}
-
-.cancel-button {
-    border:1px solid var(--line);
-    background:white;
-    color:#666;
-}
+.save-button{border:0;background:var(--pink);color:#fff}
+.cancel-button{border:1px solid var(--line);background:#fff;color:#666}
 
 /* STATS */
 
-.stats {
-    margin-bottom:28px;
+.stats{
+    margin-bottom:32px;
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:14px;
 }
-
-.stat {
+.stat{
     padding:18px;
-    background:white;
+    background:#fff;
     border:1px solid var(--line);
     border-radius:14px;
 }
-
-.stat-number {
+.stat-number{
     color:var(--green);
     font-size:27px;
     font-weight:700;
 }
-
-.stat-label {
-    margin-top:4px;
-    color:var(--muted);
-    font-size:11px;
-}
+.stat-label{margin-top:4px;color:var(--muted);font-size:11px}
 
 /* ORDERS */
 
-.orders {
+.orders{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:16px;
 }
 
-.order-card {
+.order-card{
+    position:relative;
     padding:21px;
-    background:white;
+    background:#fff;
     border:1px solid var(--line);
     border-radius:16px;
 }
 
-.order-head {
+/* НОВЫЕ */
+
+.order-card.active{
+    border-color:rgba(212,0,126,.25);
+    box-shadow:0 5px 22px rgba(212,0,126,.045);
+}
+.order-card.active::before{
+    content:"";
+    position:absolute;
+    top:-1px;
+    left:22px;
+    width:38px;
+    height:3px;
+    background:var(--pink);
+    border-radius:0 0 5px 5px;
+}
+
+/* CARD */
+
+.order-head{
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
-
-.shop {
+.shop{
     color:var(--pink);
     font-size:10px;
     font-weight:700;
     letter-spacing:1px;
 }
+.price{color:var(--green);font-weight:700}
 
-.price {
-    color:var(--green);
-    font-weight:700;
-}
-
-.collection-name {
+.collection-name{
     margin-top:16px;
     color:#999;
     font-size:10px;
@@ -262,28 +211,21 @@ input:focus, select:focus, textarea:focus {
     letter-spacing:1px;
     text-transform:uppercase;
 }
+.order-card h3{margin:5px 0;font-size:18px}
+.recipient{color:#777;font-size:13px}
 
-.order-card h3 {
-    margin:5px 0;
-    font-size:18px;
-}
-
-.recipient {
-    color:#777;
-    font-size:13px;
-}
-
-.note {
+.note{
     margin-top:14px;
     padding:11px 12px;
-    background:#faf8f9;
+    background:var(--soft);
     border-radius:9px;
     color:#666;
     font-size:12px;
     line-height:1.5;
 }
+.private-note{color:#777}
 
-.meta {
+.meta{
     margin-top:17px;
     display:flex;
     justify-content:space-between;
@@ -292,54 +234,95 @@ input:focus, select:focus, textarea:focus {
     font-size:11px;
 }
 
-.status {
+/* ACTIONS */
+
+.order-actions{
     margin-top:17px;
     padding-top:14px;
     border-top:1px solid #eee;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    gap:8px;
 }
-
-.status select {
+.order-actions select{
     width:auto;
+    margin-left:auto;
     padding:7px 8px;
     font-size:11px;
 }
 
-.delete {
+.build-order{
+    padding:8px 11px;
+    border:1px solid var(--pink);
+    border-radius:8px;
+    background:#fff;
+    color:var(--pink);
+    font-size:11px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.18s;
+}
+.build-order:hover{background:var(--pink);color:#fff}
+
+.delete{
     border:0;
     background:none;
     color:#aaa;
+    font-size:11px;
     cursor:pointer;
 }
+.delete:hover{color:var(--pink)}
 
-.delete:hover { color:var(--pink); }
+/* ARCHIVE */
 
-.empty {
+.archive{margin-top:75px}
+
+.archive-heading{
+    margin-bottom:28px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+.archive-heading h3{
+    margin:0;
+    color:#999;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+.archive-line{height:1px;flex:1;background:var(--line)}
+.archive-count{color:#aaa;font-size:11px}
+
+.archive .order-card{
+    opacity:.68;
+    transition:.2s;
+}
+.archive .order-card:hover{opacity:1}
+
+.empty{
     grid-column:1/-1;
-    padding:70px 20px;
-    text-align:center;
+    padding:60px 20px;
     color:#aaa;
+    text-align:center;
 }
 
 /* MOBILE */
 
-@media(max-width:900px) {
-    .orders { grid-template-columns:repeat(2,1fr); }
-    .stats { grid-template-columns:repeat(2,1fr); }
+@media(max-width:900px){
+    .orders{grid-template-columns:repeat(2,1fr)}
+    .stats{grid-template-columns:repeat(2,1fr)}
 }
-
-@media(max-width:650px) {
-    .page { padding:12px; }
-    .top { align-items:start; gap:20px; }
-    .form-grid, .product-fields, .orders { grid-template-columns:1fr; }
+@media(max-width:650px){
+    .page{padding:12px}
+    .top{align-items:start;gap:20px}
+    .form-grid,.product-fields,.orders{grid-template-columns:1fr}
+    .order-actions{flex-wrap:wrap}
 }
 </style>
 </head>
 
 <body>
-
 <div class="page">
 
 <header class="header">
@@ -382,10 +365,7 @@ input:focus, select:focus, textarea:focus {
         <input id="recipient" placeholder="Ариадна Фрост">
     </div>
 
-    <!-- ТОВАР ИЗ PRODUCTS.JS -->
-
     <div class="product-fields">
-
         <div class="field">
             <label>Коллекция</label>
             <select id="collection" onchange="loadModels()"></select>
@@ -395,7 +375,6 @@ input:focus, select:focus, textarea:focus {
             <label>Модель</label>
             <select id="model"></select>
         </div>
-
     </div>
 
     <div class="field">
@@ -438,307 +417,208 @@ input:focus, select:focus, textarea:focus {
     </div>
 
     <div class="stat">
-        <div id="work-count" class="stat-number">0</div>
-        <div class="stat-label">В работе</div>
+        <div id="delivered-count" class="stat-number">0</div>
+        <div class="stat-label">Доставлено</div>
     </div>
 
     <div class="stat">
-        <div id="delivery-count" class="stat-number">0</div>
-        <div class="stat-label">К доставке</div>
+        <div id="cancelled-count" class="stat-number">0</div>
+        <div class="stat-label">Отменено</div>
     </div>
 
     <div class="stat">
         <div id="total-money" class="stat-number">0</div>
-        <div class="stat-label">Галлеонов в заказах</div>
+        <div class="stat-label">Галлеонов получено</div>
     </div>
 </div>
 
+<!-- ACTIVE -->
+
 <div id="orders" class="orders"></div>
+
+<!-- ARCHIVE -->
+
+<section id="archive-section" class="archive">
+    <div class="archive-heading">
+        <h3>Архив</h3>
+        <div class="archive-line"></div>
+        <span id="archive-count" class="archive-count"></span>
+    </div>
+
+    <div id="archive-orders" class="orders"></div>
+</section>
 
 </div>
 
-
-<!-- ЕДИНЫЙ КАТАЛОГ -->
 <script src="../data/products.js"></script>
 
 <script>
-const $ = id => document.getElementById(id);
-const statuses = [
-    "Новый",
-    "В работе",
-    "Готов к доставке",
-    "Доставлен",
-    "Завершён",
-    "Отменён"
-];
+const $=id=>document.getElementById(id);
+const statuses=["Новый","Доставлен","Отменён"];
+let orders=JSON.parse(localStorage.getItem("ananelOrders"))||[];
 
-let orders = JSON.parse(localStorage.getItem("ananelOrders")) || [];
+/* Старые промежуточные статусы → Новый */
+orders.forEach(o=>{
+    if(!statuses.includes(o.status)) o.status="Новый";
+});
+saveOrders();
 
+/* CATALOG */
 
-/* =========================
-   КАТАЛОГ
-========================= */
-
-function initCatalog() {
-    $("shop").innerHTML = Object.entries(STORES)
-        .map(([key, store]) =>
-            `<option value="${key}">${store.name}</option>`
-        ).join("");
-
+function initCatalog(){
+    $("shop").innerHTML=Object.entries(STORES)
+        .map(([key,s])=>`<option value="${key}">${s.name}</option>`).join("");
     loadCollections();
 }
 
-function loadCollections() {
-    const store = STORES[$("shop").value];
-    const collections = store?.collections || [];
+function loadCollections(){
+    const collections=STORES[$("shop").value]?.collections||[];
 
-    $("collection").innerHTML = collections.length
-        ? collections.map(c =>
-            `<option value="${c.id}">${c.name}</option>`
-          ).join("")
-        : `<option value="">Нет коллекций</option>`;
+    $("collection").innerHTML=collections.length
+        ? collections.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")
+        : '<option value="">Нет коллекций</option>';
 
     loadModels();
 }
 
-function loadModels() {
-    const store = STORES[$("shop").value];
-    const collection = store?.collections.find(
-        c => c.id === $("collection").value
-    );
+function loadModels(){
+    const store=STORES[$("shop").value];
+    const collection=store?.collections.find(c=>c.id===$("collection").value);
+    const models=collection?.models||[];
 
-    const models = collection?.models || [];
-
-    $("model").innerHTML = models.length
-        ? models.map((m, index) =>
-            `<option value="${index}">${m.name}</option>`
-          ).join("")
-        : `<option value="">Нет моделей</option>`;
+    $("model").innerHTML=models.length
+        ? models.map((m,i)=>`<option value="${i}">${m.name}</option>`).join("")
+        : '<option value="">Нет моделей</option>';
 }
 
+/* FORM */
 
-/* =========================
-   FORM
-========================= */
-
-$("date").value = today();
-initCatalog();
-
-function today() {
+function today(){
     return new Date().toISOString().split("T")[0];
 }
 
-function toggleForm(force) {
-    const panel = $("form-panel");
+$("date").value=today();
+initCatalog();
 
-    if (force === false) {
-        panel.classList.remove("open");
+function toggleForm(force){
+    if(force===false){
+        $("form-panel").classList.remove("open");
         return;
     }
-
-    panel.classList.toggle("open");
+    $("form-panel").classList.toggle("open");
 }
 
-function clearForm() {
+function clearForm(){
     ["price","customer","recipient","gift-note","private-notes"]
-        .forEach(id => $(id).value = "");
+        .forEach(id=>$(id).value="");
 
-    $("date").value = today();
-    $("shop").selectedIndex = 0;
-
+    $("date").value=today();
+    $("shop").selectedIndex=0;
     loadCollections();
 }
 
+function saveOrder(){
+    const storeKey=$("shop").value;
+    const store=STORES[storeKey];
+    const collection=store?.collections.find(c=>c.id===$("collection").value);
+    const model=collection?.models?.[Number($("model").value)];
 
-/* =========================
-   SAVE ORDER
-========================= */
-
-function saveOrder() {
-    const storeKey = $("shop").value;
-    const store = STORES[storeKey];
-
-    const collection = store?.collections.find(
-        c => c.id === $("collection").value
-    );
-
-    const modelIndex = Number($("model").value);
-    const model = collection?.models?.[modelIndex];
-
-    if (!$("customer").value.trim()) {
+    if(!$("customer").value.trim()){
         alert("Укажи заказчика.");
         return;
     }
 
-    if (!collection || !model) {
+    if(!collection||!model){
         alert("Выбери коллекцию и модель.");
         return;
     }
 
-    const order = {
-        id: Date.now(),
-
+    orders.unshift({
+        id:Date.now(),
         storeKey,
-        shop: store.name,
+        shop:store.name,
+        customer:$("customer").value.trim(),
+        recipient:$("recipient").value.trim(),
+        price:Number($("price").value)||0,
+        delivery:$("delivery").value,
+        date:$("date").value,
+        collectionId:collection.id,
+        collection:collection.name,
+        modelFile:model.file,
+        model:model.name,
+        giftNote:$("gift-note").value.trim(),
+        privateNotes:$("private-notes").value.trim(),
+        status:"Новый",
+        paid:true
+    });
 
-        customer: $("customer").value.trim(),
-        recipient: $("recipient").value.trim(),
-
-        price: Number($("price").value) || 0,
-        delivery: $("delivery").value,
-        date: $("date").value,
-
-        collectionId: collection.id,
-        collection: collection.name,
-
-        modelFile: model.file,
-        model: model.name,
-
-        giftNote: $("gift-note").value.trim(),
-        privateNotes: $("private-notes").value.trim(),
-
-        status: "Новый",
-        paid: true
-    };
-
-    orders.unshift(order);
     saveOrders();
     clearForm();
     toggleForm(false);
     renderOrders();
 }
 
+/* DATA */
 
-/* =========================
-   ORDERS
-========================= */
-
-function saveOrders() {
-    localStorage.setItem("ananelOrders", JSON.stringify(orders));
+function saveOrders(){
+    localStorage.setItem("ananelOrders",JSON.stringify(orders));
 }
 
-function changeStatus(id, status) {
-    const order = orders.find(o => o.id === id);
-    if (!order) return;
+function changeStatus(id,status){
+    const order=orders.find(o=>o.id===id);
+    if(!order)return;
 
-    order.status = status;
+    order.status=status;
     saveOrders();
     renderOrders();
 }
 
-function deleteOrder(id) {
-    if (!confirm("Удалить этот заказ?")) return;
+function deleteOrder(id){
+    if(!confirm("Удалить этот заказ?"))return;
 
-    orders = orders.filter(o => o.id !== id);
+    orders=orders.filter(o=>o.id!==id);
     saveOrders();
     renderOrders();
 }
 
+/* BB CODE — ПОКА ЗАГЛУШКА */
 
-/* =========================
-   RENDER
-========================= */
+function buildOrder(id){
+    const order=orders.find(o=>o.id===id);
+    if(!order)return;
 
-function renderOrders() {
-    const container = $("orders");
+    console.log("Собрать заказ:",order);
+}
 
-    if (!orders.length) {
-        container.innerHTML = `
-            <div class="empty">
-                Заказов пока нет.<br>
-                Добавь первый через «Новый заказ».
-            </div>
-        `;
-        updateStats();
-        return;
+/* RENDER */
+
+function renderOrders(){
+    const newest=(a,b)=>
+        new Date(b.date||0)-new Date(a.date||0) || b.id-a.id;
+
+    const active=orders
+        .filter(o=>o.status==="Новый")
+        .sort(newest);
+
+    const archive=orders
+        .filter(o=>o.status==="Доставлен"||o.status==="Отменён")
+        .sort(newest);
+
+    $("orders").innerHTML=active.length
+        ? active.map(o=>orderCard(o,true)).join("")
+        : '<div class="empty">Активных заказов нет.</div>';
+
+    if(archive.length){
+        $("archive-section").style.display="block";
+        $("archive-count").textContent=archive.length;
+        $("archive-orders").innerHTML=archive.map(o=>orderCard(o,false)).join("");
+    }else{
+        $("archive-section").style.display="none";
     }
-
-    container.innerHTML = orders.map(order => `
-        <article class="order-card">
-
-            <div class="order-head">
-                <span class="shop">${order.shop}</span>
-                <span class="price">${order.price || 0} G</span>
-            </div>
-
-            <div class="collection-name">
-                ${order.collection || ""}
-            </div>
-
-            <h3>${order.model || order.product || "Без названия"}</h3>
-
-            <div class="recipient">
-                ${order.recipient
-                    ? "Для: " + order.recipient
-                    : "Для себя"}
-            </div>
-
-            ${order.giftNote ? `
-                <div class="note">
-                    «${order.giftNote}»
-                </div>
-            ` : ""}
-
-            <div class="meta">
-                <span>${order.customer}</span>
-                <span>${order.delivery}</span>
-                <span>${formatDate(order.date)}</span>
-            </div>
-
-            <div class="status">
-
-                <select onchange="changeStatus(${order.id}, this.value)">
-                    ${statuses.map(status => `
-                        <option ${status === order.status ? "selected" : ""}>
-                            ${status}
-                        </option>
-                    `).join("")}
-                </select>
-
-                <button
-                    class="delete"
-                    onclick="deleteOrder(${order.id})">
-                    Удалить
-                </button>
-
-            </div>
-
-        </article>
-    `).join("");
 
     updateStats();
 }
 
-function formatDate(date) {
-    if (!date) return "";
-
-    return new Date(date + "T00:00:00")
-        .toLocaleDateString("ru-RU");
-}
-
-
-/* =========================
-   STATS
-========================= */
-
-function updateStats() {
-    $("new-count").textContent =
-        orders.filter(o => o.status === "Новый").length;
-
-    $("work-count").textContent =
-        orders.filter(o => o.status === "В работе").length;
-
-    $("delivery-count").textContent =
-        orders.filter(o => o.status === "Готов к доставке").length;
-
-    $("total-money").textContent =
-        orders
-            .filter(o => o.status !== "Отменён")
-            .reduce((sum, o) => sum + (Number(o.price) || 0), 0);
-}
-
-renderOrders();
-</script>
-
-</body>
-</html>
+function orderCard(order,active){
+    return `
+    <article class="order-card ${active?"
