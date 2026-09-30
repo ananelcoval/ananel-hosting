@@ -246,41 +246,59 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 
     <div class="field">
         <label>Магазин</label>
-        <select id="shop" onchange="loadCollections()"></select>
+        <select id="shop" onchange="loadCollections()">
+            <option value="">Выберите магазин</option>
+        </select>
     </div>
 
     <div class="field">
         <label>Сумма</label>
-        <input id="price" type="number" min="0">
+        <input
+            id="price"
+            type="number"
+            min="0"
+            placeholder="Подставится автоматически">
     </div>
 
     <div class="field">
         <label>Заказчик</label>
-        <input id="customer">
+        <input
+            id="customer"
+            type="text"
+            placeholder="Кто оформил заказ">
     </div>
 
     <div class="field">
         <label>Получатель</label>
-        <input id="recipient">
+        <input
+            id="recipient"
+            type="text"
+            placeholder="Кому доставить заказ">
     </div>
 
     <div class="product-fields">
+
         <div class="field">
             <label>Коллекция</label>
-            <select id="collection" onchange="loadModels()"></select>
+            <select id="collection" onchange="loadModels()">
+                <option value="">Выберите коллекцию</option>
+            </select>
         </div>
 
         <div class="field">
             <label>Модель</label>
-            <select id="model" onchange="fillPrice()"></select>
+            <select id="model" onchange="fillPrice()">
+                <option value="">Выберите модель</option>
+            </select>
         </div>
+
     </div>
 
     <div class="field">
         <label>Куда доставить</label>
         <select id="delivery">
-            <option>Хогсмид</option>
-            <option>ГФ</option>
+            <option value="Хогсмид">Хогсмид</option>
+            <option value="ГФ">ГФ</option>
         </select>
     </div>
 
@@ -291,19 +309,30 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 
     <div class="field full">
         <label>Записка получателю</label>
-        <textarea id="gift-note"></textarea>
+        <textarea
+            id="gift-note"
+            placeholder="Текст записки. Если записки нет — оставить пустым"></textarea>
     </div>
 
     <div class="field full">
         <label>Мои пометки</label>
-        <textarea id="private-notes"></textarea>
+        <textarea
+            id="private-notes"
+            placeholder="Внутренние заметки: что учесть, что проверить, особенности заказа"></textarea>
     </div>
 
 </div>
 
 <div class="form-actions">
-    <button class="save" onclick="saveOrder()">Сохранить заказ</button>
-    <button class="cancel" onclick="toggleForm(false)">Отмена</button>
+
+    <button class="save" onclick="saveOrder()">
+        Сохранить заказ
+    </button>
+
+    <button class="cancel" onclick="toggleForm(false)">
+        Отмена
+    </button>
+
 </div>
 </div>
 
