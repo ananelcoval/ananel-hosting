@@ -420,8 +420,6 @@ const baseEvents=(window.CALENDAR_DATA?.hogwarts||[]).map(e=>({
 /* EVENTS */
 
 function allEvents(){
-    return [...baseEvents,...customEvents];
-}
 
 function saveLocal(){
     localStorage.setItem("ananelCalendar",JSON.stringify(customEvents));
@@ -530,7 +528,6 @@ function renderOverview(){
         .sort((a,b)=>a.start.localeCompare(b.start));
 
     $("overview-grid").innerHTML=events.length
-$("overview-grid").innerHTML=events.length
     ?events.map(e=>`
         <div class="overview-card" onclick="openEvent('${e.id}')">
             <h3>${e.name}</h3>
@@ -870,19 +867,22 @@ function categoryName(category){
    УБИРАЕМ ДУБЛЬ БАЗОВОГО
    СОБЫТИЯ ПРИ ЛОКАЛЬНОЙ ПРАВКЕ
 ========================= */
+function allEvents(){
+    const overrides=new Set(
+        customEvents
+            .filter(e=>e.override)
+            .map(e=>e.id)
+    );
 
-    const base=
-        baseEvents.filter(
-            e=>!overrides.has(e.id)
-        );
+    const base=baseEvents.filter(
+        e=>!overrides.has(e.id)
+    );
 
     return [
         ...base,
         ...customEvents
     ];
 }
-
-
 /* =========================
    START
 ========================= */
