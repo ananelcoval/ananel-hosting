@@ -1,4 +1,4 @@
-window.STORES = {
+const STORES = {
     sole: {
         name: "SÓLE",
 
