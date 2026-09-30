@@ -502,3 +502,387 @@ function loadModels(){
 }
 
 function fillPrice(){
+    const model=selectedModel();
+    $("price").value=model?.price ?? "";
+}
+
+/* FORM */
+
+function today(){
+    return new Date().toISOString().split("T")[0];
+}
+
+$("date").value=today();
+initCatalog();
+
+function toggleForm(force){
+    const form=$("form-panel");
+
+    if(force===false){
+        form.classList.remove("open");
+        return;
+    }
+
+    form.classList.toggle("open");
+}
+
+function clearForm(){
+    ["price","customer","recipient","gift-note","private-notes"]
+        .forEach(id=>$(id).value="");
+
+    $("date").value=today();
+    $("shop").selectedIndex=0;
+    loadCollections();
+}
+
+/* SAVE ORDER */
+
+function saveOrder(){
+    const storeKey=$("shop").value;
+    const store=STORES[storeKey];
+    const collection=selectedCollection();
+    const model=selectedModel();
+
+    if(!$("customer").value.trim()){
+        alert("Укажи заказчика.");
+        return;
+    }
+
+    if(!collection||!model){
+        alert("Выбери коллекцию и модель.");
+        return;
+    }
+
+    orders.unshift({
+        id:Date.now(),
+        storeKey,
+        shop:store.name,
+        customer:$("customer").value.trim(),
+        recipient:$("recipient").value.trim(),
+        price:Number($("price").value)||0,
+        delivery:$("delivery").value,
+        date:$("date").value,
+        collectionId:collection.id,
+        collection:collection.name,
+        collectionFolder:collection.folder,
+        modelFile:model.file,
+        model:model.name,
+        giftNote:$("gift-note").value.trim(),
+        privateNotes:$("private-notes").value.trim(),
+        status:"Новый"
+    });
+
+    saveOrders();
+    clearForm();
+    toggleForm(false);
+    renderOrders();
+}
+
+/* STORAGE */
+
+function saveOrders(){
+    localStorage.setItem("ananelOrders",JSON.stringify(orders));
+}
+
+function changeStatus(id,status){
+    const order=orders.find(o=>o.id===id);
+    if(!order)return;
+
+    order.status=status;
+    saveOrders();
+    renderOrders();
+}
+
+function deleteOrder(id){
+    if(!confirm("Удалить этот заказ?"))return;
+
+    orders=orders.filter(o=>o.id!==id);
+    saveOrders();
+    renderOrders();
+}
+
+/* BBCODE BUILDER */
+
+function buildOrder(id){
+    const order=orders.find(o=>o.id===id);
+    if(!order)return;
+
+    if(order.storeKey!=="sole"){
+        alert("Для EXTRA шаблон доставки пока не настроен.");
+        return;
+    }
+
+    builderOrder=order;
+
+    $("builder-sub").textContent=
+        `${order.collection} · ${order.model}`;
+
+    $("builder-note").innerHTML=`
+        <strong>Записка для карточки</strong>
+        ${order.giftNote||"Без записки"}
+    `;
+
+    $("sender-id").value="";
+    $("recipient-id").value="";
+    $("attachment-number").value=0;
+    $("attachment-file").value="";
+    $("bbcode").value="";
+
+    $("builder").classList.add("open");
+}
+
+function closeBuilder(){
+    $("builder").classList.remove("open");
+    builderOrder=null;
+}
+
+function getBuilderData(){
+    if(!builderOrder)return null;
+
+    const store=STORES[builderOrder.storeKey];
+
+    const collection=store?.collections.find(
+        c=>c.id===builderOrder.collectionId
+    );
+
+    const model=collection?.models.find(
+        m=>m.file===builderOrder.modelFile
+    );
+
+    if(!collection||!model)return null;
+
+    return {order:builderOrder,collection,model};
+}
+
+/* ГЕНЕРАЦИЯ BBCODE */
+
+function generateBBCode(){
+    const data=getBuilderData();
+    if(!data)return;
+
+    const {order,collection,model}=data;
+
+    const senderId=$("sender-id").value.trim();
+    const recipientId=$("recipient-id").value.trim();
+    const attachmentNumber=$("attachment-number").value.trim()||"0";
+    const attachmentFile=$("attachment-file").value.trim();
+
+    if(!senderId||!recipientId){
+        alert("Укажи ID отправителя и получателя.");
+        return;
+    }
+
+    if(!attachmentFile){
+        alert("Укажи имя файла карточки.");
+        return;
+    }
+
+    const modelUrl=
+        `${HOST}/sole/products/${collection.folder}/models/${model.file}`;
+
+    const bagFile=
+        collection.delivery?.bag||"base-bag.png";
+
+    const bagUrl=
+        `${HOST}/sole/products/${collection.folder}/decor/${bagFile}`;
+
+    const attachment=
+        `[attachment=${attachmentNumber}]${attachmentFile}[/attachment]`;
+
+    const code=`[center][width=900][table][tr][td colspan=3][center][img]${SOLE_HEADER}[/img][/center][/tr]
+[tr][td][b][left]От: [/b][mention=${senderId}]${order.customer}[/mention]
+[b]Для:[/b] [mention=${recipientId}]${order.recipient}[/mention][/left]
+[td]
+[center][size=110]Коллекция[/size]
+[size=150][b]${order.collection}[/b][/size][/center]
+[td v=middle h=right]Ателье открыто
+для [b][url=${ORDER_URL}]новых заказов[/url]![/b][tr]
+
+[tr][td colspan=3]
+[center][width=400][img]${bagUrl}[/img][/width]
+
+[more=Открыть пакет]
+
+[center][width=800][table][tr][td colspan=2][size=210][b]${model.name}[/b][/size][/tr]
+[tr][td colspan=2]
+[size=120][color=#625c54]• ${model.type} •[/color][/size][/tr]
+[tr][td]
+[quote][size=100]${model.description}[/size]
+[/quote]
+[td][width=300]${attachment}[/width]
+[/tr]
+[tr][td colspan=2]
+[center][width=400][img]${modelUrl}[/img][/width]
+[/center][/td][/tr][/table][/center]
+[/more]
+[/center][/tr]
+[/table][/width][/center]`;
+
+    $("bbcode").value=code;
+}
+
+/* COPY */
+
+function copyBBCode(){
+    if(!$("bbcode").value){
+        generateBBCode();
+    }
+
+    const code=$("bbcode").value;
+    if(!code)return;
+
+    navigator.clipboard.writeText(code)
+        .then(showToast)
+        .catch(()=>alert("Не удалось скопировать BBCode."));
+}
+
+function showToast(){
+    const toast=$("toast");
+
+    toast.classList.add("show");
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer=setTimeout(
+        ()=>toast.classList.remove("show"),
+        1500
+    );
+}
+
+/* ЗАКРЫТИЕ MODAL ПО ФОНУ */
+
+$("builder").addEventListener("click",event=>{
+    if(event.target===$("builder"))closeBuilder();
+});
+
+/* ORDER CARD */
+
+function orderCard(order,active){
+    return `
+        <article class="order-card ${active?"active":""}">
+
+            <div class="order-head">
+                <span class="shop">${order.shop}</span>
+                <span class="price">${order.price||0} G</span>
+            </div>
+
+            <div class="collection-name">
+                ${order.collection||""}
+            </div>
+
+            <h3>${order.model||"Без названия"}</h3>
+
+            <div class="recipient">
+                ${order.recipient
+                    ?"Для: "+order.recipient
+                    :"Для себя"}
+            </div>
+
+            ${order.giftNote?`
+                <div class="note">
+                    «${order.giftNote}»
+                </div>
+            `:""}
+
+            ${order.privateNotes?`
+                <div class="note">
+                    <strong>Пометка:</strong>
+                    ${order.privateNotes}
+                </div>
+            `:""}
+
+            <div class="meta">
+                <span>${order.customer}</span>
+                <span>${order.delivery}</span>
+                <span>${formatDate(order.date)}</span>
+            </div>
+
+            <div class="order-actions">
+
+                ${active?`
+                    <button
+                        class="build-order"
+                        onclick="buildOrder(${order.id})">
+                        Собрать заказ
+                    </button>
+                `:""}
+
+                <select onchange="changeStatus(${order.id},this.value)">
+                    ${statuses.map(status=>`
+                        <option ${status===order.status?"selected":""}>
+                            ${status}
+                        </option>
+                    `).join("")}
+                </select>
+
+                <button
+                    class="delete"
+                    onclick="deleteOrder(${order.id})">
+                    Удалить
+                </button>
+
+            </div>
+
+        </article>
+    `;
+}
+
+/* RENDER */
+
+function renderOrders(){
+    const newest=(a,b)=>
+        new Date(b.date||0)-new Date(a.date||0)||b.id-a.id;
+
+    const active=orders
+        .filter(o=>o.status==="Новый")
+        .sort(newest);
+
+    const archive=orders
+        .filter(o=>o.status==="Доставлен"||o.status==="Отменён")
+        .sort(newest);
+
+    $("orders").innerHTML=active.length
+        ?active.map(o=>orderCard(o,true)).join("")
+        :'<div class="empty">Активных заказов нет.</div>';
+
+    if(archive.length){
+        $("archive-section").style.display="block";
+        $("archive-count").textContent=archive.length;
+        $("archive-orders").innerHTML=
+            archive.map(o=>orderCard(o,false)).join("");
+    }else{
+        $("archive-section").style.display="none";
+    }
+
+    updateStats();
+}
+
+function formatDate(date){
+    if(!date)return"";
+
+    return new Date(date+"T00:00:00")
+        .toLocaleDateString("ru-RU");
+}
+
+function updateStats(){
+    $("new-count").textContent=
+        orders.filter(o=>o.status==="Новый").length;
+
+    $("delivered-count").textContent=
+        orders.filter(o=>o.status==="Доставлен").length;
+
+    $("cancelled-count").textContent=
+        orders.filter(o=>o.status==="Отменён").length;
+
+    $("total-money").textContent=
+        orders
+            .filter(o=>o.status!=="Отменён")
+            .reduce((sum,o)=>sum+(Number(o.price)||0),0);
+}
+
+/* START */
+
+renderOrders();
+
+</script>
+</body>
+</html>
