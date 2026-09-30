@@ -19,11 +19,13 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Montserrat',sa
 .page{max-width:1400px;margin:auto;padding:24px}
 button{font-family:inherit;cursor:pointer}
 
-/* HEADER */
+/* ОСНОВА */
+
+.header,.form-panel,.stat,.order-card,.modal-box{background:#fff;border:1px solid var(--line)}
 
 .header{
-    padding:22px 30px;background:#fff;border:1px solid var(--line);
-    border-radius:18px;display:flex;justify-content:space-between;align-items:center
+    padding:22px 30px;border-radius:18px;
+    display:flex;justify-content:space-between;align-items:center
 }
 .logo{margin:0;color:var(--green);font-size:30px}
 .back{color:#999;font-size:12px;font-weight:600;text-decoration:none}
@@ -42,16 +44,13 @@ button{font-family:inherit;cursor:pointer}
 }
 .add-button:hover{background:var(--pink)}
 
-/* FORM */
+/* ФОРМА */
 
-.form-panel{
-    display:none;margin-bottom:30px;padding:28px;background:#fff;
-    border:1px solid var(--line);border-radius:18px
-}
+.form-panel{display:none;margin-bottom:30px;padding:28px;border-radius:18px}
 .form-panel.open{display:block}
-.form-panel h3{margin:0 0 24px;font-size:21px}
+.form-panel h3{margin:0 0 24px}
 
-.form-grid,.product-fields{
+.form-grid,.product-fields,.builder-grid{
     display:grid;grid-template-columns:repeat(2,1fr);gap:18px
 }
 .product-fields{
@@ -59,13 +58,12 @@ button{font-family:inherit;cursor:pointer}
 }
 
 .field{display:flex;flex-direction:column;gap:7px}
-.field.full{grid-column:1/-1}
+.full{grid-column:1/-1}
 
 label{
     color:#777;font-size:11px;font-weight:600;
     letter-spacing:1px;text-transform:uppercase
 }
-
 input,select,textarea{
     width:100%;padding:12px 13px;border:1px solid #d8d4d7;
     border-radius:9px;background:#fff;font:inherit;font-size:14px
@@ -74,47 +72,43 @@ textarea{min-height:80px;resize:vertical}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 
 .form-actions{margin-top:22px;display:flex;gap:10px}
-.save-button,.cancel-button{
+.save,.cancel,.generate,.copy{
     padding:11px 17px;border-radius:9px;font-weight:600
 }
-.save-button{border:0;background:var(--pink);color:#fff}
-.cancel-button{border:1px solid var(--line);background:#fff;color:#666}
+.save,.copy{border:0;background:var(--pink);color:#fff}
+.cancel{border:1px solid var(--line);background:#fff;color:#666}
+.generate{border:1px solid var(--pink);background:#fff;color:var(--pink)}
 
-/* STATS */
+/* СТАТИСТИКА */
 
 .stats{
     margin-bottom:32px;display:grid;
     grid-template-columns:repeat(4,1fr);gap:14px
 }
-.stat{
-    padding:18px;background:#fff;border:1px solid var(--line);border-radius:14px
-}
+.stat{padding:18px;border-radius:14px;text-align:left}
 .stat-number{color:var(--green);font-size:27px;font-weight:700}
 .stat-label{margin-top:4px;color:var(--muted);font-size:11px}
 
-/* ORDERS */
+.stats-button{font-family:inherit;transition:.18s}
+.stats-button:hover{border-color:var(--pink);transform:translateY(-2px)}
+.stats-button .stat-number{color:var(--pink)}
 
-.orders{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:16px
-}
-.order-card{
-    position:relative;padding:21px;background:#fff;
-    border:1px solid var(--line);border-radius:16px
-}
+/* ЗАКАЗЫ */
+
+.orders{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.order-card{position:relative;padding:21px;border-radius:16px}
+
 .order-card.active{
     border-color:rgba(212,0,126,.28);
     box-shadow:0 5px 22px rgba(212,0,126,.05)
 }
 .order-card.active::before{
     content:"";position:absolute;top:-1px;left:22px;
-    width:38px;height:3px;background:var(--pink);
-    border-radius:0 0 5px 5px
+    width:38px;height:3px;background:var(--pink);border-radius:0 0 5px 5px
 }
 
-.order-head{display:flex;justify-content:space-between;align-items:center}
-.shop{
-    color:var(--pink);font-size:10px;font-weight:700;letter-spacing:1px
-}
+.order-head{display:flex;justify-content:space-between}
+.shop{color:var(--pink);font-size:10px;font-weight:700;letter-spacing:1px}
 .price{color:var(--green);font-weight:700}
 
 .collection-name{
@@ -128,7 +122,6 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
     margin-top:14px;padding:11px 12px;background:var(--soft);
     border-radius:9px;color:#666;font-size:12px;line-height:1.5
 }
-
 .meta{
     margin-top:17px;display:flex;justify-content:space-between;
     gap:10px;color:#999;font-size:11px
@@ -138,22 +131,19 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
     margin-top:17px;padding-top:14px;border-top:1px solid #eee;
     display:flex;align-items:center;gap:8px
 }
-.order-actions select{
-    width:auto;margin-left:auto;padding:7px 8px;font-size:11px
-}
+.order-actions select{width:auto;margin-left:auto;padding:7px 8px;font-size:11px}
 
-.build-order{
-    padding:8px 11px;border:1px solid var(--pink);border-radius:8px;
-    background:#fff;color:var(--pink);font-size:11px;font-weight:600
+.build{
+    padding:8px 11px;border:1px solid var(--pink);
+    border-radius:8px;background:#fff;color:var(--pink);
+    font-size:11px;font-weight:600
 }
-.build-order:hover{background:var(--pink);color:#fff}
+.build:hover{background:var(--pink);color:#fff}
 
-.delete{
-    border:0;background:none;color:#aaa;font-size:11px
-}
+.delete{border:0;background:none;color:#aaa;font-size:11px}
 .delete:hover{color:var(--pink)}
 
-/* ARCHIVE */
+/* АРХИВ */
 
 .archive{margin-top:75px}
 .archive-heading{
@@ -165,14 +155,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 }
 .archive-line{height:1px;flex:1;background:var(--line)}
 .archive-count{color:#aaa;font-size:11px}
-.archive .order-card{opacity:.68;transition:.2s}
+.archive .order-card{opacity:.68}
 .archive .order-card:hover{opacity:1}
+.empty{grid-column:1/-1;padding:60px;text-align:center;color:#aaa}
 
-.empty{
-    grid-column:1/-1;padding:60px 20px;color:#aaa;text-align:center
-}
-
-/* BBCODE MODAL */
+/* BUILDER */
 
 .modal{
     display:none;position:fixed;inset:0;z-index:1000;
@@ -183,25 +170,16 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 
 .modal-box{
     width:min(900px,100%);max-height:90vh;overflow:auto;
-    background:#fff;border-radius:20px;padding:30px;
+    padding:30px;border-radius:20px;
     box-shadow:0 25px 80px rgba(0,0,0,.18)
 }
-
 .modal-head{
-    display:flex;justify-content:space-between;align-items:flex-start;
-    margin-bottom:25px
+    display:flex;justify-content:space-between;
+    align-items:flex-start;margin-bottom:25px
 }
 .modal-head h2{margin:0;color:var(--green);font-size:25px}
 .modal-sub{margin-top:6px;color:#888;font-size:12px}
-
-.close{
-    border:0;background:none;color:#aaa;font-size:25px;line-height:1
-}
-.close:hover{color:var(--pink)}
-
-.builder-grid{
-    display:grid;grid-template-columns:repeat(2,1fr);gap:16px
-}
+.close{border:0;background:none;color:#aaa;font-size:25px}
 
 .builder-note{
     grid-column:1/-1;padding:15px;background:var(--soft);
@@ -212,29 +190,12 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
     font-size:10px;letter-spacing:1px;text-transform:uppercase
 }
 
-.bb-result{
-    grid-column:1/-1;margin-top:8px
-}
+.bb-result{grid-column:1/-1}
 .bb-result textarea{
-    min-height:260px;
-    font-family:monospace;
-    font-size:12px;
-    line-height:1.5
+    min-height:300px;font-family:monospace;font-size:12px;line-height:1.5
 }
-
 .builder-actions{
     grid-column:1/-1;display:flex;justify-content:flex-end;gap:10px
-}
-
-.generate,.copy{
-    padding:11px 16px;border-radius:9px;font-weight:600
-}
-.generate{
-    border:1px solid var(--pink);background:#fff;color:var(--pink)
-}
-.generate:hover{background:#fff6fb}
-.copy{
-    border:0;background:var(--pink);color:#fff
 }
 
 /* TOAST */
@@ -253,9 +214,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 }
 @media(max-width:650px){
     .page{padding:12px}
-    .top{align-items:start;gap:20px}
-    .form-grid,.product-fields,.orders,.builder-grid{grid-template-columns:1fr}
-    .order-actions{flex-wrap:wrap}
+    .form-grid,.product-fields,.builder-grid,.orders{grid-template-columns:1fr}
     .modal{padding:12px}
 }
 </style>
@@ -278,7 +237,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
     <button class="add-button" onclick="toggleForm()">+ Новый заказ</button>
 </div>
 
-<!-- NEW ORDER -->
+<!-- НОВЫЙ ЗАКАЗ -->
 
 <div id="form-panel" class="form-panel">
 <h3>Новый заказ</h3>
@@ -343,14 +302,15 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 </div>
 
 <div class="form-actions">
-    <button class="save-button" onclick="saveOrder()">Сохранить заказ</button>
-    <button class="cancel-button" onclick="toggleForm(false)">Отмена</button>
+    <button class="save" onclick="saveOrder()">Сохранить заказ</button>
+    <button class="cancel" onclick="toggleForm(false)">Отмена</button>
 </div>
 </div>
 
-<!-- STATS -->
+<!-- СТАТИСТИКА -->
 
 <div class="stats">
+
     <div class="stat">
         <div id="new-count" class="stat-number">0</div>
         <div class="stat-label">Новые</div>
@@ -366,10 +326,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
         <div class="stat-label">Отменено</div>
     </div>
 
-    <div class="stat">
-        <div id="total-money" class="stat-number">0</div>
-        <div class="stat-label">Галлеонов получено</div>
-    </div>
+    <button class="stat stats-button" onclick="openStatistics()">
+        <div class="stat-number">↗</div>
+        <div class="stat-label">Статистика продаж</div>
+    </button>
+
 </div>
 
 <div id="orders" class="orders"></div>
@@ -402,8 +363,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 
         <div id="builder-note" class="builder-note"></div>
 
-        <div class="field">
-            <label>ID отправителя</label>
+        <div id="sender-field" class="field">
+            <label>ID заказчика</label>
             <input id="sender-id" placeholder="2181">
         </div>
 
@@ -412,27 +373,20 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
             <input id="recipient-id" placeholder="3511">
         </div>
 
-        <div class="field">
-            <label>Номер attachment</label>
-            <input id="attachment-number" type="number" value="0" min="0">
-        </div>
-
-        <div class="field">
-            <label>Имя файла карточки</label>
-            <input id="attachment-file" placeholder="card.png">
+        <div class="field full">
+            <label>Карточка</label>
+            <select id="has-card">
+                <option value="yes">С карточкой</option>
+                <option value="no">Без карточки</option>
+            </select>
         </div>
 
         <div class="builder-actions">
-            <button class="generate" onclick="generateBBCode()">
-                Сформировать
-            </button>
-
-            <button class="copy" onclick="copyBBCode()">
-                Скопировать BBCode
-            </button>
+            <button class="generate" onclick="generateBBCode()">Сформировать</button>
+            <button class="copy" onclick="copyBBCode()">Скопировать BBCode</button>
         </div>
 
-        <div class="bb-result field">
+        <div class="field bb-result">
             <label>Готовый BBCode</label>
             <textarea id="bbcode"></textarea>
         </div>
@@ -449,21 +403,22 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
 <script>
 const $=id=>document.getElementById(id);
 const statuses=["Новый","Доставлен","Отменён"];
+
 const HOST="https://ananelcoval.github.io/ananel-hosting";
-const SOLE_HEADER="https://s10.iimage.su/s/07/uMWS4r2xp376YQgg6CQyNc6ytSzzruqy0BIyMWOSh.jpg";
+const HEADER="https://s10.iimage.su/s/07/uMWS4r2xp376YQgg6CQyNc6ytSzzruqy0BIyMWOSh.jpg";
 const ORDER_URL="https://hogsmeade.dhog.org/viewtopic.php?t=743&";
 
 let orders=JSON.parse(localStorage.getItem("ananelOrders"))||[];
 let builderOrder=null;
 
-/* MIGRATION */
+/* СТАРЫЕ СТАТУСЫ */
 
 orders.forEach(o=>{
     if(!statuses.includes(o.status))o.status="Новый";
 });
 saveOrders();
 
-/* CATALOG */
+/* КАТАЛОГ */
 
 function initCatalog(){
     $("shop").innerHTML=Object.entries(STORES)
@@ -475,9 +430,11 @@ function loadCollections(){
     const list=STORES[$("shop").value]?.collections||[];
 
     $("collection").innerHTML=list.length
-        ?list.filter(c=>c.available!==false)
-            .map(c=>`<option value="${c.id}">${c.name}</option>`).join("")
-        :'<option value="">Нет доступных коллекций</option>';
+        ?list.map(c=>`
+            <option value="${c.id}">
+                ${c.name}${c.available===false?" (архив)":""}
+            </option>`).join("")
+        :'<option value="">Нет коллекций</option>';
 
     loadModels();
 }
@@ -502,20 +459,18 @@ function loadModels(){
 }
 
 function fillPrice(){
-    const model=selectedModel();
-    $("price").value=model?.price ?? "";
+    $("price").value=selectedModel()?.price??"";
 }
 
-/* FORM */
+/* ФОРМА */
 
 function today(){
     return new Date().toISOString().split("T")[0];
 }
 
 $("date").value=today();
-initCatalog();
-
-function toggleForm(force){
+initCatalog
+    function toggleForm(force){
     const form=$("form-panel");
 
     if(force===false){
@@ -535,7 +490,7 @@ function clearForm(){
     loadCollections();
 }
 
-/* SAVE ORDER */
+/* СОХРАНЕНИЕ ЗАКАЗА */
 
 function saveOrder(){
     const storeKey=$("shop").value;
@@ -548,6 +503,11 @@ function saveOrder(){
         return;
     }
 
+    if(!$("recipient").value.trim()){
+        alert("Укажи получателя.");
+        return;
+    }
+
     if(!collection||!model){
         alert("Выбери коллекцию и модель.");
         return;
@@ -557,18 +517,24 @@ function saveOrder(){
         id:Date.now(),
         storeKey,
         shop:store.name,
+
         customer:$("customer").value.trim(),
         recipient:$("recipient").value.trim(),
+
         price:Number($("price").value)||0,
         delivery:$("delivery").value,
         date:$("date").value,
+
         collectionId:collection.id,
         collection:collection.name,
         collectionFolder:collection.folder,
+
         modelFile:model.file,
         model:model.name,
+
         giftNote:$("gift-note").value.trim(),
         privateNotes:$("private-notes").value.trim(),
+
         status:"Новый"
     });
 
@@ -581,7 +547,10 @@ function saveOrder(){
 /* STORAGE */
 
 function saveOrders(){
-    localStorage.setItem("ananelOrders",JSON.stringify(orders));
+    localStorage.setItem(
+        "ananelOrders",
+        JSON.stringify(orders)
+    );
 }
 
 function changeStatus(id,status){
@@ -601,7 +570,20 @@ function deleteOrder(id){
     renderOrders();
 }
 
-/* BBCODE BUILDER */
+/* СТАТИСТИКА — ПОКА ЗАГЛУШКА */
+
+function openStatistics(){
+    alert("Статистику продаж сделаем следующим разделом.");
+}
+
+/* =========================
+   BBCODE BUILDER
+========================= */
+
+function isSelfOrder(order){
+    return order.customer.trim().toLowerCase()===
+           order.recipient.trim().toLowerCase();
+}
 
 function buildOrder(id){
     const order=orders.find(o=>o.id===id);
@@ -614,6 +596,8 @@ function buildOrder(id){
 
     builderOrder=order;
 
+    const self=isSelfOrder(order);
+
     $("builder-sub").textContent=
         `${order.collection} · ${order.model}`;
 
@@ -622,10 +606,12 @@ function buildOrder(id){
         ${order.giftNote||"Без записки"}
     `;
 
+    /* Если заказ себе — ID отправителя не нужен */
+    $("sender-field").style.display=self?"none":"flex";
+
     $("sender-id").value="";
     $("recipient-id").value="";
-    $("attachment-number").value=0;
-    $("attachment-file").value="";
+    $("has-card").value=order.giftNote?"yes":"no";
     $("bbcode").value="";
 
     $("builder").classList.add("open");
@@ -651,29 +637,37 @@ function getBuilderData(){
 
     if(!collection||!model)return null;
 
-    return {order:builderOrder,collection,model};
+    return {
+        order:builderOrder,
+        collection,
+        model
+    };
 }
 
-/* ГЕНЕРАЦИЯ BBCODE */
+/* СОЗДАНИЕ BBCODE */
 
 function generateBBCode(){
     const data=getBuilderData();
-    if(!data)return;
 
-    const {order,collection,model}=data;
-
-    const senderId=$("sender-id").value.trim();
-    const recipientId=$("recipient-id").value.trim();
-    const attachmentNumber=$("attachment-number").value.trim()||"0";
-    const attachmentFile=$("attachment-file").value.trim();
-
-    if(!senderId||!recipientId){
-        alert("Укажи ID отправителя и получателя.");
+    if(!data){
+        alert("Не удалось найти данные модели.");
         return;
     }
 
-    if(!attachmentFile){
-        alert("Укажи имя файла карточки.");
+    const {order,collection,model}=data;
+
+    const self=isSelfOrder(order);
+    const senderId=$("sender-id").value.trim();
+    const recipientId=$("recipient-id").value.trim();
+    const hasCard=$("has-card").value==="yes";
+
+    if(!recipientId){
+        alert("Укажи ID получателя.");
+        return;
+    }
+
+    if(!self&&!senderId){
+        alert("Укажи ID заказчика.");
         return;
     }
 
@@ -681,17 +675,39 @@ function generateBBCode(){
         `${HOST}/sole/products/${collection.folder}/models/${model.file}`;
 
     const bagFile=
-        collection.delivery?.bag||"base-bag.png";
+        collection.delivery?.bag || "base-bag.png";
 
     const bagUrl=
         `${HOST}/sole/products/${collection.folder}/decor/${bagFile}`;
 
-    const attachment=
-        `[attachment=${attachmentNumber}]${attachmentFile}[/attachment]`;
+    /* КТО КОМУ */
 
-    const code=`[center][width=900][table][tr][td colspan=3][center][img]${SOLE_HEADER}[/img][/center][/tr]
-[tr][td][b][left]От: [/b][mention=${senderId}]${order.customer}[/mention]
-[b]Для:[/b] [mention=${recipientId}]${order.recipient}[/mention][/left]
+    const people=self
+        ?`[b][left]Для:[/b] [mention=${recipientId}]${order.recipient}[/mention][/left]`
+        :`[b][left]От: [/b][mention=${senderId}]${order.customer}[/mention]
+[b]Для:[/b] [mention=${recipientId}]${order.recipient}[/mention][/left]`;
+
+    /*
+       С КАРТОЧКОЙ:
+       оставляем заметное место, куда на форуме
+       вставляется готовый attachment.
+    */
+
+    const productRow=hasCard
+        ?`[tr][td]
+[quote][size=100]${model.description}
+[/size]
+[/quote]
+[td][width=300]<<< ВСТАВИТЬ КАРТОЧКУ >>>[/width]
+[/tr]`
+        :`[tr][td colspan=2]
+[quote][size=100]${model.description}
+[/size]
+[/quote]
+[/tr]`;
+
+    const code=`[center][width=900][table][tr][td colspan=3][center][img]${HEADER}[/img][/center][/tr]
+[tr][td]${people}
 [td]
 [center][size=110]Коллекция[/size]
 [size=150][b]${order.collection}[/b][/size][/center]
@@ -703,17 +719,16 @@ function generateBBCode(){
 
 [more=Открыть пакет]
 
-[center][width=800][table][tr][td colspan=2][size=210][b]${model.name}[/b][/size][/tr]
+[center][width=800][table]
+[tr][td colspan=2][size=210][b]${model.name}[/b][/size][/tr]
 [tr][td colspan=2]
 [size=120][color=#625c54]• ${model.type} •[/color][/size][/tr]
-[tr][td]
-[quote][size=100]${model.description}[/size]
-[/quote]
-[td][width=300]${attachment}[/width]
-[/tr]
+${productRow}
 [tr][td colspan=2]
 [center][width=400][img]${modelUrl}[/img][/width]
-[/center][/td][/tr][/table][/center]
+[/center][/td][/tr]
+[/table][/center]
+
 [/more]
 [/center][/tr]
 [/table][/width][/center]`;
@@ -721,7 +736,7 @@ function generateBBCode(){
     $("bbcode").value=code;
 }
 
-/* COPY */
+/* КОПИРОВАНИЕ */
 
 function copyBBCode(){
     if(!$("bbcode").value){
@@ -733,28 +748,34 @@ function copyBBCode(){
 
     navigator.clipboard.writeText(code)
         .then(showToast)
-        .catch(()=>alert("Не удалось скопировать BBCode."));
+        .catch(()=>{
+            alert("Не удалось скопировать BBCode.");
+        });
 }
 
 function showToast(){
     const toast=$("toast");
 
     toast.classList.add("show");
+
     clearTimeout(window.toastTimer);
 
-    window.toastTimer=setTimeout(
-        ()=>toast.classList.remove("show"),
-        1500
-    );
+    window.toastTimer=setTimeout(()=>{
+        toast.classList.remove("show");
+    },1500);
 }
 
-/* ЗАКРЫТИЕ MODAL ПО ФОНУ */
+/* КЛИК ПО ФОНУ ЗАКРЫВАЕТ BUILDER */
 
 $("builder").addEventListener("click",event=>{
-    if(event.target===$("builder"))closeBuilder();
+    if(event.target===$("builder")){
+        closeBuilder();
+    }
 });
 
-/* ORDER CARD */
+/* =========================
+   КАРТОЧКА ЗАКАЗА
+========================= */
 
 function orderCard(order,active){
     return `
@@ -800,7 +821,7 @@ function orderCard(order,active){
 
                 ${active?`
                     <button
-                        class="build-order"
+                        class="build"
                         onclick="buildOrder(${order.id})">
                         Собрать заказ
                     </button>
@@ -808,7 +829,8 @@ function orderCard(order,active){
 
                 <select onchange="changeStatus(${order.id},this.value)">
                     ${statuses.map(status=>`
-                        <option ${status===order.status?"selected":""}>
+                        <option
+                            ${status===order.status?"selected":""}>
                             ${status}
                         </option>
                     `).join("")}
@@ -826,18 +848,24 @@ function orderCard(order,active){
     `;
 }
 
-/* RENDER */
+/* =========================
+   ВЫВОД
+========================= */
 
 function renderOrders(){
     const newest=(a,b)=>
-        new Date(b.date||0)-new Date(a.date||0)||b.id-a.id;
+        new Date(b.date||0)-new Date(a.date||0)
+        || b.id-a.id;
 
     const active=orders
         .filter(o=>o.status==="Новый")
         .sort(newest);
 
     const archive=orders
-        .filter(o=>o.status==="Доставлен"||o.status==="Отменён")
+        .filter(o=>
+            o.status==="Доставлен" ||
+            o.status==="Отменён"
+        )
         .sort(newest);
 
     $("orders").innerHTML=active.length
@@ -847,8 +875,11 @@ function renderOrders(){
     if(archive.length){
         $("archive-section").style.display="block";
         $("archive-count").textContent=archive.length;
+
         $("archive-orders").innerHTML=
-            archive.map(o=>orderCard(o,false)).join("");
+            archive
+                .map(o=>orderCard(o,false))
+                .join("");
     }else{
         $("archive-section").style.display="none";
     }
@@ -863,6 +894,8 @@ function formatDate(date){
         .toLocaleDateString("ru-RU");
 }
 
+/* СЧЁТЧИКИ */
+
 function updateStats(){
     $("new-count").textContent=
         orders.filter(o=>o.status==="Новый").length;
@@ -872,11 +905,6 @@ function updateStats(){
 
     $("cancelled-count").textContent=
         orders.filter(o=>o.status==="Отменён").length;
-
-    $("total-money").textContent=
-        orders
-            .filter(o=>o.status!=="Отменён")
-            .reduce((sum,o)=>sum+(Number(o.price)||0),0);
 }
 
 /* START */
