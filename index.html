@@ -1,1 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ananel Coval — Workspace</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f7f5f6;
+    color: #171717;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ШАПКА */
+
+.header {
+    padding: 24px 30px;
+    border: 3px solid #D4007E;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+}
+
+.logo {
+    margin: 0;
+    color: #005500;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.header-label {
+    color: #999;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* ОСНОВНОЙ БЛОК */
+
+.hero {
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 90px 0 70px;
+}
+
+.eyebrow {
+    margin-bottom: 15px;
+    color: #D4007E;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.hero h2 {
+    max-width: 750px;
+    margin: 0;
+    color: #005500;
+    font-size: 54px;
+    line-height: 1.08;
+    letter-spacing: -2px;
+}
+
+.description {
+    max-width: 600px;
+    margin: 24px 0 55px;
+    color: #777;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* МОДУЛИ */
+
+.modules {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.module {
+    min-height: 250px;
+    padding: 30px;
+    border: 1px solid #dedade;
+    border-radius: 20px;
+    background: #ffffff;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform .2s ease,
+                border-color .2s ease,
+                box-shadow .2s ease;
+}
+
+.module.active {
+    cursor: pointer;
+}
+
+.module.active:hover {
+    transform: translateY(-4px);
+    border-color: #D4007E;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .07);
+}
+
+.module-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.module-number {
+    color: #bbb;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.arrow {
+    color: #D4007E;
+    font-size: 25px;
+    transition: transform .2s ease;
+}
+
+.module:hover .arrow {
+    transform: translate(3px, -3px);
+}
+
+.module h3 {
+    margin: 0 0 10px;
+    color: #005500;
+    font-size: 27px;
+}
+
+.module p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.module.disabled {
+    opacity: .48;
+}
+
+.soon {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    color: #888;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ПОДВАЛ */
+
+.footer {
+    padding: 0 5px;
+    display: flex;
+    justify-content: space-between;
+    color: #aaa;
+    font-size: 11px;
+}
+
+/* МОБИЛЬНАЯ ВЕРСИЯ */
+
+@media (max-width: 750px) {
+    .page {
+        padding: 12px;
+    }
+
+    .header {
+        padding: 20px;
+    }
+
+    .logo {
+        font-size: 25px;
+    }
+
+    .header-label {
+        display: none;
+    }
+
+    .hero {
+        padding: 60px 5px 40px;
+    }
+
+    .hero h2 {
+        font-size: 38px;
+        letter-spacing: -1px;
+    }
+
+    .modules {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        margin-top: 30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <header class="header">
+        <h1 class="logo">Ananel Coval</h1>
+        <div class="header-label">Personal Workspace</div>
+    </header>
+
+    <main class="hero">
+
+        <div class="eyebrow">Workspace</div>
+
+        <h2>
+            Всё нужное.<br>
+            В одном месте.
+        </h2>
+
+        <p class="description">
+            Рабочее пространство для управления проектами,
+            изображениями и магазинами.
+        </p>
+
+        <div class="modules">
+
+            <!-- HOSTING -->
+
+            <a class="module active" href="hosting/">
+
+                <div class="module-top">
+                    <span class="module-number">01</span>
+                    <span class="arrow">↗</span>
+                </div>
+
+                <div>
+                    <h3>Hosting</h3>
+
+                    <p>
+                        Галерея изображений SÓLE и EXTRA.
+                        Просмотр, навигация по коллекциям
+                        и копирование прямых ссылок.
+                    </p>
+                </div>
+
+            </a>
+
+
+            <!-- MANAGER -->
+
+            <div class="module disabled">
+
+                <div class="module-top">
+                    <span class="module-number">02</span>
+                    <span class="soon">Скоро</span>
+                </div>
+
+                <div>
+                    <h3>Manager</h3>
+
+                    <p>
+                        Заказы, цены, коллекции,
+                        BBCode и управление магазинами.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <span>ANANEL COVAL</span>
+        <span>2026</span>
+    </footer>
+
+</div>
+
+</body>
+</html>
