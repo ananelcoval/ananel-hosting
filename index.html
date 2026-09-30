@@ -104,7 +104,26 @@
         ">
     </div>
 
+    <!-- ДЕКОР -->
+    <h3 style="
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 500;
+            margin: 50px 0 25px;
+        ">
+    Декор
+</h3>
 
+<div
+    id="architecture-decor"
+    style="
+        display: grid;
+        grid-template-columns: repeat(3, 230px);
+        gap: 30px;
+        justify-content: center;
+    ">
+</div>
     <script>
 
         // ДАННЫЕ КОЛЛЕКЦИИ
@@ -152,7 +171,20 @@
             }
         ];
 
-
+const architectureDecor = [
+    {
+        file: "base-bag.png",
+        name: "Пакет"
+    },
+    {
+        file: "base-card.png",
+        name: "Карточка"
+    },
+    {
+        file: "base-preview.jpeg",
+        name: "Превью"
+    }
+];
         // НАХОДИМ ГАЛЕРЕЮ
 
         const gallery = document.getElementById("architecture-gallery");
@@ -197,7 +229,44 @@
             gallery.appendChild(card);
         });
 
+const decorGallery = document.getElementById("architecture-decor");
 
+architectureDecor.forEach(item => {
+
+    const card = document.createElement("div");
+
+    card.style.width = "300px";
+    card.style.textAlign = "center";
+
+    card.innerHTML = `
+        <div style="
+            background-color: white;
+            padding: 15px;
+        ">
+
+            <img
+                src="sole/products/2026-06-architecture/decor/${item.file}"
+                alt="${item.name}"
+                style="
+                    width: 100%;
+                    cursor: pointer;
+                "
+                title="Нажмите, чтобы скопировать ссылку"
+                onclick="copyImageLink(this)"
+            >
+
+        </div>
+
+        <p style="
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        ">
+            ${item.name}
+        </p>
+    `;
+
+    decorGallery.appendChild(card);
+});
         // КОПИРОВАНИЕ ССЫЛКИ
 
         function copyImageLink(image) {
