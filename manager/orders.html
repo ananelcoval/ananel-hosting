@@ -1,1 +1,751 @@
+<!DOCTYPE html>
+<html lang="ru">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orders — Ananel Manager</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: #f7f5f6;
+    color: #171717;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.page {
+    max-width: 1400px;
+    margin: auto;
+    padding: 24px;
+}
+
+/* HEADER */
+
+.header {
+    background: white;
+    border: 3px solid #D4007E;
+    border-radius: 18px;
+    padding: 22px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin: 0;
+    color: #005500;
+    font-size: 30px;
+}
+
+.back {
+    color: #777;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.back:hover { color: #D4007E; }
+
+/* TITLE */
+
+.top {
+    margin: 55px 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.top h2 {
+    margin: 0;
+    color: #005500;
+    font-size: 38px;
+}
+
+.top p {
+    margin: 8px 0 0;
+    color: #888;
+    font-size: 14px;
+}
+
+.add-button {
+    border: 0;
+    border-radius: 12px;
+    padding: 14px 20px;
+    background: #005500;
+    color: white;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.add-button:hover { background: #D4007E; }
+
+/* FORM */
+
+.form-panel {
+    display: none;
+    margin-bottom: 35px;
+    padding: 30px;
+    background: white;
+    border: 1px solid #ddd8dc;
+    border-radius: 18px;
+}
+
+.form-panel.open { display: block; }
+
+.form-panel h3 {
+    margin: 0 0 25px;
+    font-size: 22px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field.full { grid-column: 1 / -1; }
+
+label {
+    color: #666;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d8d4d7;
+    border-radius: 10px;
+    background: #fff;
+    font: inherit;
+    font-size: 14px;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #D4007E;
+}
+
+.form-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.save-button,
+.cancel-button {
+    padding: 12px 18px;
+    border-radius: 10px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.save-button {
+    border: 0;
+    background: #D4007E;
+    color: white;
+}
+
+.cancel-button {
+    border: 1px solid #ddd;
+    background: white;
+    color: #555;
+}
+
+/* STATS */
+
+.stats {
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.stat {
+    padding: 20px;
+    background: white;
+    border: 1px solid #e2dee1;
+    border-radius: 14px;
+}
+
+.stat-number {
+    color: #005500;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.stat-label {
+    margin-top: 5px;
+    color: #888;
+    font-size: 12px;
+}
+
+/* ORDERS */
+
+.orders {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.order-card {
+    padding: 22px;
+    background: white;
+    border: 1px solid #e0dcdf;
+    border-radius: 16px;
+}
+
+.order-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.shop {
+    color: #D4007E;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.price {
+    color: #005500;
+    font-weight: 700;
+}
+
+.order-card h3 {
+    margin: 13px 0 5px;
+    font-size: 18px;
+}
+
+.recipient {
+    color: #777;
+    font-size: 13px;
+}
+
+.meta {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    color: #999;
+    font-size: 12px;
+}
+
+.status {
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status select {
+    width: auto;
+    padding: 7px 9px;
+    font-size: 12px;
+}
+
+.delete {
+    border: 0;
+    background: none;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.delete:hover { color: #D4007E; }
+
+.empty {
+    grid-column: 1 / -1;
+    padding: 70px 20px;
+    text-align: center;
+    color: #aaa;
+}
+
+@media (max-width: 900px) {
+    .orders { grid-template-columns: repeat(2, 1fr); }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 650px) {
+    .page { padding: 12px; }
+    .top { align-items: start; gap: 20px; }
+    .form-grid,
+    .orders { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<header class="header">
+    <h1 class="logo">Ananel Manager</h1>
+    <a class="back" href="../">← Главная</a>
+</header>
+
+<div class="top">
+    <div>
+        <h2>Заказы</h2>
+        <p>Заказы SÓLE и EXTRA</p>
+    </div>
+
+    <button class="add-button" onclick="toggleForm()">
+        + Новый заказ
+    </button>
+</div>
+
+<!-- ФОРМА -->
+
+<div id="form-panel" class="form-panel">
+
+<h3>Новый заказ</h3>
+
+<div class="form-grid">
+
+    <div class="field">
+        <label>Магазин</label>
+        <select id="shop">
+            <option>SÓLE</option>
+            <option>EXTRA</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Сумма</label>
+        <input id="price" type="number" placeholder="30">
+    </div>
+
+    <div class="field">
+        <label>Заказчик</label>
+        <input id="customer" placeholder="Chris Everington">
+    </div>
+
+    <div class="field">
+        <label>Получатель</label>
+        <input id="recipient" placeholder="Ариадна Фрост">
+    </div>
+
+    <div class="field">
+        <label>Что заказали</label>
+        <input id="product" placeholder="Платформа 9¾">
+    </div>
+
+    <div class="field">
+        <label>Куда доставить</label>
+        <select id="delivery">
+            <option>Хогсмид</option>
+            <option>ГФ</option>
+        </select>
+    </div>
+
+    <div class="field full">
+        <label>Подпись перевода</label>
+        <textarea id="payment-note"></textarea>
+    </div>
+
+    <div class="field full">
+        <label>Записка получателю</label>
+        <textarea id="gift-note"></textarea>
+    </div>
+
+    <div class="field full">
+        <label>Дополнительные пожелания</label>
+        <textarea id="wishes"></textarea>
+    </div>
+
+    <div class="field full">
+        <label>Мои пометки</label>
+        <textarea
+            id="private-notes"
+            placeholder="Внутренние заметки по заказу..."></textarea>
+    </div>
+
+    <div class="field">
+        <label>Дата заказа</label>
+        <input id="date" type="date">
+    </div>
+
+    <div class="field">
+        <label>Ссылка на заказ</label>
+        <input id="order-link" type="url" placeholder="https://...">
+    </div>
+
+</div>
+
+<div class="form-actions">
+    <button class="save-button" onclick="saveOrder()">
+        Сохранить заказ
+    </button>
+
+    <button class="cancel-button" onclick="toggleForm(false)">
+        Отмена
+    </button>
+</div>
+
+</div>
+
+<!-- СТАТИСТИКА -->
+
+<div class="stats">
+    <div class="stat">
+        <div id="new-count" class="stat-number">0</div>
+        <div class="stat-label">Новые</div>
+    </div>
+
+    <div class="stat">
+        <div id="work-count" class="stat-number">0</div>
+        <div class="stat-label">В работе</div>
+    </div>
+
+    <div class="stat">
+        <div id="delivery-count" class="stat-number">0</div>
+        <div class="stat-label">К доставке</div>
+    </div>
+
+    <div class="stat">
+        <div id="total-money" class="stat-number">0</div>
+        <div class="stat-label">Галлеонов в заказах</div>
+    </div>
+</div>
+
+<!-- ЗАКАЗЫ -->
+
+<div id="orders" class="orders"></div>
+
+</div>
+
+
+<script>
+
+let orders =
+    JSON.parse(localStorage.getItem("ananelOrders")) || [];
+
+
+/* ДАТА ПО УМОЛЧАНИЮ */
+
+document.getElementById("date").value =
+    new Date().toISOString().split("T")[0];
+
+
+/* ФОРМА */
+
+function toggleForm(force) {
+    const panel = document.getElementById("form-panel");
+
+    if (force === false) {
+        panel.classList.remove("open");
+        return;
+    }
+
+    panel.classList.toggle("open");
+}
+
+
+/* СОХРАНЕНИЕ */
+
+function saveOrder() {
+
+    const order = {
+        id: Date.now(),
+
+        shop: document.getElementById("shop").value,
+        price: Number(document.getElementById("price").value),
+
+        customer: document.getElementById("customer").value,
+        recipient: document.getElementById("recipient").value,
+        product: document.getElementById("product").value,
+
+        delivery: document.getElementById("delivery").value,
+
+        paymentNote:
+            document.getElementById("payment-note").value,
+
+        giftNote:
+            document.getElementById("gift-note").value,
+
+        wishes:
+            document.getElementById("wishes").value,
+
+        privateNotes:
+            document.getElementById("private-notes").value,
+
+        date:
+            document.getElementById("date").value,
+
+        link:
+            document.getElementById("order-link").value,
+
+        status: "Новый",
+        paid: true
+    };
+
+
+    if (!order.customer || !order.product) {
+        alert("Укажи заказчика и товар.");
+        return;
+    }
+
+
+    orders.unshift(order);
+
+    saveOrders();
+    clearForm();
+    toggleForm(false);
+    renderOrders();
+}
+
+
+/* СОХРАНЕНИЕ В БРАУЗЕР */
+
+function saveOrders() {
+    localStorage.setItem(
+        "ananelOrders",
+        JSON.stringify(orders)
+    );
+}
+
+
+/* ОЧИСТКА */
+
+function clearForm() {
+
+    document.getElementById("price").value = "";
+    document.getElementById("customer").value = "";
+    document.getElementById("recipient").value = "";
+    document.getElementById("product").value = "";
+    document.getElementById("payment-note").value = "";
+    document.getElementById("gift-note").value = "";
+    document.getElementById("wishes").value = "";
+    document.getElementById("private-notes").value = "";
+    document.getElementById("order-link").value = "";
+
+    document.getElementById("date").value =
+        new Date().toISOString().split("T")[0];
+}
+
+
+/* СТАТУС */
+
+function changeStatus(id, status) {
+
+    const order =
+        orders.find(order => order.id === id);
+
+    if (!order) return;
+
+    order.status = status;
+
+    saveOrders();
+    renderOrders();
+}
+
+
+/* УДАЛЕНИЕ */
+
+function deleteOrder(id) {
+
+    if (!confirm("Удалить этот заказ?"))
+        return;
+
+    orders =
+        orders.filter(order => order.id !== id);
+
+    saveOrders();
+    renderOrders();
+}
+
+
+/* КАРТОЧКИ */
+
+function renderOrders() {
+
+    const container =
+        document.getElementById("orders");
+
+    container.innerHTML = "";
+
+
+    if (orders.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                Заказов пока нет.<br>
+                Добавь первый через «Новый заказ».
+            </div>
+        `;
+
+    }
+
+
+    orders.forEach(order => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "order-card";
+
+
+        card.innerHTML = `
+
+            <div class="order-head">
+
+                <span class="shop">
+                    ${order.shop}
+                </span>
+
+                <span class="price">
+                    ${order.price || 0} G
+                </span>
+
+            </div>
+
+
+            <h3>
+                ${order.product}
+            </h3>
+
+
+            <div class="recipient">
+                ${order.recipient
+                    ? "Для: " + order.recipient
+                    : "Для себя"}
+            </div>
+
+
+            <div class="meta">
+
+                <span>
+                    ${order.customer}
+                </span>
+
+                <span>
+                    ${order.delivery}
+                </span>
+
+            </div>
+
+
+            <div class="status">
+
+                <select
+                    onchange="changeStatus(
+                        ${order.id},
+                        this.value
+                    )">
+
+                    ${[
+                        "Новый",
+                        "В работе",
+                        "Готов к доставке",
+                        "Доставлен",
+                        "Завершён",
+                        "Отменён"
+
+                    ].map(status => `
+
+                        <option
+                            ${status === order.status
+                                ? "selected"
+                                : ""}
+                        >
+                            ${status}
+                        </option>
+
+                    `).join("")}
+
+                </select>
+
+
+                <button
+                    class="delete"
+                    onclick="deleteOrder(${order.id})">
+
+                    Удалить
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+
+    updateStats();
+}
+
+
+/* СТАТИСТИКА */
+
+function updateStats() {
+
+    document.getElementById("new-count").textContent =
+        orders.filter(o =>
+            o.status === "Новый"
+        ).length;
+
+
+    document.getElementById("work-count").textContent =
+        orders.filter(o =>
+            o.status === "В работе"
+        ).length;
+
+
+    document.getElementById("delivery-count").textContent =
+        orders.filter(o =>
+            o.status === "Готов к доставке"
+        ).length;
+
+
+    const total =
+        orders
+            .filter(o => o.status !== "Отменён")
+            .reduce(
+                (sum, order) =>
+                    sum + (order.price || 0),
+                0
+            );
+
+
+    document.getElementById("total-money").textContent =
+        total;
+}
+
+
+renderOrders();
+
+</script>
+
+</body>
+</html>
