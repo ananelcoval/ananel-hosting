@@ -16,7 +16,7 @@ const STORES = {
 
                 type: "base",
                 season: "allSeason",
-                dates: ["2026-06-08", null],
+                dates: ["2026-06-09", null],
                 packaging: {
                     bag: "collection",
                     card: "collection"
