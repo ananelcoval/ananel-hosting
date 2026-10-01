@@ -259,7 +259,7 @@ const STORES = {
             {
                 id: "dod-2026",
                 name: "ДОД Слизерин 2026",
-                folder: "2026-06-dod-2026",
+                folder: "2026-08-dod-2026",
                 available: false,
 
                 delivery: {
