@@ -468,7 +468,7 @@ const STORES = {
                 ],
 
                 decor:[
-                    {file:"01-orlenok-bag-base.png",name:"Пакет"},
+                    {file:"orlenok-bag-base.png",name:"Пакет"},
                     {file:"orlenok-preview.png",name:"Превью"}
                 ]
             }
