@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assortment — Ananel Coval</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --green:#005500;
+    --pink:#D4007E;
+    --text:#181818;
+    --muted:#8b878a;
+    --line:#e8e4e7;
+    --soft:#f8f6f7;
+}
+*{box-sizing:border-box}
+body{
+    margin:0;
+    background:#fff;
+    color:var(--text);
+    font-family:'Montserrat',sans-serif;
+}
+button,select,input{font:inherit}
+
+.page{
+    max-width:1450px;
+    margin:auto;
+    padding:24px;
+}
+
+/* HEADER */
+
+.header{
+    padding:22px 28px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.brand{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+}
+.logo{
+    margin:0;
+    color:var(--green);
+    font-size:30px;
+}
+.header-label{
+    color:#aaa;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+.back{
+    color:#999;
+    font-size:12px;
+    font-weight:600;
+    text-decoration:none;
+}
+.back:hover{color:var(--pink)}
+
+/* TOP */
+
+.top{
+    margin:65px 0 35px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:30px;
+}
+.eyebrow{
+    margin-bottom:9px;
+    color:var(--pink);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+}
+h2{
+    margin:0;
+    color:var(--green);
+    font-size:34px;
+}
+.top p{
+    max-width:570px;
+    margin:10px 0 0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* TABS */
+
+.tabs{
+    display:flex;
+    gap:7px;
+    padding:5px;
+    background:var(--soft);
+    border-radius:13px;
+}
+.tab{
+    padding:10px 16px;
+    border:0;
+    border-radius:9px;
+    background:transparent;
+    color:#777;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+}
+.tab.active{
+    background:#fff;
+    color:var(--green);
+    box-shadow:0 2px 12px rgba(0,0,0,.05);
+}
+
+/* PANELS */
+
+.panel{display:none}
+.panel.active{display:block}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:35px;
+}
+.stat{
+    padding:20px;
+    border:1px solid var(--line);
+    border-radius:15px;
+}
+.stat-value{
+    color:var(--green);
+    font-size:28px;
+    font-weight:700;
+}
+.stat-label{
+    margin-top:5px;
+    color:#999;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+/* BLOCKS */
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+.block{
+    padding:24px;
+    border:1px solid var(--line);
+    border-radius:17px;
+}
+.block-title{
+    margin:0 0 20px;
+    font-size:15px;
+    color:#333;
+}
+.rows{display:grid;gap:4px}
+.row{
+    min-height:42px;
+    padding:9px 11px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center;
+    gap:15px;
+    border-radius:9px;
+}
+.row:hover{background:var(--soft)}
+.row-name{
+    font-size:12px;
+    font-weight:600;
+}
+.row-sub{
+    margin-top:3px;
+    color:#aaa;
+    font-size:10px;
+}
+.row-value{
+    min-width:28px;
+    color:var(--green);
+    font-size:13px;
+    font-weight:700;
+    text-align:right;
+}
+
+/* FILTERS */
+
+.filters{
+    margin-bottom:22px;
+    padding:18px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    border:1px solid var(--line);
+    border-radius:16px;
+}
+.field label{
+    display:block;
+    margin-bottom:7px;
+    color:#999;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+.field select,
+.field input{
+    width:100%;
+    height:42px;
+    padding:0 12px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    outline:none;
+    background:#fff;
+    color:#333;
+    font-size:12px;
+}
+.field select:focus,
+.field input:focus{border-color:#bbb}
+
+/* MODEL LIBRARY */
+
+.library{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+.model{
+    padding:17px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    transition:.15s;
+}
+.model:hover{
+    border-color:#ccc;
+    transform:translateY(-1px);
+}
+.model-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+.model-name{
+    font-size:13px;
+    font-weight:700;
+}
+.model-category{
+    margin-top:5px;
+    color:#999;
+    font-size:10px;
+}
+.usage{
+    min-width:35px;
+    height:27px;
+    padding:0 9px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:20px;
+    background:var(--soft);
+    color:#777;
+    font-size:10px;
+    font-weight:700;
+}
+.usage.zero{
+    background:#f3faf3;
+    color:var(--green);
+}
+.tags{
+    margin-top:14px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+}
+.tag{
+    padding:5px 7px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    color:#888;
+    font-size:9px;
+}
+.model-last{
+    margin-top:13px;
+    color:#aaa;
+    font-size:9px;
+}
+
+/* PICKER */
+
+.picker-layout{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:20px;
+}
+.picker-controls{
+    padding:22px;
+    border:1px solid var(--line);
+    border-radius:17px;
+    align-self:start;
+}
+.picker-controls .field{margin-bottom:15px}
+
+.check{
+    margin:17px 0;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#666;
+    font-size:11px;
+}
+.check input{accent-color:var(--pink)}
+
+.primary{
+    width:100%;
+    height:43px;
+    border:0;
+    border-radius:10px;
+    background:var(--green);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+}
+.primary:hover{opacity:.9}
+
+.results{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+.result{
+    padding:20px;
+    border:1px solid var(--line);
+    border-radius:15px;
+}
+.result-head{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+.result-name{
+    font-size:14px;
+    font-weight:700;
+}
+.result-new{
+    color:var(--pink);
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+.result-meta{
+    margin-top:6px;
+    color:#999;
+    font-size:10px;
+}
+.result-tags{
+    margin-top:14px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+}
+.empty{
+    grid-column:1/-1;
+    padding:50px;
+    border:1px dashed var(--line);
+    border-radius:15px;
+    color:#aaa;
+    text-align:center;
+    font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .grid-2{grid-template-columns:1fr}
+    .library{grid-template-columns:repeat(2,1fr)}
+    .filters{grid-template-columns:repeat(2,1fr)}
+    .picker-layout{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+    .page{padding:12px}
+    .header{padding:18px}
+    .header-label{display:none}
+    .top{margin-top:45px;display:block}
+    .tabs{margin-top:25px}
+    .stats,.library,.filters,.results{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<header class="header">
+    <div class="brand">
+        <h1 class="logo">Ananel Coval</h1>
+        <span class="header-label">Assortment</span>
+    </div>
+    <a class="back" href="../">← Workspace</a>
+</header>
+
+<section class="top">
+    <div>
+        <div class="eyebrow">SÓLE / DATABASE</div>
+        <h2>Ассортимент</h2>
+        <p>
+            Структура моделей, частота использования и подбор
+            конструкций для следующих выпусков.
+        </p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active" data-tab="overview">Обзор</button>
+        <button class="tab" data-tab="catalog">Каталог</button>
+        <button class="tab" data-tab="picker">Подобрать</button>
+    </div>
+</section>
+
+<!-- ОБЗОР -->
+
+<section id="overview" class="panel active">
+    <div id="stats" class="stats"></div>
+
+    <div class="grid-2">
+        <div class="block">
+            <h3 class="block-title">По категориям</h3>
+            <div id="categoryStats" class="rows"></div>
+        </div>
+
+        <div class="block">
+            <h3 class="block-title">Чаще всего использовались</h3>
+            <div id="typeStats" class="rows"></div>
+        </div>
+    </div>
+</section>
+
+<!-- КАТАЛОГ -->
+
+<section id="catalog" class="panel">
+
+    <div class="filters">
+        <div class="field">
+            <label>Категория</label>
+            <select id="catalogCategory"></select>
+        </div>
+
+        <div class="field">
+            <label>Пол</label>
+            <select id="catalogGender"></select>
+        </div>
+
+        <div class="field">
+            <label>Погода</label>
+            <select id="catalogWeather"></select>
+        </div>
+
+        <div class="field">
+            <label>Использование</label>
+            <select id="catalogUsage">
+                <option value="">Все</option>
+                <option value="unused">Ещё не использовались</option>
+                <option value="used">Уже использовались</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="library" class="library"></div>
+</section>
+
+<!-- ПОДБОР -->
+
+<section id="picker" class="panel">
+
+    <div class="picker-layout">
+
+        <div class="picker-controls">
+
+            <div class="field">
+                <label>Категория</label>
+                <select id="pickCategory"></select>
+            </div>
+
+            <div class="field">
+                <label>Пол</label>
+                <select id="pickGender"></select>
+            </div>
+
+            <div class="field">
+                <label>Погода</label>
+                <select id="pickWeather"></select>
+            </div>
+
+            <div class="field">
+                <label>Характер</label>
+                <select id="pickVibe"></select>
+            </div>
+
+            <div class="field">
+                <label>Не повторять последние</label>
+                <select id="pickRecent">
+                    <option value="0">Не учитывать</option>
+                    <option value="1">1 коллекцию</option>
+                    <option value="2">2 коллекции</option>
+                    <option value="3" selected>3 коллекции</option>
+                    <option value="4">4 коллекции</option>
+                    <option value="5">5 коллекций</option>
+                </select>
+            </div>
+
+            <label class="check">
+                <input id="unusedFirst" type="checkbox" checked>
+                Сначала ещё не использованные
+            </label>
+
+            <button id="pickButton" class="primary">
+                Подобрать модели
+            </button>
+
+        </div>
+
+        <div id="results" class="results"></div>
+
+    </div>
+</section>
+
+</div>
+
+<script src="../data/taxonomy.js"></script>
+<script src="../data/products.js"></script>
+
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+const sole=STORES.sole;
+const collections=sole.collections||[];
+
+/*
+Собираем все реально выпущенные модели.
+Учитываем и обычные коллекции, и rounds.
+*/
+
+const usedModels=[];
+
+collections.forEach((collection,collectionIndex)=>{
+
+    (collection.models||[]).forEach(model=>{
+        usedModels.push({
+            ...model,
+            collection,
+            collectionIndex
+        });
+    });
+
+    (collection.rounds||[]).forEach(round=>{
+        (round.models||[]).forEach(model=>{
+            usedModels.push({
+                ...model,
+                collection,
+                round,
+                collectionIndex
+            });
+        });
+    });
+
+});
+
+/* =========================
+   USAGE INDEX
+========================= */
+
+const usage={};
+
+Object.keys(MODEL_TYPES).forEach(id=>{
+    usage[id]={
+        count:0,
+        models:[],
+        collections:new Set(),
+        lastIndex:-1,
+        lastCollection:null
+    };
+});
+
+usedModels.forEach(model=>{
+    if(!model.modelType)return;
+
+    if(!usage[model.modelType]){
+        usage[model.modelType]={
+            count:0,
+            models:[],
+            collections:new Set(),
+            lastIndex:-1,
+            lastCollection:null
+        };
+    }
+
+    const stat=usage[model.modelType];
+
+    stat.count++;
+    stat.models.push(model);
+    stat.collections.add(model.collection.id);
+
+    if(model.collectionIndex>=stat.lastIndex){
+        stat.lastIndex=model.collectionIndex;
+        stat.lastCollection=model.collection.name;
+    }
+});
+
+/* =========================
+   HELPERS
+========================= */
+
+function categoryName(id){
+    return SHOE_CATEGORIES[id]||id;
+}
+
+function fillSelect(select,data,first="Все"){
+    select.innerHTML=
+        `<option value="">${first}</option>`+
+        Object.entries(data)
+            .map(([id,name])=>
+                `<option value="${id}">${name}</option>`
+            )
+            .join("");
+}
+
+function fillModelMetaSelect(select,data,first="Все"){
+    fillSelect(select,data,first);
+}
+
+function modelInfo(id){
+    return MODEL_TYPES[id]||null;
+}
+
+function tagsFor(model){
+    const tags=[];
+
+    (model.gender||[]).forEach(id=>{
+        tags.push(GENDERS[id]||id);
+    });
+
+    (model.weather||[]).forEach(id=>{
+        tags.push(WEATHER[id]||id);
+    });
+
+    return tags;
+}
+
+/* =========================
+   TABS
+========================= */
+
+document.querySelectorAll(".tab").forEach(button=>{
+    button.onclick=()=>{
+        document.querySelectorAll(".tab")
+            .forEach(x=>x.classList.remove("active"));
+
+        document.querySelectorAll(".panel")
+            .forEach(x=>x.classList.remove("active"));
+
+        button.classList.add("active");
+
+        document
+            .getElementById(button.dataset.tab)
+            .classList.add("active");
+    };
+});
+
+/* =========================
+   OVERVIEW
+========================= */
+
+function buildOverview(){
+
+    const usedTypeCount=
+        Object.values(usage)
+            .filter(x=>x.count>0)
+            .length;
+
+    const unusedTypeCount=
+        Object.values(usage)
+            .filter(x=>x.count===0)
+            .length;
+
+    document.getElementById("stats").innerHTML=`
+        <div class="stat">
+            <div class="stat-value">${usedModels.length}</div>
+            <div class="stat-label">Выпущено моделей</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-value">${collections.length}</div>
+            <div class="stat-label">Коллекций</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-value">${usedTypeCount}</div>
+            <div class="stat-label">Типов использовано</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-value">${unusedTypeCount}</div>
+            <div class="stat-label">Ещё не использовано</div>
+        </div>
+    `;
+
+    /* КАТЕГОРИИ */
+
+    const categoryCounts={};
+
+    Object.keys(SHOE_CATEGORIES).forEach(id=>{
+        categoryCounts[id]=0;
+    });
+
+    usedModels.forEach(model=>{
+        const info=modelInfo(model.modelType);
+        if(!info)return;
+
+        categoryCounts[info.category]=
+            (categoryCounts[info.category]||0)+1;
+    });
+
+    document.getElementById("categoryStats").innerHTML=
+        Object.entries(categoryCounts)
+            .sort((a,b)=>b[1]-a[1])
+            .map(([id,count])=>`
+                <div class="row">
+                    <div>
+                        <div class="row-name">
+                            ${categoryName(id)}
+                        </div>
+                    </div>
+
+                    <div class="row-value">
+                        ${count}
+                    </div>
+                </div>
+            `)
+            .join("");
+
+    /* ТИПЫ */
+
+    const typeRows=
+        Object.entries(usage)
+            .filter(([,stat])=>stat.count>0)
+            .sort((a,b)=>b[1].count-a[1].count)
+            .slice(0,12);
+
+    document.getElementById("typeStats").innerHTML=
+        typeRows
+            .map(([id,stat])=>{
+                const info=modelInfo(id);
+
+                return `
+                    <div class="row">
+                        <div>
+                            <div class="row-name">
+                                ${info?.name||id}
+                            </div>
+
+                            <div class="row-sub">
+                                ${
+                                    stat.lastCollection
+                                        ?`Последний раз: ${stat.lastCollection}`
+                                        :""
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row-value">
+                            ${stat.count}
+                        </div>
+                    </div>
+                `;
+            })
+            .join("");
+}
+
+
+/* =========================
+   CATALOG
+========================= */
+
+const catalogCategory=
+    document.getElementById("catalogCategory");
+
+const catalogGender=
+    document.getElementById("catalogGender");
+
+const catalogWeather=
+    document.getElementById("catalogWeather");
+
+const catalogUsage=
+    document.getElementById("catalogUsage");
+
+
+fillSelect(
+    catalogCategory,
+    SHOE_CATEGORIES
+);
+
+fillSelect(
+    catalogGender,
+    GENDERS
+);
+
+fillSelect(
+    catalogWeather,
+    WEATHER
+);
+
+
+function buildCatalog(){
+
+    const category=
+        catalogCategory.value;
+
+    const gender=
+        catalogGender.value;
+
+    const weather=
+        catalogWeather.value;
+
+    const usageFilter=
+        catalogUsage.value;
+
+
+    let items=
+        Object.entries(MODEL_TYPES)
+            .map(([id,model])=>({
+                id,
+                ...model,
+                usage:usage[id]||{
+                    count:0,
+                    lastCollection:null
+                }
+            }));
+
+
+    if(category){
+        items=items.filter(
+            item=>item.category===category
+        );
+    }
+
+    if(gender){
+        items=items.filter(
+            item=>item.gender?.includes(gender)
+        );
+    }
+
+    if(weather){
+        items=items.filter(
+            item=>item.weather?.includes(weather)
+        );
+    }
+
+    if(usageFilter==="unused"){
+        items=items.filter(
+            item=>item.usage.count===0
+        );
+    }
+
+    if(usageFilter==="used"){
+        items=items.filter(
+            item=>item.usage.count>0
+        );
+    }
+
+
+    /*
+    Сначала использованные чаще,
+    затем остальные по алфавиту.
+    */
+
+    items.sort((a,b)=>{
+        if(b.usage.count!==a.usage.count){
+            return b.usage.count-a.usage.count;
+        }
+
+        return a.name.localeCompare(
+            b.name,
+            "ru"
+        );
+    });
+
+
+    const library=
+        document.getElementById("library");
+
+
+    if(!items.length){
+        library.innerHTML=`
+            <div class="empty">
+                По этим фильтрам ничего нет.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    library.innerHTML=
+        items
+            .map(item=>{
+
+                const stat=item.usage;
+
+                return `
+                    <div class="model">
+
+                        <div class="model-top">
+
+                            <div>
+                                <div class="model-name">
+                                    ${item.name}
+                                </div>
+
+                                <div class="model-category">
+                                    ${categoryName(item.category)}
+                                </div>
+                            </div>
+
+                            <div class="usage ${stat.count===0?"zero":""}">
+                                ${
+                                    stat.count===0
+                                        ?"NEW"
+                                        :stat.count+"×"
+                                }
+                            </div>
+
+                        </div>
+
+                        <div class="tags">
+                            ${tagsFor(item)
+                                .map(tag=>
+                                    `<span class="tag">${tag}</span>`
+                                )
+                                .join("")
+                            }
+                        </div>
+
+                        <div class="model-last">
+                            ${
+                                stat.count
+                                    ?`Последний выпуск: ${stat.lastCollection}`
+                                    :"Ещё не использовалась"
+                            }
+                        </div>
+
+                    </div>
+                `;
+            })
+            .join("");
+}
+
+
+[
+    catalogCategory,
+    catalogGender,
+    catalogWeather,
+    catalogUsage
+].forEach(el=>{
+    el.onchange=buildCatalog;
+});
+
+
+/* =========================
+   PICKER
+========================= */
+
+const pickCategory=
+    document.getElementById("pickCategory");
+
+const pickGender=
+    document.getElementById("pickGender");
+
+const pickWeather=
+    document.getElementById("pickWeather");
+
+const pickVibe=
+    document.getElementById("pickVibe");
+
+const pickRecent=
+    document.getElementById("pickRecent");
+
+const unusedFirst=
+    document.getElementById("unusedFirst");
+
+
+fillSelect(
+    pickCategory,
+    SHOE_CATEGORIES,
+    "Любая"
+);
+
+fillSelect(
+    pickGender,
+    GENDERS,
+    "Любой"
+);
+
+fillSelect(
+    pickWeather,
+    WEATHER,
+    "Любая"
+);
+
+fillSelect(
+    pickVibe,
+    VIBES,
+    "Любой"
+);
+
+
+/* =========================
+   RECENT TYPES
+========================= */
+
+function recentModelTypes(amount){
+
+    if(!amount){
+        return new Set();
+    }
+
+    /*
+    Берём последние N коллекций
+    в порядке products.js.
+    */
+
+    const recent=
+        collections.slice(-amount);
+
+    const ids=
+        new Set(
+            recent.map(collection=>collection.id)
+        );
+
+    const types=
+        new Set();
+
+
+    usedModels.forEach(model=>{
+        if(
+            ids.has(model.collection.id) &&
+            model.modelType
+        ){
+            types.add(model.modelType);
+        }
+    });
+
+
+    return types;
+}
+
+
+/* =========================
+   PICK MODELS
+========================= */
+
+function pickModels(){
+
+    const category=
+        pickCategory.value;
+
+    const gender=
+        pickGender.value;
+
+    const weather=
+        pickWeather.value;
+
+    const vibe=
+        pickVibe.value;
+
+    const recentAmount=
+        Number(pickRecent.value);
+
+    const recentTypes=
+        recentModelTypes(recentAmount);
+
+
+    let items=
+        Object.entries(MODEL_TYPES)
+            .map(([id,model])=>({
+                id,
+                ...model,
+                usage:usage[id]||{
+                    count:0,
+                    lastCollection:null
+                }
+            }));
+
+
+    /* ФИЛЬТРЫ */
+
+    if(category){
+        items=items.filter(
+            item=>item.category===category
+        );
+    }
+
+    if(gender){
+        items=items.filter(
+            item=>item.gender?.includes(gender)
+        );
+    }
+
+    if(weather){
+        items=items.filter(
+            item=>item.weather?.includes(weather)
+        );
+    }
+
+    if(vibe){
+        items=items.filter(
+            item=>item.vibes?.includes(vibe)
+        );
+    }
+
+
+    /*
+    Убираем типы, которые были
+    в последних N коллекциях.
+    */
+
+    if(recentAmount){
+        items=items.filter(
+            item=>!recentTypes.has(item.id)
+        );
+    }
+
+
+    /*
+    Сортировка:
+    1. Неиспользованные, если включено.
+    2. Реже использованные.
+    3. По алфавиту.
+    */
+
+    items.sort((a,b)=>{
+
+        if(unusedFirst.checked){
+
+            const aUnused=
+                a.usage.count===0;
+
+            const bUnused=
+                b.usage.count===0;
+
+            if(aUnused!==bUnused){
+                return aUnused?-1:1;
+            }
+        }
+
+        if(a.usage.count!==b.usage.count){
+            return a.usage.count-b.usage.count;
+        }
+
+        return a.name.localeCompare(
+            b.name,
+            "ru"
+        );
+    });
+
+
+    renderResults(items);
+}
+
+
+/* =========================
+   RESULTS
+========================= */
+
+function renderResults(items){
+
+    const results=
+        document.getElementById("results");
+
+
+    if(!items.length){
+
+        results.innerHTML=`
+            <div class="empty">
+                Подходящих моделей нет.
+                Попробуй ослабить фильтры.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    results.innerHTML=
+        items
+            .map(item=>{
+
+                const stat=item.usage;
+
+                const vibeTags=
+                    (item.vibes||[])
+                        .map(id=>
+                            VIBES[id]||id
+                        );
+
+                const weatherTags=
+                    (item.weather||[])
+                        .map(id=>
+                            WEATHER[id]||id
+                        );
+
+
+                return `
+                    <div class="result">
+
+                        <div class="result-head">
+
+                            <div>
+                                <div class="result-name">
+                                    ${item.name}
+                                </div>
+
+                                <div class="result-meta">
+                                    ${categoryName(item.category)}
+                                    ·
+                                    ${
+                                        stat.count
+                                            ?`использовано ${stat.count}×`
+                                            :"ещё не использовалось"
+                                    }
+                                </div>
+                            </div>
+
+                            ${
+                                stat.count===0
+                                    ?`<span class="result-new">Новое</span>`
+                                    :""
+                            }
+
+                        </div>
+
+                        <div class="result-tags">
+
+                            ${weatherTags
+                                .map(tag=>
+                                    `<span class="tag">${tag}</span>`
+                                )
+                                .join("")
+                            }
+
+                            ${vibeTags
+                                .map(tag=>
+                                    `<span class="tag">${tag}</span>`
+                                )
+                                .join("")
+                            }
+
+                        </div>
+
+                        ${
+                            stat.lastCollection
+                                ?`
+                                    <div class="model-last">
+                                        Последний выпуск:
+                                        ${stat.lastCollection}
+                                    </div>
+                                `
+                                :""
+                        }
+
+                    </div>
+                `;
+            })
+            .join("");
+}
+
+
+document
+    .getElementById("pickButton")
+    .onclick=pickModels;
+
+
+/* =========================
+   INITIAL BUILD
+========================= */
+
+buildOverview();
+buildCatalog();
+pickModels();
+
+</script>
+</body>
+</html>
