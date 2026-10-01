@@ -563,6 +563,120 @@ const STORES = {
                     { file: "back-to-school-bag-base.png", name: "Пакет" },
                     { file: "back-to-school-preview.png", name: "Превью" }
                 ]
+            },
+
+            /* =========================
+               ВШТ 2026
+            ========================= */
+
+            {
+                id: "vsht-2026",
+                name: "ВШТ 2026",
+                folder: "2026-10-vsht",
+                available: true,
+
+                delivery: {
+                    preview: "vsht-preview.png",
+                    placeholderFemale: "vsht-placeholder-female.png",
+                    placeholderMale: "vsht-placeholder-male.png"
+                },
+
+                rounds: [
+                    {
+                        id: "tour-1",
+                        name: "I тур",
+                        folder: "tour-1",
+                        available: true,
+
+                        delivery: {
+                            bag: "vsht-bag-1tour.png"
+                        },
+
+                        models: [
+                            {
+                                file: "01-quaffle.png",
+                                name: "Квоффл",
+                                collectionName: "ВШТ 2026",
+                                type: "туфли T-strap на платформе",
+                                price: 26,
+                                description: `Для чего нужен квоффл? Как сказал один умный человек — кидать. По возможности в ворота. И желательно не в свои.
+Бордово-коньячные туфли T-strap на высокой платформе собраны из кожаных панелей с молочными вставками, золотистой фурнитурой и шнуровкой на массивном каблуке.
+Пара для молитв квиддобогам.
+Будем надеяться, они ценят хороший вкус.`
+                            },
+                            {
+                                file: "02-chaser-base.png",
+                                name: "Охотник",
+                                collectionName: "ВШТ 2026",
+                                type: "cross-training sneakers",
+                                price: 28,
+
+                                variants: [
+                                    {
+                                        id: "base",
+                                        name: "Основная",
+                                        file: "02-chaser-base.png",
+                                        default: true
+                                    },
+                                    {
+                                        id: "red",
+                                        name: "Красная",
+                                        file: "03-chaser-red.png"
+                                    },
+                                    {
+                                        id: "yellow",
+                                        name: "Жёлтая",
+                                        file: "04-chaser-yellow.png"
+                                    },
+                                    {
+                                        id: "blue",
+                                        name: "Синяя",
+                                        file: "05-chaser-blue.png"
+                                    },
+                                    {
+                                        id: "green",
+                                        name: "Зелёная",
+                                        file: "06-chaser-green.png"
+                                    }
+                                ],
+
+                                description: `ВШТ стартовал, а значит охотникам снова можно носиться по полю так, будто тормозов не существует.
+Бордово-молочные тренировочные кроссовки собраны из сетчатых и кожаных панелей, дополнены плотной шнуровкой и устойчивой спортивной подошвой.
+Чтобы хотя бы обувь была готова к тому, что нормального плана на матч всё равно не будет.`
+                            }
+                        ]
+                    },
+
+                    {
+                        id: "tour-2",
+                        name: "II тур",
+                        folder: "tour-2",
+                        available: false,
+                        models: []
+                    },
+
+                    {
+                        id: "tour-3",
+                        name: "III тур",
+                        folder: "tour-3",
+                        available: false,
+                        models: []
+                    },
+
+                    {
+                        id: "tour-4",
+                        name: "IV тур",
+                        folder: "tour-4",
+                        available: false,
+                        models: []
+                    }
+                ],
+
+                decor: [
+                    { file: "vsht-placeholder-female.png", name: "Заглушка — женская" },
+                    { file: "vsht-placeholder-male.png", name: "Заглушка — мужская" },
+                    { file: "vsht-preview.png", name: "Превью" }
+                ]
             }
 
         ]
