@@ -18,14 +18,17 @@
     --line:#e8e4e7;
     --soft:#f8f6f7;
 }
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+
 body{
     margin:0;
     background:#fff;
     color:var(--text);
     font-family:'Montserrat',sans-serif;
 }
+
 .page{
     max-width:1500px;
     margin:auto;
@@ -44,16 +47,19 @@ body{
     justify-content:space-between;
     align-items:center;
 }
+
 .brand{
     display:flex;
     align-items:baseline;
     gap:14px;
 }
+
 .logo{
     margin:0;
     color:var(--green);
     font-size:30px;
 }
+
 .header-label{
     color:#aaa;
     font-size:10px;
@@ -61,10 +67,12 @@ body{
     letter-spacing:2px;
     text-transform:uppercase;
 }
+
 .header-right,.navigation{
     display:flex;
     align-items:center;
 }
+
 .header-right{gap:35px}
 .navigation{gap:28px}
 
@@ -74,6 +82,7 @@ body{
     font-weight:600;
     text-decoration:none;
 }
+
 .home-link:hover{color:var(--pink)}
 
 /* DROPDOWN */
@@ -89,6 +98,7 @@ body{
     font-weight:700;
     cursor:default;
 }
+
 .nav-title::after{
     content:"⌄";
     color:var(--pink);
@@ -112,6 +122,7 @@ body{
     transform:translateY(-5px);
     transition:.18s;
 }
+
 .dropdown-menu::before{
     content:"";
     position:absolute;
@@ -120,11 +131,13 @@ body{
     right:0;
     height:14px;
 }
+
 .nav-dropdown:hover .dropdown-menu{
     opacity:1;
     visibility:visible;
     transform:none;
 }
+
 .dropdown-menu a,.dropdown-empty{
     display:block;
     padding:10px 12px;
@@ -132,21 +145,23 @@ body{
     font-size:13px;
     white-space:nowrap;
 }
+
 .dropdown-menu a{
     color:#333;
     font-weight:500;
     text-decoration:none;
 }
+
 .dropdown-menu a:hover{
     background:var(--soft);
     color:var(--pink);
 }
+
 .dropdown-empty{color:#aaa}
 
 /* STORES */
 
 #stores{margin-top:65px}
-
 .store{margin-bottom:110px}
 
 .store-heading{
@@ -155,16 +170,19 @@ body{
     align-items:center;
     gap:18px;
 }
+
 .store-heading h2{
     margin:0;
     color:var(--green);
     font-size:21px;
 }
+
 .store-line{
     flex:1;
     height:1px;
     background:var(--line);
 }
+
 .store-count{
     color:#aaa;
     font-size:11px;
@@ -176,10 +194,12 @@ body{
     margin-bottom:100px;
     scroll-margin-top:30px;
 }
+
 .collection-heading{
     margin-bottom:38px;
     text-align:center;
 }
+
 .collection-number{
     display:block;
     margin-bottom:9px;
@@ -188,11 +208,13 @@ body{
     font-weight:700;
     letter-spacing:2px;
 }
+
 .collection-title{
     margin:0;
     font-size:29px;
     font-weight:600;
 }
+
 .section-title{
     margin:42px 0 25px;
     text-align:center;
@@ -203,16 +225,60 @@ body{
     text-transform:uppercase;
 }
 
+/* TOURS */
+
+.round{
+    margin:0 auto 55px;
+    max-width:1300px;
+}
+
+.round-heading{
+    margin:45px 0 28px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.round-heading::before,
+.round-heading::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line);
+}
+
+.round-title{
+    margin:0;
+    color:#555;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+}
+
+.round-empty{
+    margin:0 auto 40px;
+    padding:20px;
+    max-width:500px;
+    border:1px dashed var(--line);
+    border-radius:12px;
+    color:#aaa;
+    text-align:center;
+    font-size:11px;
+}
+
 /* GALLERIES */
 
 .models-gallery,.decor-gallery{
     display:grid;
     justify-content:center;
 }
+
 .models-gallery{
     grid-template-columns:repeat(5,minmax(170px,230px));
     gap:25px 15px;
 }
+
 .decor-gallery{
     grid-template-columns:repeat(4,minmax(210px,280px));
     gap:25px;
@@ -222,6 +288,7 @@ body{
     min-width:0;
     text-align:center;
 }
+
 .model-image-box,.decor-image-box{
     display:flex;
     justify-content:center;
@@ -229,19 +296,23 @@ body{
     border-radius:16px;
     transition:.2s;
 }
+
 .model-image-box{
     height:230px;
     padding:12px;
 }
+
 .decor-image-box{
     height:245px;
     padding:15px;
 }
+
 .model-card:hover .model-image-box,
 .decor-card:hover .decor-image-box{
     background:var(--soft);
     transform:translateY(-3px);
 }
+
 .model-image,.decor-image{
     max-width:100%;
     max-height:100%;
@@ -249,10 +320,18 @@ body{
     height:auto;
     cursor:pointer;
 }
+
 .item-name{
     margin:14px 0 0;
     font-size:13px;
     font-weight:600;
+}
+
+.variant-name{
+    margin:5px 0 0;
+    color:#aaa;
+    font-size:10px;
+    font-weight:500;
 }
 
 .collection-divider{
@@ -289,6 +368,7 @@ body{
     transition:.25s;
     z-index:500;
 }
+
 .toast.show{
     opacity:1;
     transform:translate(-50%,0);
@@ -300,10 +380,12 @@ body{
     .models-gallery{grid-template-columns:repeat(4,220px)}
     .decor-gallery{grid-template-columns:repeat(3,270px)}
 }
+
 @media(max-width:950px){
     .models-gallery{grid-template-columns:repeat(3,220px)}
     .decor-gallery{grid-template-columns:repeat(2,270px)}
 }
+
 @media(max-width:700px){
     .page{padding:12px}
     .header{padding:18px}
@@ -320,6 +402,7 @@ body{
 </head>
 
 <body>
+
 <div class="page">
 
 <header class="header">
@@ -346,33 +429,54 @@ body{
 const STORE_ORDER=["sole","extra"];
 const $=id=>document.getElementById(id);
 
+/* =========================
+   START
+========================= */
+
 function buildHosting(){
     STORE_ORDER.forEach(key=>{
         const store=STORES[key];
         if(!store)return;
+
         buildNav(key,store);
         buildStore(key,store);
     });
 }
 
+/* =========================
+   NAVIGATION
+========================= */
+
 function buildNav(key,store){
     const el=document.createElement("div");
     el.className="nav-dropdown";
 
-    const links=store.collections.map(c=>
-        `<a href="#${key}-${c.id}">${c.name}</a>`
-    ).join("");
+    const links=(store.collections||[])
+        .map(c=>`
+            <a href="#${key}-${c.id}">
+                ${c.name}
+            </a>
+        `)
+        .join("");
 
     el.innerHTML=`
         <span class="nav-title">${store.name}</span>
+
         <div class="dropdown-menu">
             ${links||'<span class="dropdown-empty">Пока пусто</span>'}
-        </div>`;
+        </div>
+    `;
 
     $("navigation").appendChild(el);
 }
 
+/* =========================
+   STORE
+========================= */
+
 function buildStore(key,store){
+    const collections=store.collections||[];
+
     const el=document.createElement("section");
     el.className="store";
 
@@ -380,26 +484,45 @@ function buildStore(key,store){
         <div class="store-heading">
             <h2>${store.name}</h2>
             <div class="store-line"></div>
+
             <span class="store-count">
-                ${store.collections.length} ${word(store.collections.length)}
+                ${collections.length}
+                ${word(collections.length)}
             </span>
         </div>
-        <div class="store-content"></div>`;
+
+        <div class="store-content"></div>
+    `;
 
     const content=el.querySelector(".store-content");
 
-    if(!store.collections.length){
-        content.innerHTML='<div class="empty-store">Коллекции пока не добавлены.</div>';
+    if(!collections.length){
+        content.innerHTML=`
+            <div class="empty-store">
+                Коллекции пока не добавлены.
+            </div>
+        `;
     }else{
-        store.collections.forEach((c,i)=>buildCollection(key,c,i,content));
+        collections.forEach((collection,index)=>{
+            buildCollection(
+                key,
+                collection,
+                index,
+                content
+            );
+        });
     }
 
     $("stores").appendChild(el);
 }
 
+/* =========================
+   COLLECTION
+========================= */
+
 function buildCollection(storeKey,c,index,container){
     const el=document.createElement("section");
-    const hasDecor=c.decor?.length;
+
     el.className="collection";
     el.id=`${storeKey}-${c.id}`;
 
@@ -408,82 +531,388 @@ function buildCollection(storeKey,c,index,container){
             <span class="collection-number">
                 COLLECTION ${String(index+1).padStart(2,"0")}
             </span>
-            <h3 class="collection-title">${c.name}</h3>
+
+            <h3 class="collection-title">
+                ${c.name}
+            </h3>
         </div>
 
-        <h4 class="section-title">Модели</h4>
-        <div class="models-gallery"></div>
+        <div class="collection-content"></div>
 
-        ${hasDecor?`
-            <h4 class="section-title">Декор</h4>
-            <div class="decor-gallery"></div>
-        `:""}
-
-        <div class="collection-divider"></div>`;
+        <div class="collection-divider"></div>
+    `;
 
     container.appendChild(el);
 
-    buildGallery(
-        el.querySelector(".models-gallery"),
-        path(storeKey,c,"models"),
-        c.models||[],
-        true
-    );
+    const content=
+        el.querySelector(".collection-content");
 
-    if(hasDecor)buildGallery(
-        el.querySelector(".decor-gallery"),
-        path(storeKey,c,"decor"),
-        c.decor,
-        false
-    );
+    if(c.rounds?.length){
+        buildRoundCollection(
+            storeKey,
+            c,
+            content
+        );
+    }else{
+        buildRegularCollection(
+            storeKey,
+            c,
+            content
+        );
+    }
+}
+/* =========================
+   REGULAR COLLECTION
+========================= */
+
+function buildRegularCollection(storeKey,c,container){
+    const models=c.models||[];
+
+    if(models.length){
+        addTitle(container,"Модели");
+
+        const gallery=createGallery(
+            container,
+            "models-gallery"
+        );
+
+        buildModels(
+            gallery,
+            modelPath(storeKey,c),
+            models
+        );
+    }
+
+    if(c.decor?.length){
+        addTitle(container,"Декор");
+
+        const gallery=createGallery(
+            container,
+            "decor-gallery"
+        );
+
+        buildDecor(
+            gallery,
+            decorPath(storeKey,c),
+            c.decor
+        );
+    }
 }
 
-function buildGallery(container,path,items,isModel){
-    items.forEach((item,index)=>{
+/* =========================
+   ROUND COLLECTION
+========================= */
+
+function buildRoundCollection(storeKey,c,container){
+
+    /* СНАЧАЛА ВСЕ ТУРЫ */
+
+    c.rounds.forEach(round=>{
+        const section=document.createElement("section");
+        section.className="round";
+
+        section.innerHTML=`
+            <div class="round-heading">
+                <h4 class="round-title">
+                    ${round.name}
+                </h4>
+            </div>
+        `;
+
+        container.appendChild(section);
+
+        const models=round.models||[];
+
+        if(models.length){
+            addTitle(section,"Модели");
+
+            const gallery=createGallery(
+                section,
+                "models-gallery"
+            );
+
+            buildModels(
+                gallery,
+                roundModelPath(
+                    storeKey,
+                    c,
+                    round
+                ),
+                models
+            );
+        }else{
+            const empty=document.createElement("div");
+
+            empty.className="round-empty";
+            empty.textContent="Пока не открыт";
+
+            section.appendChild(empty);
+        }
+
+        /* ДЕКОР КОНКРЕТНОГО ТУРА */
+
+        const roundDecor=[];
+
+        if(round.delivery?.bag){
+            roundDecor.push({
+                file:round.delivery.bag,
+                name:"Пакет"
+            });
+        }
+
+        if(round.decor?.length){
+            roundDecor.push(
+                ...round.decor
+            );
+        }
+
+        if(roundDecor.length){
+            addTitle(section,"Декор");
+
+            const gallery=createGallery(
+                section,
+                "decor-gallery"
+            );
+
+            buildDecor(
+                gallery,
+                roundDecorPath(
+                    storeKey,
+                    c,
+                    round
+                ),
+                roundDecor
+            );
+        }
+    });
+
+    /* ПОСЛЕ ВСЕХ ТУРОВ — ОБЩИЙ ДЕКОР */
+
+    if(c.decor?.length){
+        addTitle(container,"Декор");
+
+        const gallery=createGallery(
+            container,
+            "decor-gallery"
+        );
+
+        buildDecor(
+            gallery,
+            decorPath(storeKey,c),
+            c.decor
+        );
+    }
+}
+
+/* =========================
+   MODELS
+========================= */
+
+function buildModels(container,path,models){
+    models.forEach((model,index)=>{
+        const number=
+            String(index+1).padStart(2,"0");
+
+        /*
+        Если вариантов нет —
+        обычная карточка модели.
+        */
+
+        if(!model.variants?.length){
+            addModelCard(
+                container,
+                `${path}/${model.file}`,
+                model.name,
+                number
+            );
+
+            return;
+        }
+
+        /*
+        Если есть variants —
+        каждая картинка показывается отдельно,
+        но номер модели остаётся одним.
+        */
+
+        model.variants.forEach((variant,variantIndex)=>{
+            addModelCard(
+                container,
+                `${path}/${variant.file}`,
+                model.name,
+                variantIndex===0
+                    ?number
+                    :"",
+                variant.name
+            );
+        });
+    });
+}
+
+function addModelCard(
+    container,
+    src,
+    name,
+    number="",
+    variant=""
+){
+    const card=document.createElement("div");
+    card.className="model-card";
+
+    card.innerHTML=`
+        <div class="model-image-box">
+            <img
+                class="model-image"
+                src="${src}"
+                alt="${name}${variant?" — "+variant:""}"
+                title="Нажмите, чтобы скопировать ссылку"
+            >
+        </div>
+
+        <p class="item-name">
+            ${number?number+". ":""}${name}
+        </p>
+
+        ${variant
+            ?`<p class="variant-name">${variant}</p>`
+            :""
+        }
+    `;
+
+    card.querySelector("img")
+        .onclick=e=>
+            copyLink(e.currentTarget);
+
+    container.appendChild(card);
+}
+
+/* =========================
+   DECOR
+========================= */
+
+function buildDecor(container,path,items){
+    items.forEach(item=>{
         const card=document.createElement("div");
-        card.className=isModel?"model-card":"decor-card";
+        card.className="decor-card";
 
         card.innerHTML=`
-            <div class="${isModel?"model-image-box":"decor-image-box"}">
+            <div class="decor-image-box">
                 <img
-                    class="${isModel?"model-image":"decor-image"}"
+                    class="decor-image"
                     src="${path}/${item.file}"
                     alt="${item.name}"
-                    title="Нажмите, чтобы скопировать ссылку">
+                    title="Нажмите, чтобы скопировать ссылку"
+                >
             </div>
 
             <p class="item-name">
-                ${isModel?String(index+1).padStart(2,"0")+". ":""}${item.name}
-            </p>`;
+                ${item.name}
+            </p>
+        `;
 
-        card.querySelector("img").onclick=e=>copyLink(e.currentTarget);
+        card.querySelector("img")
+            .onclick=e=>
+                copyLink(e.currentTarget);
+
         container.appendChild(card);
     });
 }
 
-function path(store,c,type){
-    return `../${store}/products/${c.folder}/${type}`;
+/* =========================
+   ELEMENT HELPERS
+========================= */
+
+function addTitle(container,text){
+    const title=document.createElement("h4");
+
+    title.className="section-title";
+    title.textContent=text;
+
+    container.appendChild(title);
 }
+
+function createGallery(container,className){
+    const gallery=document.createElement("div");
+
+    gallery.className=className;
+    container.appendChild(gallery);
+
+    return gallery;
+}
+
+/* =========================
+   PATHS
+========================= */
+
+/* Обычная коллекция — модели */
+function modelPath(storeKey,c){
+    return `../${storeKey}/products/${c.folder}/models`;
+}
+
+/* Обычная коллекция / общий декор */
+function decorPath(storeKey,c){
+    return `../${storeKey}/products/${c.folder}/decor`;
+}
+
+/* Модели конкретного тура */
+function roundModelPath(storeKey,c,round){
+    return `../${storeKey}/products/${c.folder}/${round.folder}/models`;
+}
+
+/* Декор конкретного тура */
+function roundDecorPath(storeKey,c,round){
+    return `../${storeKey}/products/${c.folder}/${round.folder}/decor`;
+}
+
+/* =========================
+   COPY LINK
+========================= */
 
 function copyLink(img){
-    navigator.clipboard.writeText(img.src)
+    navigator.clipboard
+        .writeText(img.src)
         .then(()=>{
-            $("toast").classList.add("show");
+            const toast=$("toast");
+
+            toast.classList.add("show");
+
             clearTimeout(window.toastTimer);
-            window.toastTimer=setTimeout(()=>$("toast").classList.remove("show"),1500);
+
+            window.toastTimer=setTimeout(()=>{
+                toast.classList.remove("show");
+            },1500);
         })
-        .catch(()=>alert("Не удалось скопировать ссылку."));
+        .catch(()=>{
+            alert("Не удалось скопировать ссылку.");
+        });
 }
+
+/* =========================
+   COLLECTION WORD
+========================= */
 
 function word(n){
-    if(n%100>=11&&n%100<=14)return"коллекций";
-    if(n%10===1)return"коллекция";
-    if(n%10>=2&&n%10<=4)return"коллекции";
-    return"коллекций";
+    if(n%100>=11&&n%100<=14){
+        return "коллекций";
+    }
+
+    if(n%10===1){
+        return "коллекция";
+    }
+
+    if(n%10>=2&&n%10<=4){
+        return "коллекции";
+    }
+
+    return "коллекций";
 }
 
-buildHosting();
-</script>
+/* =========================
+   BUILD
+========================= */
 
+buildHosting();
+
+</script>
 </body>
 </html>
