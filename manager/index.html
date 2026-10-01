@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manager — Ananel Coval</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --green:#005500;
+    --pink:#D4007E;
+    --text:#181818;
+    --muted:#8b878a;
+    --line:#e8e4e7;
+    --soft:#f8f6f7;
+}
+
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#f7f5f6;
+    color:var(--text);
+    font-family:'Montserrat',sans-serif;
+}
+
+.page{
+    min-height:100vh;
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* HEADER */
+
+.header{
+    padding:24px 30px;
+    border:3px solid var(--pink);
+    border-radius:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#fff;
+}
+
+.brand{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+}
+
+.logo{
+    margin:0;
+    color:var(--green);
+    font-size:32px;
+}
+
+.header-label{
+    color:#999;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.workspace{
+    color:#999;
+    font-size:11px;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.workspace:hover{color:var(--pink)}
+
+/* CONTENT */
+
+.main{
+    flex:1;
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:70px 0;
+}
+
+.eyebrow{
+    margin-bottom:12px;
+    color:var(--pink);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+}
+
+h2{
+    margin:0;
+    color:var(--green);
+    font-size:44px;
+    letter-spacing:-1.5px;
+}
+
+.description{
+    margin:15px 0 45px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+/* MODULES */
+
+.modules{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.module{
+    min-height:220px;
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    border:1px solid var(--line);
+    border-radius:18px;
+    background:#fff;
+    color:inherit;
+    text-decoration:none;
+    transition:.18s;
+}
+
+.module:hover{
+    transform:translateY(-3px);
+    border-color:var(--pink);
+    box-shadow:0 12px 35px rgba(0,0,0,.06);
+}
+
+.module-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.number{
+    color:#bbb;
+    font-size:11px;
+    font-weight:600;
+}
+
+.arrow{
+    color:var(--pink);
+    font-size:21px;
+    transition:.18s;
+}
+
+.module:hover .arrow{
+    transform:translate(3px,-3px);
+}
+
+.module h3{
+    margin:0 0 8px;
+    color:var(--green);
+    font-size:22px;
+}
+
+.module p{
+    margin:0;
+    color:#888;
+    font-size:12px;
+    line-height:1.55;
+}
+
+/* FOOTER */
+
+.footer{
+    display:flex;
+    justify-content:space-between;
+    color:#aaa;
+    font-size:10px;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+    .modules{grid-template-columns:1fr}
+    .module{min-height:170px}
+}
+
+@media(max-width:650px){
+    .page{padding:12px}
+    .header{padding:20px}
+    .header-label{display:none}
+    .logo{font-size:25px}
+    .main{padding:50px 5px}
+    h2{font-size:36px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<header class="header">
+
+    <div class="brand">
+        <h1 class="logo">Ananel Coval</h1>
+        <span class="header-label">Manager</span>
+    </div>
+
+    <a class="workspace" href="../">
+        ← Workspace
+    </a>
+
+</header>
+
+<main class="main">
+
+    <div class="eyebrow">SÓLE / EXTRA</div>
+
+    <h2>Manager</h2>
+
+    <p class="description">
+        Заказы, ассортимент и инструменты для работы с магазинами.
+    </p>
+
+    <div class="modules">
+
+        <!-- ORDERS -->
+
+        <a class="module" href="orders.html">
+
+            <div class="module-top">
+                <span class="number">01</span>
+                <span class="arrow">↗</span>
+            </div>
+
+            <div>
+                <h3>Заказы</h3>
+                <p>
+                    Новые и доставленные заказы,
+                    сбор доставки и статистика продаж.
+                </p>
+            </div>
+
+        </a>
+
+
+        <!-- RELEASE BUILDER -->
+
+        <a class="module" href="release-builder.html">
+
+            <div class="module-top">
+                <span class="number">02</span>
+                <span class="arrow">↗</span>
+            </div>
+
+            <div>
+                <h3>Витрина</h3>
+                <p>
+                    Сбор BBCode для публикации
+                    коллекций и отдельных выпусков.
+                </p>
+            </div>
+
+        </a>
+
+
+        <!-- ASSORTMENT -->
+
+        <a class="module" href="assortment.html">
+
+            <div class="module-top">
+                <span class="number">03</span>
+                <span class="arrow">↗</span>
+            </div>
+
+            <div>
+                <h3>Ассортимент</h3>
+                <p>
+                    База моделей, частота использования
+                    и подбор обуви для новых коллекций.
+                </p>
+            </div>
+
+        </a>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+    <span>ANANEL COVAL</span>
+    <span>MANAGER / 2026</span>
+</footer>
+
+</div>
+
+</body>
+</html>
