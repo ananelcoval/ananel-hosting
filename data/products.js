@@ -830,9 +830,7 @@ const STORES = {
                 available: true,
 
                 delivery: {
-                    preview: "vsht-preview.png",
-                    placeholderFemale: "vsht-placeholder-female.png",
-                    placeholderMale: "vsht-placeholder-male.png"
+                    preview: "vsht-preview.png"
                 },
 
                 rounds: [
@@ -937,8 +935,6 @@ const STORES = {
                 ],
 
                 decor: [
-                    { file: "vsht-placeholder-female.png", name: "Заглушка — женская" },
-                    { file: "vsht-placeholder-male.png", name: "Заглушка — мужская" },
                     { file: "vsht-preview.png", name: "Превью" }
                 ]
             }
