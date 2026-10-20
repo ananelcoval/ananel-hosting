@@ -957,7 +957,10 @@ const STORES = {
                 },
 
                 available: true,
-                delivery: {},
+                delivery: {
+                    bag: "fair-fall-bag-base.png",
+                    preview: "fair-fall-preview.png"
+                },
 
                 models: [
                     {
@@ -1010,7 +1013,10 @@ const STORES = {
                     }
                 ],
 
-                decor: []
+                decor: [
+                    { file: "fair-fall-bag-base.png", name: "Пакет" },
+                    { file: "fair-fall-preview.png", name: "Превью" }
+                ]
             }
 
         ]
