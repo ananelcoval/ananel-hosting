@@ -41,7 +41,7 @@ button{cursor:pointer}
 .field label{color:#777;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
 .field input,.field textarea,.field select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;font-size:12px;outline:none}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--pink)}
-.field textarea{min-height:150px;resize:vertical;font-family:monospace;line-height:1.6}
+.field textarea{min-height:145px;resize:vertical;font-family:monospace;line-height:1.6}
 .field-hint{color:#aaa;font-size:10px;line-height:1.6}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .divider{height:1px;background:var(--line);margin:30px 0}
@@ -52,6 +52,11 @@ button{cursor:pointer}
 .button.primary:hover{background:var(--pink);border-color:var(--pink)}
 .button:hover{border-color:var(--pink)}
 .button:disabled{opacity:.4;cursor:default}
+.tool-panel,.order-mode,.asset-mode{display:none}
+.tool-panel.active,.order-mode.active,.asset-mode.active{display:block}
+.mode-switch{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:25px}
+.mode-button{padding:11px 14px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#777;font-size:11px;font-weight:600}
+.mode-button.active{border-color:var(--pink);background:#f8eff4;color:var(--pink)}
 .people-list,.order-items{display:flex;flex-direction:column;gap:12px}
 .person-row,.order-item{padding:18px;border:1px solid var(--line);border-radius:12px;background:#faf9fa}
 .person-head,.item-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px}
@@ -63,11 +68,6 @@ button{cursor:pointer}
 .bulk-box{margin-top:25px;padding:18px;border:1px dashed var(--line);border-radius:12px}
 .bulk-box h4{margin:0 0 8px;color:var(--green);font-size:13px}
 .bulk-box textarea{min-height:110px}
-.tool-panel,.order-mode,.asset-mode{display:none}
-.tool-panel.active,.order-mode.active,.asset-mode.active{display:block}
-.mode-switch{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:25px}
-.mode-button{padding:11px 14px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#777;font-size:11px;font-weight:600}
-.mode-button.active{border-color:var(--pink);background:#f8eff4;color:var(--pink)}
 .sender-options{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px}
 .sender-option{display:flex;align-items:center;gap:7px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;color:#666;font-size:11px;cursor:pointer}
 .sender-option:has(input:checked){border-color:var(--pink);background:#f8eff4}
@@ -81,7 +81,6 @@ button{cursor:pointer}
 .suggestion-empty{padding:13px;color:#999;font-size:11px}
 .item-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .item-fields .wide{grid-column:1/-1}
-.item-summary{margin-top:12px;color:#888;font-size:11px}
 .order-summary{padding:18px;background:var(--soft);border-radius:12px;margin-top:20px}
 .order-summary strong{color:var(--green)}
 .order-summary p{margin:8px 0 0;color:#777;font-size:11px;line-height:1.7}
@@ -92,7 +91,6 @@ button{cursor:pointer}
 .asset-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .asset-fields .full{grid-column:1/-1}
 .asset-fields .field{margin:0}
-.asset-preview{max-width:100%;max-height:220px;object-fit:contain;margin-top:12px}
 .result{display:none;margin-top:30px}
 .result.visible{display:block}
 .result-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:10px}
@@ -186,7 +184,7 @@ button{cursor:pointer}
         <!-- ORDERS -->
         <section id="tool-orders" class="tool-panel">
             <h3 class="panel-title">Заказы</h3>
-            <p class="panel-description">Добавление, редактирование, изменение статуса и удаление заказов.</p>
+            <p class="panel-description">Создание, редактирование, изменение статуса и удаление заказов.</p>
             <div class="field">
                 <label for="orders-source">Актуальный код orders.js</label>
                 <textarea id="orders-source" spellcheck="false" placeholder="const ORDERS_DB = {...}"></textarea>
@@ -252,6 +250,10 @@ button{cursor:pointer}
                         <select id="order-card"><option value="no">Не требуется</option><option value="yes">Требуется</option></select>
                     </div>
                 </div>
+                <div id="order-card-text-field" class="field" style="display:none">
+                    <label for="order-card-text">Текст карточки</label>
+                    <textarea id="order-card-text" placeholder="Текст, который должен быть на карточке"></textarea>
+                </div>
                 <div class="order-summary">
                     <strong>Новый заказ</strong>
                     <p id="order-summary-text">Номер будет присвоен автоматически.</p>
@@ -287,7 +289,7 @@ button{cursor:pointer}
                     <label for="delete-order-id">Номер заказа</label>
                     <input id="delete-order-id" placeholder="S0001">
                 </div>
-                <div class="field-hint">Номер удалённого заказа не используется повторно.</div>
+                <div class="field-hint">Удаление не освобождает номер заказа.</div>
                 <div class="actions">
                     <button class="button" type="button" onclick="generateOrderDeletion()">Удалить заказ</button>
                 </div>
@@ -297,7 +299,7 @@ button{cursor:pointer}
         <!-- CARDS AND DECOR -->
         <section id="tool-assets" class="tool-panel">
             <h3 class="panel-title">Карточки и декор</h3>
-            <p class="panel-description">Обновление other-assets.js: карточки заказов, оформление доставки и локации магазинов.</p>
+            <p class="panel-description">Обновление other-assets.js с автоматическим заполнением карточек по заказам.</p>
             <div class="field">
                 <label for="assets-source">Актуальный код other-assets.js</label>
                 <textarea id="assets-source" spellcheck="false" placeholder="const OTHER_ASSETS = {...}"></textarea>
@@ -311,16 +313,16 @@ button{cursor:pointer}
 
             <div id="asset-card-mode" class="asset-mode active">
                 <div class="field">
+                    <label for="asset-orders-source">Актуальный orders.js</label>
+                    <textarea id="asset-orders-source" spellcheck="false" placeholder="Вставь актуальный orders.js для автоматического заполнения"></textarea>
+                </div>
+                <div class="field">
                     <label for="asset-order-id">Номер заказа</label>
                     <input id="asset-order-id" placeholder="S0001">
                 </div>
-                <div class="field">
-                    <label for="asset-orders-source">Актуальный orders.js (для автозаполнения)</label>
-                    <textarea id="asset-orders-source" spellcheck="false" placeholder="Вставь orders.js, если нужно подтянуть данные заказа"></textarea>
-                </div>
                 <div class="form-grid">
                     <div class="field">
-                        <label for="asset-card-date">Дата карточки</label>
+                        <label for="asset-card-date">Дата</label>
                         <input id="asset-card-date" type="date">
                     </div>
                     <div class="field">
@@ -329,7 +331,7 @@ button{cursor:pointer}
                     </div>
                 </div>
                 <div class="field">
-                    <label for="asset-card-model">Файл модели</label>
+                    <label for="asset-card-model">Модель</label>
                     <input id="asset-card-model" placeholder="03-astronomy-tower.png">
                 </div>
                 <div class="form-grid">
@@ -344,7 +346,7 @@ button{cursor:pointer}
                 </div>
                 <div class="field">
                     <label for="asset-card-message">Текст карточки</label>
-                    <textarea id="asset-card-message" placeholder="Точный текст на изображении"></textarea>
+                    <textarea id="asset-card-message" placeholder="Автоматически из заказа, можно исправить"></textarea>
                 </div>
                 <div class="field">
                     <label for="asset-card-file">Название изображения</label>
@@ -391,7 +393,7 @@ button{cursor:pointer}
                     </div>
                 </div>
                 <div class="field">
-                    <label for="asset-edit-key">Номер заказа или название файла</label>
+                    <label for="asset-edit-key">Номер заказа или файл</label>
                     <input id="asset-edit-key" placeholder="S0001 или counter.jpeg">
                 </div>
                 <button class="button" type="button" onclick="loadAssetForEdit()">Найти изображение</button>
@@ -443,7 +445,6 @@ button{cursor:pointer}
     </main>
 </div>
 </div>
-
 <div id="toast" class="toast">Код скопирован</div>
 <script src="../data/people.js"></script>
 <script src="../data/products.js"></script>
@@ -454,8 +455,8 @@ button{cursor:pointer}
 ========================= */
 const $=id=>document.getElementById(id);
 let originalCode="",generatedCode="",generatedFilename="",toastTimer;
-let activeTool="people",orderMode="new",assetMode="card",rowCounter=0;
-let selectedSender=null,selectedRecipient=null,editingOrder=null;
+let activeTool="people",orderMode="new",assetMode="card";
+let selectedSender=null,selectedRecipient=null,editingOrder=null,editingAsset=null;
 const getPeople=()=>typeof PEOPLE!=="undefined"?PEOPLE:[];
 const getStores=()=>typeof STORES!=="undefined"?STORES:{};
 const orderNumber=(store,n)=>`${store==="sole"?"S":"E"}${String(n).padStart(4,"0")}`;
@@ -524,8 +525,11 @@ function downloadFile(content,filename){
     const blob=new Blob([content],{type:"text/javascript;charset=utf-8"});
     const url=URL.createObjectURL(blob);
     const link=document.createElement("a");
-    link.href=url;link.download=filename;
-    document.body.appendChild(link);link.click();link.remove();
+    link.href=url;
+    link.download=filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function downloadCode(){
@@ -542,40 +546,38 @@ function downloadBackup(){
 /* =========================
    TOOL SWITCH
 ========================= */
-function bindSwitch(attribute,prefix){
+function bindSwitch(attribute,selector,map){
     document.querySelectorAll(`[${attribute}]`).forEach(button=>{
         button.onclick=()=>{
             const value=button.getAttribute(attribute);
             document.querySelectorAll(`[${attribute}]`).forEach(b=>
                 b.classList.toggle("active",b===button)
             );
-            if(attribute==="data-tool"){
-                activeTool=value;
-                document.querySelectorAll(".tool-panel").forEach(p=>
-                    p.classList.toggle("active",p.id===`tool-${value}`)
-                );
-            }else{
-                if(attribute==="data-order-mode")orderMode=value;
-                else assetMode=value;
-                document.querySelectorAll(prefix).forEach(p=>
-                    p.classList.toggle("active",p.id===(attribute==="data-order-mode"?
-                        {new:"order-new",edit:"order-edit",status:"order-status-mode",delete:"order-delete"}[value]:
-                        {card:"asset-card-mode",decor:"asset-decor-mode",edit:"asset-edit-mode",delete:"asset-delete-mode"}[value]))
-                );
-            }
+            document.querySelectorAll(selector).forEach(panel=>
+                panel.classList.toggle("active",panel.id===map[value])
+            );
+            if(attribute==="data-tool")activeTool=value;
+            if(attribute==="data-order-mode")orderMode=value;
+            if(attribute==="data-asset-mode")assetMode=value;
             resetResult();
         };
     });
 }
-bindSwitch("data-tool","");
-bindSwitch("data-order-mode",".order-mode");
-bindSwitch("data-asset-mode",".asset-mode");
+bindSwitch("data-tool",".tool-panel",{
+    people:"tool-people",orders:"tool-orders",assets:"tool-assets"
+});
+bindSwitch("data-order-mode",".order-mode",{
+    new:"order-new",edit:"order-edit",status:"order-status-mode",delete:"order-delete"
+});
+bindSwitch("data-asset-mode",".asset-mode",{
+    card:"asset-card-mode",decor:"asset-decor-mode",
+    edit:"asset-edit-mode",delete:"asset-delete-mode"
+});
 
 /* =========================
    PEOPLE ROWS
 ========================= */
 function addPersonRow(data={}){
-    rowCounter++;
     const row=document.createElement("div");
     row.className="person-row";
     row.innerHTML=`
@@ -592,11 +594,14 @@ function addPersonRow(data={}){
     row.querySelector(".person-hogsmeade").value=data.hogsmeade??"";
     row.querySelector(".person-hogwarts").value=data.hogwarts??"";
     row.querySelector(".remove-person").onclick=()=>{
-        row.remove();renumberRows();resetResult();
+        row.remove();
+        renumberRows();
+        resetResult();
     };
-    row.querySelectorAll("input").forEach(i=>i.oninput=resetResult);
+    row.querySelectorAll("input").forEach(input=>input.oninput=resetResult);
     $("people-list").appendChild(row);
-    renumberRows();resetResult();
+    renumberRows();
+    resetResult();
 }
 function renumberRows(){
     document.querySelectorAll(".person-row").forEach((row,i)=>
@@ -628,13 +633,13 @@ function importPeople(){
     try{
         const text=$("bulk-input").value.trim();
         if(!text)throw Error("Вставь строки из таблицы.");
-        const imported=text.split(/\r?\n/).filter(Boolean).map(line=>{
-            const p=line.split("\t");
-            if(p.length>3)throw Error("Ожидается максимум три столбца.");
+        const imported=text.split(/\r?\n/).filter(line=>line.trim()).map(line=>{
+            const parts=line.split("\t");
+            if(parts.length>3)throw Error("Ожидается максимум три столбца.");
             return {
-                name:validateName(p[0]||""),
-                hogsmeade:validateForumId(p[1]||"","Хогсмид"),
-                hogwarts:validateForumId(p[2]||"","Главный форум")
+                name:validateName(parts[0]||""),
+                hogsmeade:validateForumId(parts[1]||"","Хогсмид"),
+                hogwarts:validateForumId(parts[2]||"","Главный форум")
             };
         });
         const rows=[...document.querySelectorAll(".person-row")];
@@ -643,7 +648,7 @@ function importPeople(){
         imported.forEach(addPersonRow);
         $("bulk-input").value="";
         showToast(`Добавлено: ${imported.length}`);
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 
 /* =========================
@@ -657,16 +662,19 @@ function parsePeopleSource(source){
     const openIndex=matches[0].index+matches[0][0].length-1;
     let depth=0,closeIndex=-1,quote=null,escaped=false;
     for(let i=openIndex;i<text.length;i++){
-        const ch=text[i];
+        const char=text[i];
         if(quote){
             if(escaped)escaped=false;
-            else if(ch==="\\")escaped=true;
-            else if(ch===quote)quote=null;
+            else if(char==="\\")escaped=true;
+            else if(char===quote)quote=null;
             continue;
         }
-        if(ch==='"'||ch==="'"||ch==="`"){quote=ch;continue}
-        if(ch==="[")depth++;
-        if(ch==="]"&&--depth===0){closeIndex=i;break}
+        if(char==='"'||char==="'"||char==="`"){quote=char;continue}
+        if(char==="[")depth++;
+        if(char==="]"){
+            depth--;
+            if(depth===0){closeIndex=i;break}
+        }
     }
     if(closeIndex<0)throw Error("Не найдена закрывающая скобка PEOPLE.");
     const body=text.slice(openIndex+1,closeIndex);
@@ -675,7 +683,7 @@ function parsePeopleSource(source){
     const ids=[...body.matchAll(/\bid\s*:\s*["'](P\d+)["']/g)].map(m=>m[1]);
     const names=[...body.matchAll(/\bname\s*:\s*["']([^"']+)["']/g)].map(m=>m[1]);
     if(ids.length!==names.length||new Set(ids).size!==ids.length)
-        throw Error("Ошибка структуры или дублирующиеся ID.");
+        throw Error("Ошибка структуры или повторяющиеся ID.");
     if(body.trim()&&!ids.length)throw Error("Не удалось прочитать записи.");
     return {text,body,openIndex,closeIndex,ids,names};
 }
@@ -689,23 +697,25 @@ function generatePeopleCode(){
             [...parsed.body.matchAll(new RegExp(`\\b${key}\\s*:\\s*(\\d+)`,"g"))]
                 .forEach(m=>existingIds[key].add(Number(m[1])));
         });
-        people.forEach(p=>{
-            if(names.has(normalizeName(p.name)))throw Error(`Повтор имени: ${p.name}`);
-            names.add(normalizeName(p.name));
+        people.forEach(person=>{
+            if(names.has(normalizeName(person.name)))
+                throw Error(`Повтор имени: ${person.name}`);
+            names.add(normalizeName(person.name));
             for(const key of ["hogsmeade","hogwarts"]){
-                if(p[key]===null)continue;
-                if(existingIds[key].has(p[key]))throw Error(`Повтор ID: ${p[key]}`);
-                existingIds[key].add(p[key]);
+                if(person[key]===null)continue;
+                if(existingIds[key].has(person[key]))
+                    throw Error(`Повтор ID: ${person[key]}`);
+                existingIds[key].add(person[key]);
             }
         });
         const max=Math.max(0,...parsed.ids.map(id=>Number(id.slice(1))));
-        const blocks=people.map((p,i)=>[
+        const blocks=people.map((person,i)=>[
             "    {",
             `        id: "P${String(max+i+1).padStart(4,"0")}",`,
-            `        name: ${JSON.stringify(p.name)},`,
+            `        name: ${JSON.stringify(person.name)},`,
             "        accounts: {",
-            `            hogsmeade: ${p.hogsmeade??"null"},`,
-            `            hogwarts: ${p.hogwarts??"null"}`,
+            `            hogsmeade: ${person.hogsmeade??"null"},`,
+            `            hogwarts: ${person.hogwarts??"null"}`,
             "        }",
             "    }"
         ].join("\n"));
@@ -717,28 +727,39 @@ function generatePeopleCode(){
         const verified=parsePeopleSource(result);
         if(verified.ids.length!==parsed.ids.length+people.length)
             throw Error("Проверка результата не пройдена.");
-        setResult(result,parsed.text,"people.js",`Добавлено: ${people.length}`,
-            people.map((p,i)=>`P${String(max+i+1).padStart(4,"0")} — ${p.name}`).join("\n"));
-    }catch(e){showError(e.message)}
+        setResult(
+            result,parsed.text,"people.js",
+            `Добавлено: ${people.length}`,
+            people.map((person,i)=>
+                `P${String(max+i+1).padStart(4,"0")} — ${person.name}`
+            ).join("\n")
+        );
+    }catch(error){showError(error.message)}
+}
+
+/* =========================
+   DATABASE PARSER
+========================= */
+function parseDatabase(source,name){
+    const text=source.trim();
+    if(!text)throw Error(`Вставь актуальный файл ${name}.`);
+    const regex=new RegExp(`const\\s+${name}\\s*=\\s*(\\{[\\s\\S]*\\})\\s*;?\\s*$`);
+    const match=text.match(regex);
+    if(!match)throw Error(`Не найден ${name}.`);
+    if(/(?:function\s*\(|=>|`|\b(?:window|document|fetch|eval)\b)/.test(match[1]))
+        throw Error("Обнаружены неподдерживаемые конструкции.");
+    try{
+        return {source:text,data:Function(`"use strict";return (${match[1]})`)()};
+    }catch{
+        throw Error(`Не удалось прочитать ${name}.`);
+    }
 }
 
 /* =========================
    ORDERS DATABASE
 ========================= */
-function parseDatabase(source,name){
-    const text=source.trim();
-    if(!text)throw Error(`Вставь актуальный ${name}.js.`);
-    const regex=new RegExp(`const\\s+${name}\\s*=\\s*(\\{[\\s\\S]*\\})\\s*;?\\s*$`);
-    const match=text.match(regex);
-    if(!match)throw Error(`Не найден ${name}.`);
-    if(/(?:function\s*\(|=>|`|\b(?:window|document|fetch|eval)\b)/.test(match[1]))
-        throw Error("В файле обнаружены неподдерживаемые конструкции.");
-    try{
-        return {source:text,data:Function(`"use strict";return (${match[1]})`)()};
-    }catch{throw Error(`Не удалось прочитать ${name}.`)}
-}
-function readOrders(){
-    const result=parseDatabase($("orders-source").value,"ORDERS_DB");
+function readOrders(source=$("orders-source").value){
+    const result=parseDatabase(source,"ORDERS_DB");
     const data=result.data;
     if(!data||!data.counters||!Array.isArray(data.orders))
         throw Error("Некорректная структура orders.js.");
@@ -747,13 +768,13 @@ function readOrders(){
             throw Error(`Некорректный счётчик ${key}.`);
     }
     const ids=new Set();
-    data.orders.forEach(o=>{
-        if(!/^[SE]\d{4,}$/.test(o.id)||ids.has(o.id))
-            throw Error(`Ошибка номера заказа: ${o.id}`);
-        ids.add(o.id);
-        const store=o.id[0]==="S"?"sole":"extra";
-        if(Number(o.id.slice(1))>data.counters[store])
-            throw Error(`Счётчик ${store} меньше номера ${o.id}.`);
+    data.orders.forEach(order=>{
+        if(!/^[SE]\d{4,}$/.test(order.id)||ids.has(order.id))
+            throw Error(`Некорректный или повторяющийся номер: ${order.id}`);
+        ids.add(order.id);
+        const store=order.id[0]==="S"?"sole":"extra";
+        if(Number(order.id.slice(1))>data.counters[store])
+            throw Error(`Счётчик ${store} меньше номера ${order.id}.`);
     });
     return result;
 }
@@ -768,7 +789,7 @@ function outputOrders(data,source,report){
 }
 
 /* =========================
-   PEOPLE AUTOCOMPLETE
+   PEOPLE SEARCH
 ========================= */
 function bindPersonSearch(inputId,listId,callback){
     const input=$(inputId),list=$(listId);
@@ -781,19 +802,20 @@ function bindPersonSearch(inputId,listId,callback){
         if(!matches.length){
             const empty=document.createElement("div");
             empty.className="suggestion-empty";
-            empty.textContent="Человек не найден в базе.";
+            empty.textContent="Человек не найден в people.js.";
             list.appendChild(empty);
         }
-        matches.forEach(p=>{
+        matches.forEach(person=>{
             const button=document.createElement("button");
-            button.type="button";button.className="suggestion";
-            button.textContent=p.name;
+            button.type="button";
+            button.className="suggestion";
+            button.textContent=person.name;
             const small=document.createElement("small");
-            small.textContent=`${p.id} · Хогсмид ${p.accounts?.hogsmeade??"—"} · ГФ ${p.accounts?.hogwarts??"—"}`;
+            small.textContent=`${person.id} · Хогсмид ${person.accounts?.hogsmeade??"—"} · ГФ ${person.accounts?.hogwarts??"—"}`;
             button.appendChild(small);
             button.onclick=()=>{
-                input.value=p.name;
-                callback(p.id);
+                input.value=person.name;
+                callback(person.id);
                 list.classList.remove("visible");
                 resetResult();
             };
@@ -839,27 +861,30 @@ function allCollections(storeKey){
     });
     return result;
 }
-function addOrderItem(data=null){
+function addOrderItem(data=null,containerId="order-items",storeId="order-store"){
+    const container=$(containerId);
     const row=document.createElement("div");
     row.className="order-item";
     row.innerHTML=`
-        <div class="item-head"><span class="item-number">Товар</span><button class="remove-item" type="button">×</button></div>
+        <div class="item-head">
+            <span class="item-number">Товар</span>
+            <button class="remove-item" type="button">×</button>
+        </div>
         <div class="item-fields">
-
             <div class="field wide"><label>Коллекция / раздел</label><select class="item-collection"></select></div>
             <div class="field wide"><label>Модель</label><select class="item-model"></select></div>
             <div class="field item-variant-field" style="display:none"><label>Расцветка</label><select class="item-variant"></select></div>
             <div class="field"><label>Количество</label><input class="item-quantity" type="number" min="1" value="1"></div>
             <div class="field"><label>Цена за единицу (G)</label><input class="item-price" type="number" min="0" step="1"></div>
         </div>`;
-    $("order-items").appendChild(row);
+    container.appendChild(row);
     const col=row.querySelector(".item-collection");
     const model=row.querySelector(".item-model");
     const variant=row.querySelector(".item-variant");
     const variantField=row.querySelector(".item-variant-field");
     const price=row.querySelector(".item-price");
     function loadCollections(){
-        const collections=allCollections($("order-store").value);
+        const collections=allCollections($(storeId).value);
         col.replaceChildren();
         collections.forEach((c,i)=>col.add(new Option(c.name,String(i))));
         if(data){
@@ -871,19 +896,19 @@ function addOrderItem(data=null){
         loadModels();
     }
     function loadModels(){
-        const c=allCollections($("order-store").value)[Number(col.value)];
+        const c=allCollections($(storeId).value)[Number(col.value)];
         model.replaceChildren();
         (c?.models||[]).forEach((m,i)=>
             model.add(new Option(m.name||m.id||m.file||`Модель ${i+1}`,String(i)))
         );
         if(data){
-            const index=(c?.models||[]).findIndex(m=>m.file===data.model);
+            const index=(c?.models||[]).findIndex(m=>(m.file||m.id)===data.model);
             if(index>=0)model.value=String(index);
         }
         loadVariants();
     }
     function loadVariants(){
-        const c=allCollections($("order-store").value)[Number(col.value)];
+        const c=allCollections($(storeId).value)[Number(col.value)];
         const m=c?.models?.[Number(model.value)];
         const variants=Array.isArray(m?.variants)?m.variants:[];
         variant.replaceChildren();
@@ -903,7 +928,7 @@ function addOrderItem(data=null){
     row.querySelectorAll("input").forEach(i=>i.oninput=resetResult);
     row.querySelector(".remove-item").onclick=()=>{
         row.remove();
-        renumberItems();
+        renumberItems(containerId);
         resetResult();
     };
     row.reloadCollections=loadCollections;
@@ -912,16 +937,16 @@ function addOrderItem(data=null){
         row.querySelector(".item-quantity").value=data.quantity??1;
         price.value=data.price??"";
     }
-    renumberItems();
+    renumberItems(containerId);
 }
-function renumberItems(){
-    document.querySelectorAll("#order-items .order-item").forEach((row,i)=>{
-        row.querySelector(".item-number").textContent=`Товар ${i+1}`;
-    });
+function renumberItems(containerId="order-items"){
+    document.querySelectorAll(`#${containerId} .order-item`).forEach((row,i)=>
+        row.querySelector(".item-number").textContent=`Товар ${i+1}`
+    );
 }
-function getOrderItems(){
-    const collections=allCollections($("order-store").value);
-    const rows=[...document.querySelectorAll("#order-items .order-item")];
+function getOrderItems(containerId="order-items",storeId="order-store"){
+    const collections=allCollections($(storeId).value);
+    const rows=[...document.querySelectorAll(`#${containerId} .order-item`)];
     if(!rows.length)throw Error("Добавь хотя бы один товар.");
     return rows.map(row=>{
         const c=collections[Number(row.querySelector(".item-collection").value)];
@@ -933,13 +958,11 @@ function getOrderItems(){
         if(!Number.isSafeInteger(quantity)||quantity<1)throw Error("Некорректное количество.");
         if(!priceText||!Number.isFinite(price)||price<0)throw Error("Укажи корректную цену.");
         return {
-            collection:c.id,
-            section:c.section??null,
+            collection:c.id,section:c.section??null,
             model:m.file||m.id,
             variant:row.querySelector(".item-variant-field").style.display==="none"
                 ?null:row.querySelector(".item-variant").value||null,
-            quantity,
-            price
+            quantity,price
         };
     });
 }
@@ -948,6 +971,15 @@ $("order-store").onchange=()=>{
     resetResult();
 };
 addOrderItem();
+
+/* =========================
+   CARD TEXT
+========================= */
+function toggleCardText(){
+    $("order-card-text-field").style.display=$("order-card").value==="yes"?"flex":"none";
+    resetResult();
+}
+$("order-card").onchange=toggleCardText;
 
 /* =========================
    NEW ORDER
@@ -969,20 +1001,18 @@ function generateNewOrder(){
         if(!Number.isFinite(total)||total<0)throw Error("Некорректная сумма.");
         const next=data.counters[store]+1;
         const id=orderNumber(store,next);
+        const cardRequired=$("order-card").value==="yes";
         const order={
-            id,store,date,
-            status:$("order-status").value,
-            senderType:type,
-            sender:type==="person"?selectedSender:null,
-            recipient:selectedRecipient,
-            delivery:$("order-delivery").value,
-            items,total,
-            cardRequired:$("order-card").value==="yes"
+            id,store,date,status:$("order-status").value,
+            senderType:type,sender:type==="person"?selectedSender:null,
+            recipient:selectedRecipient,delivery:$("order-delivery").value,
+            items,total,cardRequired,
+            cardText:cardRequired?$("order-card-text").value.trim():""
         };
         data.counters[store]=next;
         data.orders.push(order);
         outputOrders(data,source,`Добавлен ${id}\nТоваров: ${items.length}\nСумма: ${total} G`);
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 
 /* =========================
@@ -999,79 +1029,91 @@ function loadOrderForEdit(){
             <div class="divider"></div>
             <div class="section-label">Редактирование ${order.id}</div>
             <div class="form-grid">
+                <div class="field"><label>Магазин</label><select id="edit-store">
+                    <option value="sole">SÓLE</option><option value="extra">EXTRA</option>
+                </select></div>
                 <div class="field"><label>Дата</label><input id="edit-date" type="date"></div>
                 <div class="field"><label>Сумма (G)</label><input id="edit-total" type="number" min="0" step="1"></div>
-                <div class="field"><label>Площадка доставки</label>
-                    <select id="edit-delivery">
-                        <option value="hogsmeade">Хогсмид</option>
-                        <option value="hogwarts">Главный форум</option>
-                    </select>
-                </div>
-                <div class="field"><label>Карточка</label>
-                    <select id="edit-card">
-                        <option value="no">Не требуется</option>
-                        <option value="yes">Требуется</option>
-                    </select>
-                </div>
+                <div class="field"><label>Площадка</label><select id="edit-delivery">
+                    <option value="hogsmeade">Хогсмид</option>
+                    <option value="hogwarts">Главный форум</option>
+                </select></div>
+                <div class="field"><label>Карточка</label><select id="edit-card">
+                    <option value="no">Не требуется</option>
+                    <option value="yes">Требуется</option>
+                </select></div>
             </div>
-            <div class="field"><label>Тип отправителя</label>
-                <select id="edit-sender-type">
-                    <option value="person">От человека</option>
-                    <option value="self">Для себя</option>
-                    <option value="store">От магазина</option>
-                </select>
+            <div class="field" id="edit-card-text-field">
+                <label>Текст карточки</label><textarea id="edit-card-text"></textarea>
             </div>
-            <div class="field"><label>ID отправителя</label>
-                <select id="edit-sender"></select>
-            </div>
-            <div class="field"><label>Получатель</label>
-                <select id="edit-recipient"></select>
-            </div>
-            <div class="actions">
-                <button class="button primary" type="button" onclick="generateOrderEdit()">Сгенерировать изменения</button>
-            </div>`;
+            <div class="field"><label>Тип отправителя</label><select id="edit-sender-type">
+                <option value="person">От человека</option>
+                <option value="self">Для себя</option>
+                <option value="store">От магазина</option>
+            </select></div>
+            <div class="field" id="edit-sender-field"><label>Отправитель</label><select id="edit-sender"></select></div>
+            <div class="field"><label>Получатель</label><select id="edit-recipient"></select></div>
+            <div class="divider"></div>
+            <div class="section-label">Товары</div>
+            <div id="edit-order-items" class="order-items"></div>
+            <div class="actions"><button class="button" type="button"
+                onclick="addOrderItem(null,'edit-order-items','edit-store')">+ Добавить товар</button></div>
+            <div class="actions"><button class="button primary" type="button"
+                onclick="generateOrderEdit()">Сгенерировать изменения</button></div>`;
+        $("edit-store").value=order.store;
         $("edit-date").value=order.date;
         $("edit-total").value=order.total??0;
         $("edit-delivery").value=order.delivery;
         $("edit-card").value=order.cardRequired?"yes":"no";
+        $("edit-card-text").value=order.cardText||"";
         $("edit-sender-type").value=order.senderType;
-        for(const person of getPeople()){
-            $("edit-sender").add(new Option(person.name,person.id));
-            $("edit-recipient").add(new Option(person.name,person.id));
-        }
+        getPeople().forEach(p=>{
+            $("edit-sender").add(new Option(p.name,p.id));
+            $("edit-recipient").add(new Option(p.name,p.id));
+        });
         $("edit-sender").value=order.sender||"";
         $("edit-recipient").value=order.recipient;
         const toggle=()=>{
-            $("edit-sender").parentElement.style.display=
-                $("edit-sender-type").value==="person"?"flex":"none";
+            $("edit-sender-field").style.display=$("edit-sender-type").value==="person"?"flex":"none";
+            $("edit-card-text-field").style.display=$("edit-card").value==="yes"?"flex":"none";
         };
         $("edit-sender-type").onchange=toggle;
+        $("edit-card").onchange=toggle;
+        $("edit-store").onchange=()=>{
+            $("edit-order-items").innerHTML="";
+            addOrderItem(null,"edit-order-items","edit-store");
+        };
+        (order.items||[]).forEach(item=>addOrderItem(item,"edit-order-items","edit-store"));
         toggle();
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 function generateOrderEdit(){
     try{
         const {source,data}=readOrders();
         const order=findOrder(data,editingOrder);
+        const store=$("edit-store").value;
+        if(store!==order.store)
+            throw Error("Магазин нельзя изменить без смены номера заказа.");
         const total=Number($("edit-total").value);
         if(!Number.isFinite(total)||total<0)throw Error("Некорректная сумма.");
         if(!$("edit-date").value)throw Error("Укажи дату.");
-        if(!$("edit-recipient").value)throw Error("Выбери получателя.");
         const type=$("edit-sender-type").value;
-        if(type==="person"&&!$("edit-sender").value)
-            throw Error("Выбери отправителя.");
+        if(type==="person"&&!$("edit-sender").value)throw Error("Выбери отправителя.");
+        if(!$("edit-recipient").value)throw Error("Выбери получателя.");
         order.date=$("edit-date").value;
         order.total=total;
         order.delivery=$("edit-delivery").value;
-        order.cardRequired=$("edit-card").value==="yes";
         order.senderType=type;
         order.sender=type==="person"?$("edit-sender").value:null;
         order.recipient=$("edit-recipient").value;
+        order.items=getOrderItems("edit-order-items","edit-store");
+        order.cardRequired=$("edit-card").value==="yes";
+        order.cardText=order.cardRequired?$("edit-card-text").value.trim():"";
         delete order.giftNote;
         delete order.transferComment;
         delete order.privateNotes;
         outputOrders(data,source,`Изменён заказ ${order.id}.`);
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 
 /* =========================
@@ -1084,7 +1126,7 @@ function generateStatusChange(){
         const previous=order.status;
         order.status=$("new-order-status").value;
         outputOrders(data,source,`${order.id}: ${previous} → ${order.status}`);
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 function generateOrderDeletion(){
     try{
@@ -1093,14 +1135,9 @@ function generateOrderDeletion(){
         if(!confirm(`Удалить ${order.id}? Номер останется занятым.`))return;
         data.orders=data.orders.filter(o=>o.id!==order.id);
         outputOrders(data,source,`Удалён ${order.id}. Счётчики сохранены.`);
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 $("orders-source").addEventListener("input",resetResult);
-document.addEventListener("click",event=>{
-    if(!event.target.closest(".autocomplete"))
-        document.querySelectorAll(".suggestions").forEach(s=>s.classList.remove("visible"));
-});
-
 
 /* =========================
    ASSETS DATABASE
@@ -1115,22 +1152,19 @@ function readAssets(){
     return result;
 }
 function outputAssets(data,source,report){
-    setResult(
-        `const OTHER_ASSETS = ${JSON.stringify(data,null,4)};\n`,
-        source,"other-assets.js","Готово",report
-    );
+    setResult(`const OTHER_ASSETS = ${JSON.stringify(data,null,4)};\n`,
+        source,"other-assets.js","Готово",report);
 }
 function validateAssetFile(value){
     const file=String(value??"").trim();
     if(!file||!/\.(png|jpe?g|webp|gif)$/i.test(file))
-        throw Error("Укажи название файла с расширением PNG, JPG, JPEG, WEBP или GIF.");
+        throw Error("Укажи файл PNG, JPG, JPEG, WEBP или GIF.");
     if(file.includes("/")||file.includes("\\")||file.includes(".."))
-        throw Error("Указывай только имя файла, без пути.");
+        throw Error("Укажи только название файла, без пути.");
     return file;
 }
 function getAssetArray(data,store,type){
-    if(!["sole","extra"].includes(store))
-        throw Error("Неизвестный магазин.");
+    if(!["sole","extra"].includes(store))throw Error("Неизвестный магазин.");
     if(!["cards","delivery","locations"].includes(type))
         throw Error("Неизвестный раздел.");
     if(!Array.isArray(data[store][type]))data[store][type]=[];
@@ -1157,17 +1191,17 @@ function fillCardFromOrder(){
         $("asset-card-file").value=`card-${id}.png`;
         const source=$("asset-orders-source").value.trim();
         if(!source)return;
-        const parsed=parseDatabase(source,"ORDERS_DB");
-        const order=findOrder(parsed.data,id);
+        const {data}=readOrders(source);
+        const order=findOrder(data,id);
         $("asset-card-date").value=order.date||"";
         const first=order.items?.[0];
         $("asset-card-collection").value=first?.collection||"";
         $("asset-card-model").value=first?.model||"";
         $("asset-card-sender").value=order.sender||"";
         $("asset-card-recipient").value=order.recipient||"";
-    }catch(e){
-        showError(e.message);
-    }
+        $("asset-card-message").value=order.cardText||"";
+        resetResult();
+    }catch(error){showError(error.message)}
 }
 $("asset-order-id").addEventListener("change",fillCardFromOrder);
 $("asset-orders-source").addEventListener("change",fillCardFromOrder);
@@ -1182,20 +1216,19 @@ function generateAssetCard(){
         if(!/^S\d{4,}$/.test(id))
             throw Error("Карточки SÓLE должны иметь номер S0001 и далее.");
         const cards=getAssetArray(data,"sole","cards");
-        if(cards.some(c=>c.orderId===id))
+        if(cards.some(card=>card.orderId===id))
             throw Error(`Карточка ${id} уже существует.`);
         const file=validateAssetFile(
             $("asset-card-file").value||`card-${id}.png`
         );
-        if(cards.some(c=>c.file.toLowerCase()===file.toLowerCase()))
-            throw Error("Файл с таким именем уже есть.");
+        if(cards.some(card=>card.file.toLowerCase()===file.toLowerCase()))
+            throw Error("Файл с таким названием уже существует.");
         const date=$("asset-card-date").value;
         if(!/^\d{4}-\d{2}-\d{2}$/.test(date))
             throw Error("Укажи дату карточки.");
         const recipient=$("asset-card-recipient").value.trim();
-        if(!recipient)throw Error("Укажи ID получателя.");
-        const personIds=new Set(getPeople().map(p=>p.id));
         const sender=$("asset-card-sender").value.trim()||null;
+        const personIds=new Set(getPeople().map(p=>p.id));
         if(!personIds.has(recipient))
             throw Error("Получатель отсутствует в people.js.");
         if(sender&&!personIds.has(sender))
@@ -1212,8 +1245,8 @@ function generateAssetCard(){
         };
         cards.push(card);
         outputAssets(data,source,
-            `Добавлена карточка ${id}\nФайл: ${file}\nПолучатель: ${recipient}`);
-    }catch(e){showError(e.message)}
+            `Добавлена карточка ${id}\nФайл: ${file}\nТекст: ${card.message||"не указан"}`);
+    }catch(error){showError(error.message)}
 }
 
 /* =========================
@@ -1233,13 +1266,12 @@ function generateDecor(){
         list.push({file,name});
         outputAssets(data,source,
             `Добавлено изображение: ${name}\nМагазин: ${store}\nРаздел: ${type}`);
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 
 /* =========================
    EDIT ASSET
 ========================= */
-let editingAsset=null;
 function loadAssetForEdit(){
     try{
         const {data}=readAssets();
@@ -1283,7 +1315,7 @@ function loadAssetForEdit(){
         button.onclick=generateAssetEdit;
         box.appendChild(button);
         container.appendChild(box);
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 function generateAssetEdit(){
     try{
@@ -1309,7 +1341,7 @@ function generateAssetEdit(){
         }
         list[index]=updated;
         outputAssets(data,source,`Изменено изображение: ${updated.file}`);
-    }catch(e){showError(e.message)}
+    }catch(error){showError(error.message)}
 }
 
 /* =========================
@@ -1326,8 +1358,8 @@ function generateAssetDeletion(){
         if(!confirm(`Удалить запись ${item.orderId||item.file}?`))return;
         list.splice(index,1);
         outputAssets(data,source,
-            `Удалена запись: ${item.orderId||item.file}\nСам файл изображения в GitHub не удалён.`);
-    }catch(e){showError(e.message)}
+            `Удалена запись: ${item.orderId||item.file}\nФайл изображения в GitHub не удалён.`);
+    }catch(error){showError(error.message)}
 }
 
 /* =========================
@@ -1338,14 +1370,12 @@ $("orders-source").addEventListener("input",resetResult);
 $("assets-source").addEventListener("input",resetResult);
 $("asset-orders-source").addEventListener("input",resetResult);
 document.addEventListener("click",event=>{
-    if(!event.target.closest(".autocomplete")){
+    if(!event.target.closest(".autocomplete"))
         document.querySelectorAll(".suggestions").forEach(s=>
             s.classList.remove("visible")
         );
-    }
 });
 addPersonRow();
-addOrderItem();
 $("order-date").value=new Date().toLocaleDateString("en-CA");
 </script>
 </body>
