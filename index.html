@@ -98,14 +98,15 @@ a{text-decoration:none;color:inherit}
     gap:20px;
 }
 .module{
-    min-height:270px;
+    min-height:390px;
     padding:26px;
     border:1px solid var(--line);
     border-radius:20px;
     background:#fff;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
+    justify-content:flex-start;
+    gap:0;
     transition:transform .2s,border-color .2s,box-shadow .2s;
 }
 .module:hover{
@@ -117,6 +118,8 @@ a{text-decoration:none;color:inherit}
     display:flex;
     justify-content:space-between;
     align-items:center;
+    min-height:40px;
+    margin-bottom:28px;
 }
 .module-number{
     color:#bbb;
@@ -153,6 +156,7 @@ a{text-decoration:none;color:inherit}
     color:var(--muted);
     font-size:11px;
     line-height:1.5;
+    min-height:17px;
 }
 .module-arrow{
     margin-top:18px;
