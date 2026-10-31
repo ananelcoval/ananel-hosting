@@ -1153,16 +1153,15 @@ models: [
             { id: "blue", name: "Синий", file: "06-by-the-rules-blue.png" },
             { id: "yellow", name: "Жёлтый", file: "06-by-the-rules-yellow.png" }
         ],
-        description: `Встречают по одёжке, а
+              description: `Встречают по одёжке, а
 провожают обычно к директору.
 Зато форма безупречна.
 Придраться почти не к чему.`
     }
-                        ]
-                    }
-                ],
+],
 
-                decor: []
+decor: []
             }
         ]
-    };
+    }
+};
