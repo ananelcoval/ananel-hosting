@@ -37,10 +37,10 @@ button{cursor:pointer}
 .panel{padding:28px}
 .panel-title{margin:0 0 8px;color:var(--green);font-size:22px}
 .panel-description{margin:0 0 28px;color:#999;font-size:12px;line-height:1.6}
-.field{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;min-width:0}
 .field label{color:#777;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.field input,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;font-size:12px;outline:none}
-.field input:focus,.field textarea:focus{border-color:var(--pink)}
+.field input,.field textarea,.field select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;font-size:12px;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--pink)}
 .field textarea{min-height:170px;resize:vertical;font-family:monospace;line-height:1.6}
 .field-hint{color:#aaa;font-size:10px;line-height:1.6}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
@@ -52,17 +52,41 @@ button{cursor:pointer}
 .button.primary:hover{background:var(--pink);border-color:var(--pink)}
 .button:hover{border-color:var(--pink)}
 .button:disabled{opacity:.4;cursor:default}
-.people-list{display:flex;flex-direction:column;gap:12px}
-.person-row{padding:18px;border:1px solid var(--line);border-radius:12px;background:#faf9fa}
-.person-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px}
-.person-number{color:var(--pink);font-size:11px;font-weight:700}
-.remove-person{border:0;background:none;color:#aaa;font-size:18px}
-.remove-person:hover{color:var(--pink)}
+.people-list,.order-items{display:flex;flex-direction:column;gap:12px}
+.person-row,.order-item{padding:18px;border:1px solid var(--line);border-radius:12px;background:#faf9fa}
+.person-head,.item-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px}
+.person-number,.item-number{color:var(--pink);font-size:11px;font-weight:700}
+.remove-person,.remove-item{border:0;background:none;color:#aaa;font-size:18px}
+.remove-person:hover,.remove-item:hover{color:var(--pink)}
 .person-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
-.person-fields .field{margin:0}
+.person-fields .field,.item-fields .field{margin:0}
 .bulk-box{margin-top:25px;padding:18px;border:1px dashed var(--line);border-radius:12px}
 .bulk-box h4{margin:0 0 8px;color:var(--green);font-size:13px}
 .bulk-box textarea{min-height:110px}
+.tool-panel{display:none}
+.tool-panel.active{display:block}
+.mode-switch{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:25px}
+.mode-button{padding:11px 14px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#777;font-size:11px;font-weight:600}
+.mode-button.active{border-color:var(--pink);background:#f8eff4;color:var(--pink)}
+.sender-options{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px}
+.sender-option{display:flex;align-items:center;gap:7px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;color:#666;font-size:11px;cursor:pointer}
+.sender-option:has(input:checked){border-color:var(--pink);background:#f8eff4}
+.sender-option input{accent-color:var(--pink)}
+.autocomplete{position:relative}
+.suggestions{display:none;position:absolute;top:100%;left:0;right:0;z-index:20;max-height:220px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px #00000012}
+.suggestions.visible{display:block}
+.suggestion{width:100%;padding:12px;border:0;border-bottom:1px solid var(--line);background:#fff;text-align:left;color:#333;font-size:12px}
+.suggestion:hover{background:var(--soft);color:var(--green)}
+.suggestion small{display:block;margin-top:4px;color:#aaa;font-size:10px}
+.suggestion-empty{padding:13px;color:#999;font-size:11px}
+.item-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.item-fields .wide{grid-column:1/-1}
+.item-summary{margin-top:12px;color:#888;font-size:11px}
+.order-summary{padding:18px;background:var(--soft);border-radius:12px;margin-top:20px}
+.order-summary strong{color:var(--green)}
+.order-summary p{margin:8px 0 0;color:#777;font-size:11px;line-height:1.7}
+.order-edit-panel{display:none}
+.order-edit-panel.visible{display:block}
 .result{display:none;margin-top:30px}
 .result.visible{display:block}
 .result-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:10px}
@@ -91,8 +115,8 @@ button{cursor:pointer}
 .header-label{display:none}
 .page-heading{margin:35px 0 25px}
 .panel{padding:18px}
-.form-grid,.person-fields{grid-template-columns:1fr}
-.person-fields .field:first-child{grid-column:auto}
+.form-grid,.person-fields,.item-fields{grid-template-columns:1fr}
+.person-fields .field:first-child,.item-fields .wide{grid-column:auto}
 }
 </style>
 </head>
@@ -117,56 +141,220 @@ button{cursor:pointer}
     <!-- ИНСТРУМЕНТЫ -->
     <aside class="sidebar">
         <div class="sidebar-label">Инструменты</div>
-        <button class="tool-button active" type="button">Люди <span class="tool-status">Доступно</span></button>
+        <button class="tool-button active" data-tool="people" type="button">Люди <span class="tool-status">Доступно</span></button>
+        <button class="tool-button" data-tool="orders" type="button">Заказы <span class="tool-status">Доступно</span></button>
         <button class="tool-button" disabled>Коллекции <span class="tool-status">Позже</span></button>
         <button class="tool-button" disabled>Модели <span class="tool-status">Позже</span></button>
         <button class="tool-button" disabled>Карточки и декор <span class="tool-status">Позже</span></button>
         <button class="tool-button" disabled>Индивидуальные заказы <span class="tool-status">Позже</span></button>
     </aside>
 
-    <!-- ГЕНЕРАТОР -->
     <main class="panel">
-        <h3 class="panel-title">База людей</h3>
-        <p class="panel-description">Вставь актуальный people.js, добавь нужных людей и получи полный обновлённый файл.</p>
 
-        <div class="field">
-            <label for="source">Актуальный код people.js</label>
-            <textarea id="source" spellcheck="false" placeholder="const PEOPLE = [...]"></textarea>
-            <div class="field-hint">Используй последнюю версию из GitHub. Исходный код не изменяется до генерации.</div>
-        </div>
+        <!-- =========================
+             PEOPLE
+        ========================= -->
+        <section id="tool-people" class="tool-panel active">
+            <h3 class="panel-title">База людей</h3>
+            <p class="panel-description">Вставь актуальный people.js, добавь нужных людей и получи полный обновлённый файл.</p>
 
-        <div class="divider"></div>
-        <div class="section-label">Новые люди</div>
-
-        <!-- СТРОКИ ЛЮДЕЙ -->
-        <div id="people-list" class="people-list"></div>
-
-        <div class="actions">
-            <button class="button" type="button" onclick="addPersonRow()">+ Добавить человека</button>
-            <button class="button" type="button" onclick="clearPeople()">Очистить список</button>
-        </div>
-
-        <!-- МАССОВАЯ ВСТАВКА -->
-        <div class="bulk-box">
-            <h4>Массовая вставка</h4>
-            <div class="field-hint">Вставь строки из Excel или Google Sheets. Порядок столбцов: имя, ID Хогсмида, ID главного форума. Разделитель — табуляция.</div>
-            <div class="field" style="margin-top:14px;margin-bottom:0">
-                <textarea id="bulk-input" spellcheck="false" placeholder="Лина Скотт	749	2181&#10;Игараси Кайто	917	3511"></textarea>
+            <div class="field">
+                <label for="people-source">Актуальный код people.js</label>
+                <textarea id="people-source" spellcheck="false" placeholder="const PEOPLE = [...]"></textarea>
+                <div class="field-hint">Используй последнюю версию из GitHub.</div>
             </div>
-            <div class="actions" style="margin-top:12px">
-                <button class="button" type="button" onclick="importPeople()">Добавить строки в список</button>
+
+            <div class="divider"></div>
+            <div class="section-label">Новые люди</div>
+            <div id="people-list" class="people-list"></div>
+
+            <div class="actions">
+                <button class="button" type="button" onclick="addPersonRow()">+ Добавить человека</button>
+                <button class="button" type="button" onclick="clearPeople()">Очистить список</button>
             </div>
-        </div>
 
-        <div class="actions">
-            <button class="button primary" type="button" onclick="generateCode()">Сгенерировать код</button>
-        </div>
+            <div class="bulk-box">
+                <h4>Массовая вставка</h4>
+                <div class="field-hint">Столбцы: имя, ID Хогсмида, ID главного форума. Разделитель — табуляция.</div>
+                <div class="field" style="margin-top:14px;margin-bottom:0">
+                    <textarea id="bulk-input" spellcheck="false" placeholder="Имя Фамилия	749	2181"></textarea>
+                </div>
+                <div class="actions" style="margin-top:12px">
+                    <button class="button" type="button" onclick="importPeople()">Добавить строки в список</button>
+                </div>
+            </div>
 
-        <!-- РЕЗУЛЬТАТ -->
+            <div class="actions">
+                <button class="button primary" type="button" onclick="generatePeopleCode()">Сгенерировать people.js</button>
+            </div>
+        </section>
+
+        <!-- =========================
+             ORDERS
+        ========================= -->
+        <section id="tool-orders" class="tool-panel">
+            <h3 class="panel-title">Заказы</h3>
+            <p class="panel-description">Добавление, редактирование и обновление заказов SÓLE и EXTRA.</p>
+
+            <div class="field">
+                <label for="orders-source">Актуальный код orders.js</label>
+                <textarea id="orders-source" spellcheck="false" placeholder="const ORDERS_DB = {...}"></textarea>
+                <div class="field-hint">Вставь последнюю версию data/orders.js из GitHub.</div>
+            </div>
+
+            <div class="mode-switch">
+                <button class="mode-button active" data-mode="new" type="button">Новый заказ</button>
+                <button class="mode-button" data-mode="edit" type="button">Редактировать</button>
+                <button class="mode-button" data-mode="status" type="button">Статус</button>
+                <button class="mode-button" data-mode="delete" type="button">Удалить</button>
+            </div>
+
+            <!-- НОВЫЙ ЗАКАЗ -->
+            <div id="order-new" class="order-mode">
+                <div class="section-label">Основные данные</div>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="order-store">Магазин</label>
+                        <select id="order-store">
+                            <option value="sole">SÓLE</option>
+                            <option value="extra">EXTRA</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="order-date">Дата заказа</label>
+                        <input id="order-date" type="date">
+                    </div>
+                    <div class="field">
+                        <label for="order-delivery">Площадка доставки</label>
+                        <select id="order-delivery">
+                            <option value="hogsmeade">Хогсмид</option>
+                            <option value="hogwarts">Главный форум</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="order-status">Статус</label>
+                        <select id="order-status">
+                            <option value="new">Новый</option>
+                            <option value="delivered">Доставлен</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+                <div class="section-label">Отправитель и получатель</div>
+
+                <div class="sender-options">
+                    <label class="sender-option"><input type="radio" name="sender-type" value="person" checked> От человека</label>
+                    <label class="sender-option"><input type="radio" name="sender-type" value="self"> Для себя</label>
+                    <label class="sender-option"><input type="radio" name="sender-type" value="store"> От магазина</label>
+                </div>
+
+                <div id="sender-person-field" class="field autocomplete">
+                    <label for="order-sender">Заказчик</label>
+                    <input id="order-sender" autocomplete="off" placeholder="Начни вводить имя...">
+                    <div id="sender-suggestions" class="suggestions"></div>
+                </div>
+
+                <div class="field autocomplete">
+                    <label for="order-recipient">Получатель</label>
+                    <input id="order-recipient" autocomplete="off" placeholder="Начни вводить имя...">
+                    <div id="recipient-suggestions" class="suggestions"></div>
+                </div>
+
+                <div class="divider"></div>
+                <div class="section-label">Товары</div>
+                <div id="order-items" class="order-items"></div>
+                <div class="actions">
+                    <button class="button" type="button" onclick="addOrderItem()">+ Добавить товар</button>
+                </div>
+
+                <div class="divider"></div>
+                <div class="section-label">Дополнительно</div>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="order-total">Сумма перевода (G)</label>
+                        <input id="order-total" type="number" min="0" step="1" placeholder="Фактическая сумма">
+                    </div>
+                    <div class="field">
+                        <label for="order-card">Карточка</label>
+                        <select id="order-card">
+                            <option value="no">Не требуется</option>
+                            <option value="yes">Требуется</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="order-gift-note">Текст карточки</label>
+                    <textarea id="order-gift-note" placeholder="Если карточки нет, оставь пустым"></textarea>
+                </div>
+                <div class="field">
+                    <label for="order-transfer-comment">Комментарий перевода</label>
+                    <textarea id="order-transfer-comment" placeholder="Исходный комментарий покупателя"></textarea>
+                </div>
+                <div class="field">
+                    <label for="order-private-notes">Мои пометки</label>
+                    <textarea id="order-private-notes" placeholder="Дополнительные сведения"></textarea>
+                </div>
+
+                <div class="order-summary">
+                    <strong>Новый заказ</strong>
+                    <p id="order-summary-text">Номер будет присвоен автоматически после генерации.</p>
+                </div>
+
+                <div class="actions">
+                    <button class="button primary" type="button" onclick="generateNewOrder()">Сгенерировать заказ</button>
+                </div>
+            </div>
+
+            <!-- РЕДАКТИРОВАНИЕ -->
+            <div id="order-edit" class="order-mode" style="display:none">
+                <div class="field">
+                    <label for="edit-order-id">Номер заказа</label>
+                    <input id="edit-order-id" placeholder="S0001">
+                </div>
+                <button class="button" type="button" onclick="loadOrderForEdit()">Найти заказ</button>
+                <div id="order-edit-panel" class="order-edit-panel"></div>
+            </div>
+
+            <!-- СТАТУС -->
+            <div id="order-status-mode" class="order-mode" style="display:none">
+                <div class="field">
+                    <label for="status-order-id">Номер заказа</label>
+                    <input id="status-order-id" placeholder="S0001">
+                </div>
+                <div class="field">
+                    <label for="new-order-status">Новый статус</label>
+                    <select id="new-order-status">
+                        <option value="new">Новый</option>
+                        <option value="delivered">Доставлен</option>
+                    </select>
+                </div>
+                <button class="button primary" type="button" onclick="generateStatusChange()">Сгенерировать изменение</button>
+            </div>
+
+            <!-- УДАЛЕНИЕ -->
+            <div id="order-delete" class="order-mode" style="display:none">
+                <div class="field">
+                    <label for="delete-order-id">Номер заказа</label>
+                    <input id="delete-order-id" placeholder="S0001">
+                </div>
+                <div class="field-hint">Удаление не освобождает номер заказа. Действие требует подтверждения.</div>
+                <div class="actions">
+                    <button class="button" type="button" onclick="generateOrderDeletion()">Удалить из реестра</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================
+             RESULT
+        ========================= -->
         <div id="result" class="result">
             <div class="divider"></div>
             <div class="result-heading">
-                <h3>Обновлённый people.js</h3>
+                <h3 id="result-title">Обновлённый файл</h3>
                 <span id="result-status" class="result-status"></span>
             </div>
             <div class="field">
@@ -174,7 +362,7 @@ button{cursor:pointer}
             </div>
             <div class="actions">
                 <button class="button primary" type="button" onclick="copyCode()">Скопировать код</button>
-                <button class="button" type="button" onclick="downloadCode()">Скачать people.js</button>
+                <button class="button" type="button" onclick="downloadCode()">Скачать файл</button>
                 <button class="button" type="button" onclick="downloadBackup()">Скачать исходник</button>
             </div>
             <div class="divider"></div>
@@ -182,10 +370,7 @@ button{cursor:pointer}
             <div id="report" class="report"></div>
             <div class="checklist">
                 <h4>Чеклист публикации</h4>
-                <label class="check-item"><input type="checkbox">Скопировать или скачать обновлённый код.</label>
-                <label class="check-item"><input type="checkbox">Заменить содержимое data/people.js в GitHub.</label>
-                <label class="check-item"><input type="checkbox">Сохранить изменения через Commit changes.</label>
-                <label class="check-item"><input type="checkbox">Проверить добавленные записи.</label>
+                <div id="checklist-items"></div>
             </div>
         </div>
     </main>
@@ -193,14 +378,16 @@ button{cursor:pointer}
 </div>
 
 <div id="toast" class="toast">Код скопирован</div>
+<script src="../data/people.js"></script>
+<script src="../data/products.js"></script>
 <script>
 
 /* =========================
    CONFIG
 ========================= */
 const $=id=>document.getElementById(id);
-let originalCode="",generatedCode="",toastTimer;
-let rowCounter=0;
+let originalCode="",generatedCode="",generatedFilename="",toastTimer;
+let activeTool="people",orderMode="new",rowCounter=0;
 
 /* =========================
    HELPERS
@@ -219,13 +406,13 @@ function resetResult(){
     $("output").value="";
 }
 function validateName(value){
-    const name=value.trim().replace(/\s+/g," ");
+    const name=String(value??"").trim().replace(/\s+/g," ");
     if(!name)throw Error("Укажи имя персонажа.");
     if(name.length>150)throw Error("Имя слишком длинное.");
     return name;
 }
 function validateForumId(value,label){
-    const id=value.trim();
+    const id=String(value??"").trim();
     if(!id)return null;
     if(!/^\d+$/.test(id))throw Error(`${label}: ID должен содержать только цифры.`);
     const number=Number(id);
@@ -233,17 +420,67 @@ function validateForumId(value,label){
     return number;
 }
 function normalizeName(name){
-    return name.trim().replace(/\s+/g," ").toLocaleLowerCase("ru-RU");
+    return String(name??"").trim().replace(/\s+/g," ").toLocaleLowerCase("ru-RU");
+}
+function setResult(code,source,filename,status,report){
+    originalCode=source;
+    generatedCode=code;
+    generatedFilename=filename;
+    $("output").value=code;
+    $("result-title").textContent=`Обновлённый ${filename}`;
+    $("result-status").textContent=status;
+    $("report").textContent=report;
+    $("checklist-items").innerHTML=[
+        `Скопировать или скачать обновлённый ${filename}.`,
+        `Заменить содержимое data/${filename} в GitHub.`,
+        "Сохранить изменения через Commit changes.",
+        "Проверить результат после обновления сайта."
+    ].map(text=>`<label class="check-item"><input type="checkbox">${text}</label>`).join("");
+    $("result").classList.add("visible");
+    $("result").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 /* =========================
-   PERSON ROWS
+   TOOL SWITCH
+========================= */
+document.querySelectorAll("[data-tool]").forEach(button=>{
+    button.addEventListener("click",()=>{
+        activeTool=button.dataset.tool;
+        document.querySelectorAll("[data-tool]").forEach(b=>
+            b.classList.toggle("active",b===button)
+        );
+        document.querySelectorAll(".tool-panel").forEach(panel=>
+            panel.classList.toggle("active",panel.id===`tool-${activeTool}`)
+        );
+        resetResult();
+    });
+});
+document.querySelectorAll("[data-mode]").forEach(button=>{
+    button.addEventListener("click",()=>{
+        orderMode=button.dataset.mode;
+        document.querySelectorAll("[data-mode]").forEach(b=>
+            b.classList.toggle("active",b===button)
+        );
+        const ids={
+            new:"order-new",
+            edit:"order-edit",
+            status:"order-status-mode",
+            delete:"order-delete"
+        };
+        document.querySelectorAll(".order-mode").forEach(panel=>
+            panel.style.display=panel.id===ids[orderMode]?"block":"none"
+        );
+        resetResult();
+    });
+});
+
+/* =========================
+   PEOPLE ROWS
 ========================= */
 function addPersonRow(data={}){
     rowCounter++;
     const row=document.createElement("div");
     row.className="person-row";
-    row.dataset.rowId=rowCounter;
     row.innerHTML=`
         <div class="person-head">
             <span class="person-number">Человек ${rowCounter}</span>
@@ -312,24 +549,23 @@ function getNewPeople(){
 function importPeople(){
     const text=$("bulk-input").value.trim();
     if(!text)return showError("Вставь строки из таблицы.");
-    const rows=text.split(/\r?\n/);
     const imported=[];
     try{
-        rows.forEach((line,i)=>{
+        text.split(/\r?\n/).forEach((line,i)=>{
             if(!line.trim())return;
             const parts=line.split("\t");
-            if(parts.length>3)throw Error(`Строка ${i+1}: ожидается максимум 3 столбца.`);
-            const name=validateName(parts[0]||"");
-            const hogsmeade=validateForumId(parts[1]||"",`Строка ${i+1}, Хогсмид`);
-            const hogwarts=validateForumId(parts[2]||"",`Строка ${i+1}, главный форум`);
-            imported.push({name,hogsmeade,hogwarts});
+            if(parts.length>3)throw Error(`Строка ${i+1}: максимум 3 столбца.`);
+            imported.push({
+                name:validateName(parts[0]||""),
+                hogsmeade:validateForumId(parts[1]||"",`Строка ${i+1}, Хогсмид`),
+                hogwarts:validateForumId(parts[2]||"",`Строка ${i+1}, главный форум`)
+            });
         });
         if(!imported.length)throw Error("Нет строк для импорта.");
-        const rowsNow=[...document.querySelectorAll(".person-row")];
-        if(rowsNow.length===1&&!rowsNow[0].querySelector("input").value.trim()&&
-           !rowsNow[0].querySelector(".person-hogsmeade").value.trim()&&
-           !rowsNow[0].querySelector(".person-hogwarts").value.trim()){
-            rowsNow[0].remove();
+        const existing=[...document.querySelectorAll(".person-row")];
+        if(existing.length===1&&
+           [...existing[0].querySelectorAll("input")].every(input=>!input.value.trim())){
+            existing[0].remove();
         }
         imported.forEach(addPersonRow);
         $("bulk-input").value="";
@@ -338,7 +574,7 @@ function importPeople(){
 }
 
 /* =========================
-   SOURCE PARSER
+   PEOPLE SOURCE PARSER
 ========================= */
 function parsePeopleSource(source){
     const text=source.trim();
@@ -375,9 +611,9 @@ function parsePeopleSource(source){
 }
 
 /* =========================
-   DUPLICATE CHECK
+   PEOPLE DUPLICATES
 ========================= */
-function checkDuplicates(parsed,people){
+function checkPeopleDuplicates(parsed,people){
     const names=new Set(parsed.names.map(normalizeName));
     const newNames=new Set();
     const forumIds={hogsmeade:new Set(),hogwarts:new Set()};
@@ -394,9 +630,8 @@ function checkDuplicates(parsed,people){
             forumIds[key].add(id);
         });
     });
-    const source=parsed.body;
     ["hogsmeade","hogwarts"].forEach(key=>{
-        const existing=[...source.matchAll(new RegExp(`\\b${key}\\s*:\\s*(\\d+)`,"g"))]
+        const existing=[...parsed.body.matchAll(new RegExp(`\\b${key}\\s*:\\s*(\\d+)`,"g"))]
             .map(m=>Number(m[1]));
         people.forEach(person=>{
             if(person[key]!==null&&existing.includes(person[key]))
@@ -406,14 +641,14 @@ function checkDuplicates(parsed,people){
 }
 
 /* =========================
-   GENERATE
+   GENERATE PEOPLE
 ========================= */
-function generateCode(){
+function generatePeopleCode(){
     try{
         resetResult();
-        const parsed=parsePeopleSource($("source").value);
+        const parsed=parsePeopleSource($("people-source").value);
         const people=getNewPeople();
-        checkDuplicates(parsed,people);
+        checkPeopleDuplicates(parsed,people);
         const maxId=Math.max(0,...parsed.ids.map(id=>Number(id.slice(1))));
         const generated=people.map((person,i)=>({
             id:`P${String(maxId+i+1).padStart(4,"0")}`,
@@ -438,16 +673,13 @@ function generateCode(){
         const verified=parsePeopleSource(result);
         if(verified.ids.length!==parsed.ids.length+generated.length)
             throw Error("Проверка количества записей не пройдена.");
-        originalCode=parsed.text;
-        generatedCode=result;
-        $("output").value=result;
-        $("result-status").textContent=`Добавлено: ${generated.length}`;
-        $("report").textContent=
+        setResult(
+            result,parsed.text,"people.js",
+            `Добавлено: ${generated.length}`,
             generated.map(p=>`${p.id} — ${p.name}`).join("\n")+
             `\n\nСуществующих записей: ${parsed.ids.length}`+
-            `\nВсего записей: ${verified.ids.length}`;
-        $("result").classList.add("visible");
-        $("result").scrollIntoView({behavior:"smooth",block:"start"});
+            `\nВсего записей: ${verified.ids.length}`
+        );
     }catch(error){showError(error.message)}
 }
 
@@ -479,20 +711,336 @@ function downloadFile(content,filename){
 }
 function downloadCode(){
     if(!generatedCode)return;
-    downloadFile(generatedCode,"people.js");
+    downloadFile(generatedCode,generatedFilename);
     showToast("Файл скачан");
 }
 function downloadBackup(){
     if(!originalCode)return;
-    downloadFile(originalCode,"people-backup.js");
+    downloadFile(originalCode,generatedFilename.replace(".js","-backup.js"));
     showToast("Исходник скачан");
 }
 
 /* =========================
-   START
+   INITIAL PEOPLE
 ========================= */
-$("source").addEventListener("input",resetResult);
+$("people-source").addEventListener("input",resetResult);
 addPersonRow();
+
+/* =========================
+   ORDERS — DATA
+========================= */
+let selectedSender=null,selectedRecipient=null,editingOrder=null;
+const getPeople=()=>typeof PEOPLE!=="undefined"?PEOPLE:[];
+const getStores=()=>typeof STORES!=="undefined"?STORES:{};
+const clone=value=>JSON.parse(JSON.stringify(value));
+const orderNumber=(store,n)=>`${store==="sole"?"S":"E"}${String(n).padStart(4,"0")}`;
+
+function readOrders(){
+    const source=$("orders-source").value.trim();
+    if(!source)throw Error("Вставь актуальный orders.js.");
+    const match=source.match(/const\s+ORDERS_DB\s*=\s*(\{[\s\S]*\})\s*;?\s*$/);
+    if(!match)throw Error("Не найден const ORDERS_DB = {...}.");
+    const raw=match[1];
+    if(/(?:function\s*\(|=>|`|\b(?:window|document|fetch|eval)\b)/.test(raw))
+        throw Error("В orders.js обнаружены неподдерживаемые конструкции.");
+    let data;
+    try{
+        data=Function(`"use strict";return (${raw})`)();
+    }catch{
+        throw Error("Не удалось прочитать структуру orders.js.");
+    }
+    if(!data||!Array.isArray(data.orders)||!data.counters)
+        throw Error("Некорректная структура ORDERS_DB.");
+    if(!Number.isSafeInteger(data.counters.sole)||!Number.isSafeInteger(data.counters.extra))
+        throw Error("Некорректные счётчики заказов.");
+    if(data.counters.sole<0||data.counters.extra<0)
+        throw Error("Счётчики не могут быть отрицательными.");
+    const ids=data.orders.map(o=>o.id);
+    if(new Set(ids).size!==ids.length)throw Error("В реестре повторяются номера заказов.");
+    for(const id of ids){
+        if(!/^[SE]\d{4,}$/.test(id))throw Error(`Некорректный номер: ${id}`);
+        const key=id[0]==="S"?"sole":"extra";
+        if(Number(id.slice(1))>data.counters[key])
+            throw Error(`Счётчик ${key} меньше номера ${id}.`);
+    }
+    return {source,data};
+}
+function outputOrders(data,source,description){
+    const code=`const ORDERS_DB = ${JSON.stringify(data,null,4)};\n`;
+    setResult(code,source,"orders.js","Готово",description);
+}
+function findOrder(data,id){
+    const order=data.orders.find(o=>o.id===id.trim().toUpperCase());
+    if(!order)throw Error("Заказ с таким номером не найден.");
+    return order;
+}
+
+/* =========================
+   PEOPLE AUTOCOMPLETE
+========================= */
+function bindPersonSearch(inputId,listId,callback){
+    const input=$(inputId),list=$(listId);
+    input.addEventListener("input",()=>{
+        callback(null);
+        const q=normalizeName(input.value);
+        list.innerHTML="";
+        if(!q){list.classList.remove("visible");return}
+        const matches=getPeople().filter(p=>normalizeName(p.name).startsWith(q));
+        if(!matches.length){
+            const empty=document.createElement("div");
+            empty.className="suggestion-empty";
+            empty.textContent="Человек не найден в people.js";
+            list.appendChild(empty);
+        }
+        matches.forEach(p=>{
+            const button=document.createElement("button");
+            button.type="button";
+            button.className="suggestion";
+            button.textContent=p.name;
+            const small=document.createElement("small");
+            small.textContent=`${p.id} · Хогсмид: ${p.accounts?.hogsmeade??"—"} · ГФ: ${p.accounts?.hogwarts??"—"}`;
+            button.appendChild(small);
+            button.onclick=()=>{
+                input.value=p.name;
+                callback(p.id);
+                list.classList.remove("visible");
+                resetResult();
+            };
+            list.appendChild(button);
+        });
+        list.classList.add("visible");
+        resetResult();
+    });
+    input.addEventListener("blur",()=>setTimeout(()=>list.classList.remove("visible"),180));
+}
+bindPersonSearch("order-sender","sender-suggestions",id=>selectedSender=id);
+bindPersonSearch("order-recipient","recipient-suggestions",id=>selectedRecipient=id);
+
+function senderType(){
+    return document.querySelector('input[name="sender-type"]:checked').value;
+}
+function updateSenderField(){
+    $("sender-person-field").style.display=senderType()==="person"?"flex":"none";
+    resetResult();
+}
+document.querySelectorAll('input[name="sender-type"]').forEach(r=>
+    r.addEventListener("change",updateSenderField)
+);
+
+/* =========================
+   PRODUCTS
+========================= */
+function allCollections(storeKey){
+    const store=getStores()[storeKey];
+    if(!store)return [];
+    const result=[];
+    (store.collections||[]).forEach(c=>{
+        if(c.sections){
+            c.sections.forEach(s=>result.push({
+                id:c.id,section:s.id,name:`${c.name} / ${s.name}`,
+                models:s.models||[],folder:s.folder,packaging:s.packaging
+            }));
+        }else if(c.rounds){
+            c.rounds.forEach(r=>result.push({
+                id:c.id,section:r.id,name:`${c.name} / ${r.name}`,
+                models:r.models||[],folder:`${c.folder}/${r.folder}`,
+                packaging:c.packaging
+            }));
+        }else result.push({
+            id:c.id,section:null,name:c.name,
+            models:c.models||[],folder:c.folder,packaging:c.packaging
+        });
+    });
+    return result;
+}
+function addOrderItem(){
+    const container=$("order-items");
+    const row=document.createElement("div");
+    row.className="order-item";
+    row.innerHTML=`
+        <div class="item-head">
+            <span class="item-number">Товар</span>
+            <button class="remove-item" type="button">×</button>
+        </div>
+        <div class="item-fields">
+            <div class="field wide"><label>Коллекция / раздел</label><select class="item-collection"></select></div>
+            <div class="field wide"><label>Модель</label><select class="item-model"></select></div>
+            <div class="field"><label>Расцветка</label><select class="item-variant"></select></div>
+            <div class="field"><label>Количество</label><input class="item-quantity" type="number" min="1" value="1"></div>
+            <div class="field"><label>Цена за единицу (G)</label><input class="item-price" type="number" min="0" step="1"></div>
+        </div>
+    `;
+    container.appendChild(row);
+    const col=row.querySelector(".item-collection");
+    const model=row.querySelector(".item-model");
+    const variant=row.querySelector(".item-variant");
+    function loadCollections(){
+        const collections=allCollections($("order-store").value);
+        col.innerHTML=collections.map((c,i)=>`<option value="${i}">${c.name}</option>`).join("");
+        loadModels();
+    }
+    function loadModels(){
+        const c=allCollections($("order-store").value)[Number(col.value)];
+        model.innerHTML=(c?.models||[]).map((m,i)=>`<option value="${i}">${m.name}</option>`).join("");
+        loadVariants();
+    }
+    function loadVariants(){
+        const c=allCollections($("order-store").value)[Number(col.value)];
+        const m=c?.models[Number(model.value)];
+        variant.innerHTML='<option value="">Основная</option>';
+        (m?.variants||[]).forEach(v=>variant.add(new Option(v.name,v.id)));
+        row.querySelector(".item-price").value=m?.price??"";
+        resetResult();
+    }
+    col.onchange=loadModels;
+    model.onchange=loadVariants;
+    variant.onchange=resetResult;
+    row.querySelectorAll("input").forEach(i=>i.oninput=resetResult);
+    row.querySelector(".remove-item").onclick=()=>{
+        row.remove();
+        renumberItems();
+        resetResult();
+    };
+    row.reloadCollections=loadCollections;
+    loadCollections();
+    renumberItems();
+}
+function renumberItems(){
+    document.querySelectorAll(".order-item").forEach((r,i)=>
+        r.querySelector(".item-number").textContent=`Товар ${i+1}`
+    );
+}
+function getOrderItems(){
+    const collections=allCollections($("order-store").value);
+    const rows=[...document.querySelectorAll(".order-item")];
+    if(!rows.length)throw Error("Добавь хотя бы один товар.");
+    return rows.map(row=>{
+        const c=collections[Number(row.querySelector(".item-collection").value)];
+        const m=c?.models[Number(row.querySelector(".item-model").value)];
+        if(!c||!m)throw Error("Не выбрана модель товара.");
+        const quantity=Number(row.querySelector(".item-quantity").value);
+        const price=Number(row.querySelector(".item-price").value);
+        if(!Number.isSafeInteger(quantity)||quantity<1)throw Error("Некорректное количество.");
+        if(!Number.isFinite(price)||price<0)throw Error("Некорректная цена.");
+        return {
+            collection:c.id,section:c.section,
+            model:m.file,variant:row.querySelector(".item-variant").value||null,
+            quantity,price
+        };
+    });
+}
+$("order-store").addEventListener("change",()=>{
+    document.querySelectorAll(".order-item").forEach(row=>row.reloadCollections());
+});
+addOrderItem();
+
+/* =========================
+   NEW ORDER
+========================= */
+$("order-date").value=new Date().toLocaleDateString("en-CA");
+function generateNewOrder(){
+    try{
+        const {source,data}=readOrders();
+        const store=$("order-store").value;
+        const type=senderType();
+        if(!selectedRecipient)throw Error("Выбери получателя из списка.");
+        if(type==="person"&&!selectedSender)throw Error("Выбери заказчика из списка.");
+        const date=$("order-date").value;
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(date))throw Error("Укажи дату.");
+        const items=getOrderItems();
+        const calculated=items.reduce((sum,i)=>sum+i.price*i.quantity,0);
+        const totalText=$("order-total").value.trim();
+        const total=totalText===""?calculated:Number(totalText);
+        if(!Number.isFinite(total)||total<0)throw Error("Некорректная сумма.");
+        const next=data.counters[store]+1;
+        const id=orderNumber(store,next);
+        const order={
+            id,store,date,status:$("order-status").value,
+            senderType:type,sender:type==="person"?selectedSender:null,
+            recipient:selectedRecipient,delivery:$("order-delivery").value,
+            items,total,cardRequired:$("order-card").value==="yes",
+            giftNote:$("order-gift-note").value.trim(),
+            transferComment:$("order-transfer-comment").value.trim(),
+            privateNotes:$("order-private-notes").value.trim()
+        };
+        data.counters[store]=next;
+        data.orders.push(order);
+        outputOrders(data,source,`Добавлен ${id}\nТоваров: ${items.length}\nСумма: ${total} G`);
+    }catch(error){showError(error.message)}
+}
+
+/* =========================
+   EDIT ORDER
+========================= */
+function loadOrderForEdit(){
+    try{
+        const {data}=readOrders();
+        const order=findOrder(data,$("edit-order-id").value);
+        editingOrder=order.id;
+        const panel=$("order-edit-panel");
+        panel.classList.add("visible");
+        panel.innerHTML=`
+            <div class="divider"></div>
+            <div class="section-label">Редактирование ${order.id}</div>
+            <div class="field"><label>Дата</label><input id="edit-date" type="date"></div>
+            <div class="field"><label>Сумма (G)</label><input id="edit-total" type="number" min="0"></div>
+            <div class="field"><label>Текст карточки</label><textarea id="edit-note"></textarea></div>
+            <div class="field"><label>Комментарий перевода</label><textarea id="edit-comment"></textarea></div>
+            <div class="field"><label>Мои пометки</label><textarea id="edit-private"></textarea></div>
+            <button class="button primary" type="button" onclick="generateOrderEdit()">Сгенерировать изменения</button>
+        `;
+        $("edit-date").value=order.date;
+        $("edit-total").value=order.total??0;
+        $("edit-note").value=order.giftNote||"";
+        $("edit-comment").value=order.transferComment||"";
+        $("edit-private").value=order.privateNotes||"";
+    }catch(error){showError(error.message)}
+}
+function generateOrderEdit(){
+    try{
+        const {source,data}=readOrders();
+        const order=findOrder(data,editingOrder);
+        const total=Number($("edit-total").value);
+        if(!Number.isFinite(total)||total<0)throw Error("Некорректная сумма.");
+        order.date=$("edit-date").value;
+        order.total=total;
+        order.giftNote=$("edit-note").value.trim();
+        order.transferComment=$("edit-comment").value.trim();
+        order.privateNotes=$("edit-private").value.trim();
+        outputOrders(data,source,`Изменён заказ ${order.id}.`);
+    }catch(error){showError(error.message)}
+}
+
+/* =========================
+   STATUS & DELETE
+========================= */
+function generateStatusChange(){
+    try{
+        const {source,data}=readOrders();
+        const order=findOrder(data,$("status-order-id").value);
+        const previous=order.status;
+        order.status=$("new-order-status").value;
+        outputOrders(data,source,`${order.id}: ${previous} → ${order.status}`);
+    }catch(error){showError(error.message)}
+}
+function generateOrderDeletion(){
+    try{
+        const {source,data}=readOrders();
+        const order=findOrder(data,$("delete-order-id").value);
+        if(!confirm(`Удалить ${order.id}? Номер останется занятым.`))return;
+        data.orders=data.orders.filter(o=>o.id!==order.id);
+        outputOrders(data,source,`Удалён ${order.id}. Счётчики сохранены.`);
+    }catch(error){showError(error.message)}
+}
+
+/* =========================
+   RESET ON SOURCE CHANGE
+========================= */
+$("orders-source").addEventListener("input",resetResult);
+document.addEventListener("click",event=>{
+    if(!event.target.closest(".autocomplete"))
+        document.querySelectorAll(".suggestions").forEach(s=>s.classList.remove("visible"));
+});
 </script>
 </body>
 </html>
