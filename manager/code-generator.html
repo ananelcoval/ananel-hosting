@@ -8,257 +8,98 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-:root{
-    --green:#005500;
-    --pink:#D4007E;
-    --text:#181818;
-    --muted:#8b878a;
-    --line:#e8e4e7;
-    --soft:#f8f6f7;
-}
+:root{--green:#005500;--pink:#D4007E;--text:#181818;--muted:#8b878a;--line:#e8e4e7;--soft:#f8f6f7}
 *{box-sizing:border-box}
-body{
-    margin:0;background:#f7f5f6;
-    color:var(--text);
-    font-family:Montserrat,sans-serif;
-}
+body{margin:0;background:#f7f5f6;color:var(--text);font-family:Montserrat,sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 .page{max-width:1300px;margin:auto;padding:24px}
-
-/* HEADER */
-.header{
-    padding:22px 28px;
-    border:1px solid var(--line);
-    border-radius:18px;background:#fff;
-    display:flex;align-items:center;
-    justify-content:space-between;gap:20px;
-}
+.header{padding:22px 28px;border:1px solid var(--line);border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .brand{display:flex;align-items:baseline;gap:14px}
 .logo{margin:0;color:var(--green);font-size:30px}
-.header-label{
-    color:#aaa;font-size:10px;font-weight:600;
-    letter-spacing:2px;text-transform:uppercase;
-}
-.back{
-    color:#999;font-size:12px;
-    font-weight:600;text-decoration:none;
-}
+.header-label{color:#aaa;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.back{color:#999;font-size:12px;font-weight:600;text-decoration:none}
 .back:hover{color:var(--pink)}
-
-/* TITLE */
 .page-heading{margin:50px 0 35px}
-.eyebrow{
-    color:var(--pink);font-size:10px;
-    font-weight:700;letter-spacing:2px;
-    text-transform:uppercase;
-}
-.page-heading h2{
-    margin:10px 0;color:var(--green);
-    font-size:36px;
-}
-.page-heading p{
-    margin:0;color:var(--muted);
-    font-size:12px;line-height:1.7;
-}
-
-/* LAYOUT */
-.generator-layout{
-    display:grid;
-    grid-template-columns:240px minmax(0,1fr);
-    gap:22px;align-items:start;
-}
-.sidebar,.panel{
-    background:#fff;border:1px solid var(--line);
-    border-radius:16px;
-}
+.eyebrow{color:var(--pink);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.page-heading h2{margin:10px 0;color:var(--green);font-size:36px}
+.page-heading p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
+.generator-layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:22px;align-items:start}
+.sidebar,.panel{background:#fff;border:1px solid var(--line);border-radius:16px}
 .sidebar{padding:12px}
-.sidebar-label{
-    padding:13px 12px;color:#aaa;
-    font-size:10px;font-weight:700;
-    letter-spacing:1.5px;text-transform:uppercase;
-}
-.tool-button{
-    width:100%;padding:13px 12px;
-    border:0;border-radius:10px;
-    background:#fff;color:#666;
-    display:flex;align-items:center;
-    justify-content:space-between;
-    font-size:12px;font-weight:600;
-    text-align:left;
-}
+.sidebar-label{padding:13px 12px;color:#aaa;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.tool-button{width:100%;padding:13px 12px;border:0;border-radius:10px;background:#fff;color:#666;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:600;text-align:left}
 .tool-button:hover{background:var(--soft)}
-.tool-button.active{
-    background:#f8eff4;color:var(--pink);
-}
-.tool-button:disabled{
-    color:#bbb;cursor:default;
-}
+.tool-button.active{background:#f8eff4;color:var(--pink)}
+.tool-button:disabled{color:#bbb;cursor:default}
 .tool-button:disabled:hover{background:#fff}
-.tool-status{
-    font-size:9px;color:#aaa;font-weight:500;
-}
+.tool-status{font-size:9px;color:#aaa;font-weight:500}
 .panel{padding:28px}
-.panel-title{
-    margin:0 0 8px;color:var(--green);
-    font-size:22px;
-}
-.panel-description{
-    margin:0 0 28px;color:#999;
-    font-size:12px;line-height:1.6;
-}
-
-/* FORM */
-.field{
-    display:flex;flex-direction:column;
-    gap:8px;margin-bottom:20px;
-}
-.field label{
-    color:#777;font-size:10px;
-    font-weight:700;letter-spacing:1px;
-    text-transform:uppercase;
-}
-.field input,.field textarea{
-    width:100%;padding:12px 14px;
-    border:1px solid var(--line);
-    border-radius:10px;background:#fff;
-    color:#333;font-size:12px;outline:none;
-}
-.field input:focus,.field textarea:focus{
-    border-color:var(--pink);
-}
-.field textarea{
-    min-height:170px;resize:vertical;
-    font-family:monospace;line-height:1.6;
-}
-.field-hint{
-    color:#aaa;font-size:10px;line-height:1.6;
-}
-.form-grid{
-    display:grid;grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-.divider{
-    height:1px;background:var(--line);
-    margin:30px 0;
-}
-.section-label{
-    margin:0 0 20px;color:#999;
-    font-size:10px;font-weight:700;
-    letter-spacing:1.5px;text-transform:uppercase;
-}
-
-/* ACTIONS */
-.actions{
-    display:flex;flex-wrap:wrap;
-    gap:10px;margin-top:25px;
-}
-.button{
-    padding:12px 18px;border-radius:10px;
-    border:1px solid var(--line);
-    background:#fff;color:#555;
-    font-size:11px;font-weight:700;
-}
-.button.primary{
-    background:var(--green);
-    border-color:var(--green);color:#fff;
-}
-.button.primary:hover{
-    background:var(--pink);border-color:var(--pink);
-}
+.panel-title{margin:0 0 8px;color:var(--green);font-size:22px}
+.panel-description{margin:0 0 28px;color:#999;font-size:12px;line-height:1.6}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.field label{color:#777;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.field input,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;font-size:12px;outline:none}
+.field input:focus,.field textarea:focus{border-color:var(--pink)}
+.field textarea{min-height:170px;resize:vertical;font-family:monospace;line-height:1.6}
+.field-hint{color:#aaa;font-size:10px;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.divider{height:1px;background:var(--line);margin:30px 0}
+.section-label{margin:0 0 20px;color:#999;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}
+.button{padding:12px 18px;border-radius:10px;border:1px solid var(--line);background:#fff;color:#555;font-size:11px;font-weight:700}
+.button.primary{background:var(--green);border-color:var(--green);color:#fff}
+.button.primary:hover{background:var(--pink);border-color:var(--pink)}
 .button:hover{border-color:var(--pink)}
-.button:disabled{
-    opacity:.4;cursor:default;
-}
-
-/* RESULTS */
+.button:disabled{opacity:.4;cursor:default}
+.people-list{display:flex;flex-direction:column;gap:12px}
+.person-row{padding:18px;border:1px solid var(--line);border-radius:12px;background:#faf9fa}
+.person-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px}
+.person-number{color:var(--pink);font-size:11px;font-weight:700}
+.remove-person{border:0;background:none;color:#aaa;font-size:18px}
+.remove-person:hover{color:var(--pink)}
+.person-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.person-fields .field{margin:0}
+.bulk-box{margin-top:25px;padding:18px;border:1px dashed var(--line);border-radius:12px}
+.bulk-box h4{margin:0 0 8px;color:var(--green);font-size:13px}
+.bulk-box textarea{min-height:110px}
 .result{display:none;margin-top:30px}
 .result.visible{display:block}
-.result-heading{
-    display:flex;align-items:center;
-    justify-content:space-between;
-    margin-bottom:15px;gap:10px;
-}
-.result-heading h3{
-    margin:0;color:var(--green);
-    font-size:17px;
-}
-.result-status{
-    color:var(--green);font-size:11px;
-    font-weight:600;
-}
-.result textarea{
-    min-height:260px;
-    font-family:monospace;
-    font-size:11px;line-height:1.6;
-}
-.report{
-    padding:16px;background:var(--soft);
-    border-radius:11px;color:#666;
-    font-size:12px;line-height:1.8;
-}
-
-/* CHECKLIST */
-.checklist{
-    margin-top:25px;padding:20px;
-    border:1px solid var(--line);
-    border-radius:13px;
-}
-.checklist h4{
-    margin:0 0 15px;color:var(--green);
-    font-size:13px;
-}
-.check-item{
-    display:flex;align-items:flex-start;
-    gap:10px;margin:12px 0;
-    color:#666;font-size:11px;
-    line-height:1.5;
-}
-.check-item input{
-    width:15px;height:15px;margin:0;
-    accent-color:var(--green);
-}
-
-/* TOAST */
-.toast{
-    position:fixed;left:50%;bottom:25px;
-    padding:12px 18px;background:#171717;
-    color:#fff;border-radius:30px;
-    font-size:12px;opacity:0;
-    pointer-events:none;
-    transform:translate(-50%,15px);
-    transition:.2s;z-index:100;
-}
-.toast.show{
-    opacity:1;transform:translate(-50%,0);
-}
-
-/* RESPONSIVE */
+.result-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:10px}
+.result-heading h3{margin:0;color:var(--green);font-size:17px}
+.result-status{color:var(--green);font-size:11px;font-weight:600}
+.result textarea{min-height:260px;font-family:monospace;font-size:11px;line-height:1.6}
+.report{padding:16px;background:var(--soft);border-radius:11px;color:#666;font-size:12px;line-height:1.8;white-space:pre-line}
+.checklist{margin-top:25px;padding:20px;border:1px solid var(--line);border-radius:13px}
+.checklist h4{margin:0 0 15px;color:var(--green);font-size:13px}
+.check-item{display:flex;align-items:flex-start;gap:10px;margin:12px 0;color:#666;font-size:11px;line-height:1.5}
+.check-item input{width:15px;height:15px;margin:0;accent-color:var(--green)}
+.toast{position:fixed;left:50%;bottom:25px;padding:12px 18px;background:#171717;color:#fff;border-radius:30px;font-size:12px;opacity:0;pointer-events:none;transform:translate(-50%,15px);transition:.2s;z-index:100}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:850px){
-    .generator-layout{grid-template-columns:1fr}
-    .sidebar{
-        display:flex;flex-wrap:wrap;gap:6px;
-    }
-    .sidebar-label{width:100%}
-    .tool-button{width:auto;flex:1;min-width:140px}
+.generator-layout{grid-template-columns:1fr}
+.sidebar{display:flex;flex-wrap:wrap;gap:6px}
+.sidebar-label{width:100%}
+.tool-button{width:auto;flex:1;min-width:140px}
+.person-fields{grid-template-columns:1fr 1fr}
+.person-fields .field:first-child{grid-column:1/-1}
 }
 @media(max-width:600px){
-    .page{padding:12px}
-    .header{padding:18px;flex-wrap:wrap}
-    .logo{font-size:24px}
-    .header-label{display:none}
-    .page-heading{margin:35px 0 25px}
-    .panel{padding:18px}
-    .form-grid{grid-template-columns:1fr}
+.page{padding:12px}
+.header{padding:18px;flex-wrap:wrap}
+.logo{font-size:24px}
+.header-label{display:none}
+.page-heading{margin:35px 0 25px}
+.panel{padding:18px}
+.form-grid,.person-fields{grid-template-columns:1fr}
+.person-fields .field:first-child{grid-column:auto}
 }
 </style>
 </head>
 
 <body>
 <div class="page">
-
 <header class="header">
     <div class="brand">
         <h1 class="logo">Ananel Coval</h1>
@@ -274,135 +115,78 @@ button{cursor:pointer}
 </div>
 
 <div class="generator-layout">
-
-    <!-- SIDEBAR -->
+    <!-- ИНСТРУМЕНТЫ -->
     <aside class="sidebar">
         <div class="sidebar-label">Инструменты</div>
-
-        <button class="tool-button active" type="button">
-            Люди
-            <span class="tool-status">Доступно</span>
-        </button>
-
-        <button class="tool-button" disabled>
-            Коллекции
-            <span class="tool-status">Позже</span>
-        </button>
-
-        <button class="tool-button" disabled>
-            Модели
-            <span class="tool-status">Позже</span>
-        </button>
-
-        <button class="tool-button" disabled>
-            Карточки и декор
-            <span class="tool-status">Позже</span>
-        </button>
-
-        <button class="tool-button" disabled>
-            Индивидуальные заказы
-            <span class="tool-status">Позже</span>
-        </button>
+        <button class="tool-button active" type="button">Люди <span class="tool-status">Доступно</span></button>
+        <button class="tool-button" disabled>Коллекции <span class="tool-status">Позже</span></button>
+        <button class="tool-button" disabled>Модели <span class="tool-status">Позже</span></button>
+        <button class="tool-button" disabled>Карточки и декор <span class="tool-status">Позже</span></button>
+        <button class="tool-button" disabled>Индивидуальные заказы <span class="tool-status">Позже</span></button>
     </aside>
 
-    <!-- MAIN PANEL -->
+    <!-- ГЕНЕРАТОР -->
     <main class="panel">
         <h3 class="panel-title">База людей</h3>
-        <p class="panel-description">
-            Вставь актуальный people.js, заполни данные и получи
-            обновлённый файл без изменения существующих записей.
-        </p>
+        <p class="panel-description">Вставь актуальный people.js, добавь нужных людей и получи полный обновлённый файл.</p>
 
         <div class="field">
             <label for="source">Актуальный код people.js</label>
-            <textarea id="source" spellcheck="false"
-                placeholder="const PEOPLE = [...]"></textarea>
-            <div class="field-hint">
-                Используй последнюю версию файла из GitHub.
-                Генератор не хранит копию исходного кода.
-            </div>
+            <textarea id="source" spellcheck="false" placeholder="const PEOPLE = [...]"></textarea>
+            <div class="field-hint">Используй последнюю версию из GitHub. Исходный код не изменяется до генерации.</div>
         </div>
 
         <div class="divider"></div>
-        <div class="section-label">Новый человек</div>
+        <div class="section-label">Новые люди</div>
 
-        <div class="field">
-            <label for="person-name">Имя персонажа</label>
-            <input id="person-name" placeholder="Имя Фамилия">
+        <!-- СТРОКИ ЛЮДЕЙ -->
+        <div id="people-list" class="people-list"></div>
+
+        <div class="actions">
+            <button class="button" type="button" onclick="addPersonRow()">+ Добавить человека</button>
+            <button class="button" type="button" onclick="clearPeople()">Очистить список</button>
         </div>
 
-        <div class="form-grid">
-            <div class="field">
-                <label for="hogsmeade-id">ID на Хогсмиде</label>
-                <input id="hogsmeade-id" placeholder="Необязательно">
+        <!-- МАССОВАЯ ВСТАВКА -->
+        <div class="bulk-box">
+            <h4>Массовая вставка</h4>
+            <div class="field-hint">Вставь строки из Excel или Google Sheets. Порядок столбцов: имя, ID Хогсмида, ID главного форума. Разделитель — табуляция.</div>
+            <div class="field" style="margin-top:14px;margin-bottom:0">
+                <textarea id="bulk-input" spellcheck="false" placeholder="Лина Скотт	749	2181&#10;Игараси Кайто	917	3511"></textarea>
             </div>
-            <div class="field">
-                <label for="hogwarts-id">ID на главном форуме</label>
-                <input id="hogwarts-id" placeholder="Необязательно">
+            <div class="actions" style="margin-top:12px">
+                <button class="button" type="button" onclick="importPeople()">Добавить строки в список</button>
             </div>
         </div>
 
         <div class="actions">
-            <button class="button primary" onclick="generateCode()">
-                Сгенерировать код
-            </button>
-            <button class="button" onclick="clearForm()">
-                Очистить поля
-            </button>
+            <button class="button primary" type="button" onclick="generateCode()">Сгенерировать код</button>
         </div>
 
-        <!-- RESULT -->
+        <!-- РЕЗУЛЬТАТ -->
         <div id="result" class="result">
             <div class="divider"></div>
-
             <div class="result-heading">
                 <h3>Обновлённый people.js</h3>
                 <span id="result-status" class="result-status"></span>
             </div>
-
             <div class="field">
                 <textarea id="output" spellcheck="false" readonly></textarea>
             </div>
-
             <div class="actions">
-                <button class="button primary" onclick="copyCode()">
-                    Скопировать код
-                </button>
-                <button class="button" onclick="downloadCode()">
-                    Скачать people.js
-                </button>
-                <button class="button" onclick="downloadBackup()">
-                    Скачать исходник
-                </button>
+                <button class="button primary" type="button" onclick="copyCode()">Скопировать код</button>
+                <button class="button" type="button" onclick="downloadCode()">Скачать people.js</button>
+                <button class="button" type="button" onclick="downloadBackup()">Скачать исходник</button>
             </div>
-
             <div class="divider"></div>
-
             <div class="section-label">Отчёт</div>
             <div id="report" class="report"></div>
-
             <div class="checklist">
                 <h4>Чеклист публикации</h4>
-
-                <label class="check-item">
-                    <input type="checkbox">
-                    Скопировать обновлённый код.
-                </label>
-
-                <label class="check-item">
-                    <input type="checkbox">
-                    Заменить содержимое data/people.js в GitHub.
-                </label>
-
-                <label class="check-item">
-                    <input type="checkbox">
-                    Сохранить изменения через Commit changes.
-                </label>
-
-                <label class="check-item">
-                    <input type="checkbox">
-                    Проверить новую запись в базе людей.
-                </label>
+                <label class="check-item"><input type="checkbox">Скопировать или скачать обновлённый код.</label>
+                <label class="check-item"><input type="checkbox">Заменить содержимое data/people.js в GitHub.</label>
+                <label class="check-item"><input type="checkbox">Сохранить изменения через Commit changes.</label>
+                <label class="check-item"><input type="checkbox">Проверить добавленные записи.</label>
             </div>
         </div>
     </main>
@@ -410,419 +194,306 @@ button{cursor:pointer}
 </div>
 
 <div id="toast" class="toast">Код скопирован</div>
-
 <script>
 
 /* =========================
    CONFIG
 ========================= */
-
-const $ = id => document.getElementById(id);
-
-let originalCode = "";
-let generatedCode = "";
-let generatedPerson = null;
-let toastTimer;
+const $=id=>document.getElementById(id);
+let originalCode="",generatedCode="",toastTimer;
+let rowCounter=0;
 
 /* =========================
    HELPERS
 ========================= */
-
-function showError(message) {
-    alert(message);
-}
-
-function showToast(message = "Код скопирован") {
-    const toast = $("toast");
-    toast.textContent = message;
+function showError(message){alert(message)}
+function showToast(message="Код скопирован"){
+    const toast=$("toast");
+    toast.textContent=message;
     toast.classList.add("show");
-
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-        toast.classList.remove("show");
-    }, 1600);
+    toastTimer=setTimeout(()=>toast.classList.remove("show"),1600);
 }
-
-function clearForm() {
-    ["person-name", "hogsmeade-id", "hogwarts-id"]
-        .forEach(id => $(id).value = "");
-
-    resetResult();
-}
-
-function resetResult() {
-    generatedCode = "";
-    generatedPerson = null;
+function resetResult(){
+    generatedCode="";
     $("result").classList.remove("visible");
-    $("output").value = "";
+    $("output").value="";
 }
-
-["source", "person-name", "hogsmeade-id", "hogwarts-id"]
-    .forEach(id => {
-        $(id).addEventListener("input", resetResult);
-    });
-
-/* =========================
-   VALIDATION
-========================= */
-
-function validateForumId(value, label) {
-    const id = value.trim();
-
-    if (!id) return null;
-
-    if (!/^\d+$/.test(id)) {
-        throw new Error(`${label}: ID должен содержать только цифры.`);
-    }
-
-    return Number(id);
-}
-
-function validateName(value) {
-    const name = value.trim().replace(/\s+/g, " ");
-
-    if (!name) {
-        throw new Error("Укажи имя персонажа.");
-    }
-
-    if (name.length > 150) {
-        throw new Error("Имя слишком длинное.");
-    }
-
+function validateName(value){
+    const name=value.trim().replace(/\s+/g," ");
+    if(!name)throw Error("Укажи имя персонажа.");
+    if(name.length>150)throw Error("Имя слишком длинное.");
     return name;
 }
-
-/* =========================
-   SAFE SOURCE PARSER
-========================= */
-
-/*
-   Поддерживается формат:
-
-   const PEOPLE = [
-       {
-           id: "P0001",
-           name: "...",
-           accounts: {
-               hogsmeade: null,
-               hogwarts: null
-           }
-       }
-   ];
-
-   Исходный код не выполняется через eval.
-*/
-
-function parsePeopleSource(source) {
-    const text = source.trim();
-
-    if (!text) {
-        throw new Error("Вставь актуальный код people.js.");
-    }
-
-    const declaration = /\bconst\s+PEOPLE\s*=\s*\[/g;
-    const matches = [...text.matchAll(declaration)];
-
-    if (matches.length !== 1) {
-        throw new Error(
-            "В исходнике должно быть ровно одно объявление const PEOPLE = [...]."
-        );
-    }
-
-    const openIndex = matches[0].index + matches[0][0].length - 1;
-
-    let depth = 0;
-    let closeIndex = -1;
-    let quote = null;
-    let escaped = false;
-
-    for (let i = openIndex; i < text.length; i++) {
-        const char = text[i];
-
-        if (quote) {
-            if (escaped) {
-                escaped = false;
-            } else if (char === "\\") {
-                escaped = true;
-            } else if (char === quote) {
-                quote = null;
-            }
-            continue;
-        }
-
-        if (char === '"' || char === "'" || char === "`") {
-            quote = char;
-            continue;
-        }
-
-        if (char === "[") depth++;
-
-        if (char === "]") {
-            depth--;
-
-            if (depth === 0) {
-                closeIndex = i;
-                break;
-            }
-        }
-    }
-
-    if (closeIndex === -1) {
-        throw new Error("Не найдена закрывающая скобка массива PEOPLE.");
-    }
-
-    const prefix = text.slice(0, openIndex);
-    const body = text.slice(openIndex + 1, closeIndex);
-    const suffix = text.slice(closeIndex + 1);
-
-    if (!/^\s*;?\s*$/.test(suffix)) {
-        throw new Error(
-            "После массива PEOPLE обнаружен неподдерживаемый код."
-        );
-    }
-
-    /*
-       Проверяем ожидаемые поля.
-       Не исполняем исходный JavaScript.
-    */
-
-    const ids = [...body.matchAll(/\bid\s*:\s*["'](P\d+)["']/g)]
-        .map(match => match[1]);
-
-    const names = [...body.matchAll(/\bname\s*:\s*["']([^"']+)["']/g)]
-        .map(match => match[1]);
-
-    if (new Set(ids).size !== ids.length) {
-        throw new Error("В исходнике есть повторяющиеся ID людей.");
-    }
-
-    if (ids.length !== names.length) {
-        throw new Error(
-            "Количество ID и имён не совпадает. Проверь структуру people.js."
-        );
-    }
-
-    if (body.trim() && !ids.length) {
-        throw new Error(
-            "Не удалось распознать записи людей."
-        );
-    }
-
-    return {
-        text,
-        prefix,
-        body,
-        suffix,
-        openIndex,
-        closeIndex,
-        ids,
-        names
-    };
+function validateForumId(value,label){
+    const id=value.trim();
+    if(!id)return null;
+    if(!/^\d+$/.test(id))throw Error(`${label}: ID должен содержать только цифры.`);
+    const number=Number(id);
+    if(!Number.isSafeInteger(number))throw Error(`${label}: слишком большой ID.`);
+    return number;
+}
+function normalizeName(name){
+    return name.trim().replace(/\s+/g," ").toLocaleLowerCase("ru-RU");
 }
 
 /* =========================
-   NEXT PERSON ID
+   PERSON ROWS
 ========================= */
-
-function getNextPersonId(ids) {
-    const numbers = ids.map(id => Number(id.slice(1)));
-    const next = Math.max(0, ...numbers) + 1;
-
-    return `P${String(next).padStart(4, "0")}`;
-}
-
-/* =========================
-   GENERATE PERSON
-========================= */
-
-function generateCode() {
-    try {
+function addPersonRow(data={}){
+    rowCounter++;
+    const row=document.createElement("div");
+    row.className="person-row";
+    row.dataset.rowId=rowCounter;
+    row.innerHTML=`
+        <div class="person-head">
+            <span class="person-number">Человек ${rowCounter}</span>
+            <button class="remove-person" type="button" title="Удалить">×</button>
+        </div>
+        <div class="person-fields">
+            <div class="field">
+                <label>Имя персонажа</label>
+                <input class="person-name" placeholder="Имя Фамилия">
+            </div>
+            <div class="field">
+                <label>ID Хогсмида</label>
+                <input class="person-hogsmeade" placeholder="Необязательно">
+            </div>
+            <div class="field">
+                <label>ID главного форума</label>
+                <input class="person-hogwarts" placeholder="Необязательно">
+            </div>
+        </div>
+    `;
+    row.querySelector(".person-name").value=data.name||"";
+    row.querySelector(".person-hogsmeade").value=data.hogsmeade??"";
+    row.querySelector(".person-hogwarts").value=data.hogwarts??"";
+    row.querySelector(".remove-person").onclick=()=>{
+        row.remove();
+        renumberRows();
         resetResult();
+    };
+    row.querySelectorAll("input").forEach(input=>
+        input.addEventListener("input",resetResult)
+    );
+    $("people-list").appendChild(row);
+    renumberRows();
+    resetResult();
+}
+function renumberRows(){
+    document.querySelectorAll(".person-row").forEach((row,i)=>{
+        row.querySelector(".person-number").textContent=`Человек ${i+1}`;
+    });
+}
+function clearPeople(){
+    $("people-list").innerHTML="";
+    addPersonRow();
+}
+function getNewPeople(){
+    const people=[];
+    document.querySelectorAll(".person-row").forEach((row,i)=>{
+        const name=row.querySelector(".person-name").value.trim();
+        const hogsmeade=row.querySelector(".person-hogsmeade").value.trim();
+        const hogwarts=row.querySelector(".person-hogwarts").value.trim();
+        if(!name&&!hogsmeade&&!hogwarts)return;
+        if(!name)throw Error(`Строка ${i+1}: укажи имя персонажа.`);
+        people.push({
+            name:validateName(name),
+            hogsmeade:validateForumId(hogsmeade,`Строка ${i+1}, Хогсмид`),
+            hogwarts:validateForumId(hogwarts,`Строка ${i+1}, главный форум`)
+        });
+    });
+    if(!people.length)throw Error("Добавь хотя бы одного человека.");
+    return people;
+}
 
-        const source = $("source").value;
-        const parsed = parsePeopleSource(source);
-
-        const name = validateName($("person-name").value);
-
-        const hogsmeade = validateForumId(
-            $("hogsmeade-id").value,
-            "Хогсмид"
-        );
-
-        const hogwarts = validateForumId(
-            $("hogwarts-id").value,
-            "Главный форум"
-        );
-
-        /* Проверка имени */
-
-        const normalizedName = name.toLocaleLowerCase("ru-RU");
-
-        if (parsed.names.some(existing =>
-            existing.trim().toLocaleLowerCase("ru-RU") === normalizedName
-        )) {
-            throw new Error(
-                `Человек «${name}» уже присутствует в базе.`
-            );
+/* =========================
+   BULK IMPORT
+========================= */
+function importPeople(){
+    const text=$("bulk-input").value.trim();
+    if(!text)return showError("Вставь строки из таблицы.");
+    const rows=text.split(/\r?\n/);
+    const imported=[];
+    try{
+        rows.forEach((line,i)=>{
+            if(!line.trim())return;
+            const parts=line.split("\t");
+            if(parts.length>3)throw Error(`Строка ${i+1}: ожидается максимум 3 столбца.`);
+            const name=validateName(parts[0]||"");
+            const hogsmeade=validateForumId(parts[1]||"",`Строка ${i+1}, Хогсмид`);
+            const hogwarts=validateForumId(parts[2]||"",`Строка ${i+1}, главный форум`);
+            imported.push({name,hogsmeade,hogwarts});
+        });
+        if(!imported.length)throw Error("Нет строк для импорта.");
+        const rowsNow=[...document.querySelectorAll(".person-row")];
+        if(rowsNow.length===1&&!rowsNow[0].querySelector("input").value.trim()&&
+           !rowsNow[0].querySelector(".person-hogsmeade").value.trim()&&
+           !rowsNow[0].querySelector(".person-hogwarts").value.trim()){
+            rowsNow[0].remove();
         }
+        imported.forEach(addPersonRow);
+        $("bulk-input").value="";
+        showToast(`Добавлено строк: ${imported.length}`);
+    }catch(error){showError(error.message)}
+}
 
-        const newId = getNextPersonId(parsed.ids);
+/* =========================
+   SOURCE PARSER
+========================= */
+function parsePeopleSource(source){
+    const text=source.trim();
+    if(!text)throw Error("Вставь актуальный код people.js.");
+    const matches=[...text.matchAll(/\bconst\s+PEOPLE\s*=\s*\[/g)];
+    if(matches.length!==1)throw Error("Ожидается одно объявление const PEOPLE = [...].");
+    const openIndex=matches[0].index+matches[0][0].length-1;
+    let depth=0,closeIndex=-1,quote=null,escaped=false;
+    for(let i=openIndex;i<text.length;i++){
+        const char=text[i];
+        if(quote){
+            if(escaped)escaped=false;
+            else if(char==="\\")escaped=true;
+            else if(char===quote)quote=null;
+            continue;
+        }
+        if(char==='"'||char==="'"||char==="`"){quote=char;continue}
+        if(char==="[")depth++;
+        if(char==="]"){
+            depth--;
+            if(depth===0){closeIndex=i;break}
+        }
+    }
+    if(closeIndex<0)throw Error("Не найдена закрывающая скобка PEOPLE.");
+    const body=text.slice(openIndex+1,closeIndex);
+    if(!/^\s*;?\s*$/.test(text.slice(closeIndex+1)))
+        throw Error("После массива PEOPLE обнаружен неподдерживаемый код.");
+    const ids=[...body.matchAll(/\bid\s*:\s*["'](P\d+)["']/g)].map(m=>m[1]);
+    const names=[...body.matchAll(/\bname\s*:\s*["']([^"']+)["']/g)].map(m=>m[1]);
+    if(new Set(ids).size!==ids.length)throw Error("В исходнике повторяются ID.");
+    if(ids.length!==names.length)throw Error("Не совпадает количество ID и имён.");
+    if(body.trim()&&!ids.length)throw Error("Не удалось распознать записи.");
+    return {text,body,openIndex,closeIndex,ids,names};
+}
 
-        /* Формируем объект */
+/* =========================
+   DUPLICATE CHECK
+========================= */
+function checkDuplicates(parsed,people){
+    const names=new Set(parsed.names.map(normalizeName));
+    const newNames=new Set();
+    const forumIds={hogsmeade:new Set(),hogwarts:new Set()};
+    people.forEach(person=>{
+        const normalized=normalizeName(person.name);
+        if(names.has(normalized)||newNames.has(normalized))
+            throw Error(`Повторяющееся имя: ${person.name}`);
+        newNames.add(normalized);
+        ["hogsmeade","hogwarts"].forEach(key=>{
+            const id=person[key];
+            if(id===null)return;
+            if(forumIds[key].has(id))
+                throw Error(`Повторяется ID ${id} (${key}).`);
+            forumIds[key].add(id);
+        });
+    });
+    const source=parsed.body;
+    ["hogsmeade","hogwarts"].forEach(key=>{
+        const existing=[...source.matchAll(new RegExp(`\\b${key}\\s*:\\s*(\\d+)`,"g"))]
+            .map(m=>Number(m[1]));
+        people.forEach(person=>{
+            if(person[key]!==null&&existing.includes(person[key]))
+                throw Error(`ID ${person[key]} уже есть в people.js (${key}).`);
+        });
+    });
+}
 
-        const person = {
-            id: newId,
-            name,
-            accounts: {
-                hogsmeade,
-                hogwarts
-            }
-        };
-
-        const personCode = [
+/* =========================
+   GENERATE
+========================= */
+function generateCode(){
+    try{
+        resetResult();
+        const parsed=parsePeopleSource($("source").value);
+        const people=getNewPeople();
+        checkDuplicates(parsed,people);
+        const maxId=Math.max(0,...parsed.ids.map(id=>Number(id.slice(1))));
+        const generated=people.map((person,i)=>({
+            id:`P${String(maxId+i+1).padStart(4,"0")}`,
+            name:person.name,
+            accounts:{hogsmeade:person.hogsmeade,hogwarts:person.hogwarts}
+        }));
+        const blocks=generated.map(person=>[
             "    {",
             `        id: ${JSON.stringify(person.id)},`,
             `        name: ${JSON.stringify(person.name)},`,
             "        accounts: {",
-            `            hogsmeade: ${person.accounts.hogsmeade ?? "null"},`,
-            `            hogwarts: ${person.accounts.hogwarts ?? "null"}`,
+            `            hogsmeade: ${person.accounts.hogsmeade??"null"},`,
+            `            hogwarts: ${person.accounts.hogwarts??"null"}`,
             "        }",
             "    }"
-        ].join("\n");
-
-        /*
-           Добавляем объект в массив.
-           Старые записи не переписываем.
-        */
-
-        const originalBody = parsed.body;
-        const hasEntries = parsed.ids.length > 0;
-
-        let newBody;
-
-        if (hasEntries) {
-            const trimmed = originalBody.trimEnd();
-
-            if (trimmed.endsWith(",")) {
-                newBody = `${trimmed}\n${personCode}\n`;
-            } else {
-                newBody = `${trimmed},\n${personCode}\n`;
-            }
-        } else {
-            newBody = `\n${personCode}\n`;
-        }
-
-        const result =
-            parsed.text.slice(0, parsed.openIndex + 1) +
-            newBody +
-            parsed.text.slice(parsed.closeIndex);
-
-        /*
-           Проверяем результат повторно.
-        */
-
-        const verified = parsePeopleSource(result);
-
-        if (!verified.ids.includes(newId)) {
-            throw new Error(
-                "Проверка результата не пройдена: новый ID отсутствует."
-            );
-        }
-
-        if (verified.ids.length !== parsed.ids.length + 1) {
-            throw new Error(
-                "Количество записей после генерации некорректно."
-            );
-        }
-
-        originalCode = parsed.text;
-        generatedCode = result;
-        generatedPerson = person;
-
-        $("output").value = result;
-        $("result-status").textContent = `Добавлен ${newId}`;
-
-        $("report").textContent =
-            `Добавлен человек: ${name}\n` +
-            `Внутренний ID: ${newId}\n` +
-            `Хогсмид: ${hogsmeade ?? "не указан"}\n` +
-            `Главный форум: ${hogwarts ?? "не указан"}\n` +
-            `Существующих записей сохранено: ${parsed.ids.length}\n` +
-            `Всего записей: ${verified.ids.length}`;
-
-        $("report").style.whiteSpace = "pre-line";
-
+        ].join("\n"));
+        const oldBody=parsed.body.trimEnd();
+        const separator=parsed.ids.length?(oldBody.endsWith(",")?"":","):"";
+        const newBody=oldBody+separator+"\n"+blocks.join(",\n")+"\n";
+        const result=parsed.text.slice(0,parsed.openIndex+1)+
+            newBody+parsed.text.slice(parsed.closeIndex);
+        const verified=parsePeopleSource(result);
+        if(verified.ids.length!==parsed.ids.length+generated.length)
+            throw Error("Проверка количества записей не пройдена.");
+        originalCode=parsed.text;
+        generatedCode=result;
+        $("output").value=result;
+        $("result-status").textContent=`Добавлено: ${generated.length}`;
+        $("report").textContent=
+            generated.map(p=>`${p.id} — ${p.name}`).join("\n")+
+            `\n\nСуществующих записей: ${parsed.ids.length}`+
+            `\nВсего записей: ${verified.ids.length}`;
         $("result").classList.add("visible");
-
-        $("result").scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    } catch (error) {
-        showError(error.message);
-    }
+        $("result").scrollIntoView({behavior:"smooth",block:"start"});
+    }catch(error){showError(error.message)}
 }
 
 /* =========================
-   COPY
+   COPY & DOWNLOAD
 ========================= */
-
-async function copyCode() {
-    if (!generatedCode) return;
-
-    try {
+async function copyCode(){
+    if(!generatedCode)return;
+    try{
         await navigator.clipboard.writeText(generatedCode);
         showToast("Код скопирован");
-    } catch {
+    }catch{
         $("output").select();
-        document.execCommand("copy");
-        showToast("Код скопирован");
+        const success=document.execCommand("copy");
+        if(success)showToast("Код скопирован");
+        else showError("Не удалось скопировать код.");
     }
 }
-
-/* =========================
-   DOWNLOAD
-========================= */
-
-function downloadFile(content, filename) {
-    const blob = new Blob([content], {
-        type: "text/javascript;charset=utf-8"
-    });
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = filename;
-
+function downloadFile(content,filename){
+    const blob=new Blob([content],{type:"text/javascript;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement("a");
+    link.href=url;
+    link.download=filename;
     document.body.appendChild(link);
     link.click();
     link.remove();
-
-    URL.revokeObjectURL(url);
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-
-function downloadCode() {
-    if (!generatedCode) return;
-
-    downloadFile(generatedCode, "people.js");
+function downloadCode(){
+    if(!generatedCode)return;
+    downloadFile(generatedCode,"people.js");
     showToast("Файл скачан");
 }
-
-function downloadBackup() {
-    if (!originalCode) return;
-
-    downloadFile(originalCode, "people-backup.js");
+function downloadBackup(){
+    if(!originalCode)return;
+    downloadFile(originalCode,"people-backup.js");
     showToast("Исходник скачан");
 }
 
 /* =========================
    START
 ========================= */
-
-resetResult();
-
+$("source").addEventListener("input",resetResult);
+addPersonRow();
 </script>
 </body>
 </html>
