@@ -5,7 +5,7 @@ const ORDERS_DB = {
     },
     "orders": [
         {
-            "id": "S0002",
+            "id": "S0001",
             "store": "sole",
             "date": "2026-06-07",
             "status": "delivered",
