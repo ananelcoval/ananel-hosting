@@ -1064,99 +1064,100 @@ const STORES = {
 
                 delivery: {},
 
-                models: [
-                    {
-                        id: "no-money",
-                        file: "01-no-money.png",
-                        name: "ДЕНЕГ НЕТ",
-                        type: "ремень",
-                        category: "belts",
-                        price: 7
-                    },
-                    {
-                        id: "all-with-me",
-                        file: "02-all-with-me.png",
-                        name: "ВСЁ С СОБОЙ",
-                        type: "ремень",
-                        category: "belts",
-                        price: 12
-                    },
-                    {
-                        id: "no-panic",
-                        file: "03-no-panic.png",
-                        name: "БЕЗ ПАНИКИ!",
-                        type: "ремень",
-                        category: "belts",
-                        price: 12
-                    },
-                    {
-                        id: "together",
-                        file: "04-together-all.png",
-                        name: "НЕ ОТВЯЖЕШЬСЯ",
-                        type: "ремень",
-                        category: "belts",
-                        price: 15,
-
-                        variants: [
-                            {
-                                id: "all",
-                                name: "Общее фото",
-                                file: "04-together-all.png",
-                                default: true
-                            },
-                            {
-                                id: "red",
-                                name: "Красный",
-                                file: "04-together-red.png"
-                            },
-                            {
-                                id: "black",
-                                name: "Чёрный",
-                                file: "04-together-black.png"
-                            }
-                        ]
-                    },
-                    {
-                        id: "winnings",
-                        file: "05-winnings.png",
-                        name: "НА ВЫИГРАННЫЕ",
-                        type: "ремень",
-                        category: "belts",
-                        price: 25,
-
-                        customizable: true,
-                        customFolder: "custom"
-                    },
-                    {
-                        id: "by-the-rules",
-                        file: "06-by-the-rules-green.png",
-                        name: "ПО УСТАВУ",
-                        type: "ремень",
-                        category: "belts",
-                        price: 12,
-
-                        variants: [
-                            {
-                                id: "green",
-                                name: "Зелёный",
-                                file: "06-by-the-rules-green.png",
-                                default: true
-                            },
-                            {
-                                id: "red",
-                                name: "Красный",
-                                file: "06-by-the-rules-red.png"
-                            },
-                            {
-                                id: "blue",
-                                name: "Синий",
-                                file: "06-by-the-rules-blue.png"
-                            },
-                            {
-                                id: "yellow",
-                                name: "Жёлтый",
-                                file: "06-by-the-rules-yellow.png"
-                            }
+                
+models: [
+    {
+        id: "no-money",
+        file: "01-no-money.png",
+        name: "ДЕНЕГ НЕТ",
+        type: "состаренная кожа",
+        category: "belts",
+        price: 7,
+        description: `Пережил не один кризис.
+Заплатки тому подтверждение,
+зато пряжка всё ещё держится.
+И вы держитесь.`
+    },
+    {
+        id: "all-with-me",
+        file: "02-all-with-me.png",
+        name: "ВСЁ С СОБОЙ",
+        type: "съёмный карман",
+        category: "belts",
+        price: 12,
+        description: `Для тех, кто собирается налегке.
+Деньги, ключи, полквартиры.
+И ещё кое-что на всякий случай.
+Вдруг придётся переезжать.`
+    },
+    {
+        id: "no-panic",
+        file: "03-no-panic.png",
+        name: "БЕЗ ПАНИКИ!",
+        type: "надёжная фиксация",
+        category: "belts",
+        price: 12,
+        description: `Для тех, кто готов ко всему.
+И тех, кто боится всего.
+В поход берите обоих.
+Один спасёт, другой хотя бы закричит.`
+    },
+    {
+        id: "together",
+        file: "04-together-all.png",
+        name: "НЕ ОТВЯЖЕШЬСЯ",
+        type: "парный комплект",
+        category: "belts",
+        price: 15,
+        variants: [
+            { id: "all", name: "Общее фото", file: "04-together-all.png", default: true },
+            { id: "red", name: "Красный", file: "04-together-red.png" },
+            { id: "black", name: "Чёрный", file: "04-together-black.png" }
+        ],
+        description: `Для тех, кто как Шрек и Осёл:
+один мечтает о личном пространстве,
+а второй уже решил за обоих.
+И ведь всех всё устраивает.`,
+        details: `В комплекте два ремня:
+один доставляется вам,
+второй — адресату.
+Стоимость включает оба ремня.`
+    },
+    {
+        id: "winnings",
+        file: "05-winnings.png",
+        name: "НА ВЫИГРАННЫЕ",
+        type: "кастомизация",
+        category: "belts",
+        price: 25,
+        customizable: true,
+        customFolder: "custom",
+        description: `Никогда ничего не просите.
+Особенно у проигравших.
+Сами предложат и сами дадут.
+А вы потратите с удовольствием.`,
+        details: `Укажите гравировку (1–2 слова) и
+желаемые цвета кожи и фурнитуры.
+Не указали — выгравируем имя адресата.`
+    },
+    {
+        id: "by-the-rules",
+        file: "06-by-the-rules-green.png",
+        name: "ПО УСТАВУ",
+        type: "по мотивам школьной формы",
+        category: "belts",
+        price: 12,
+        variants: [
+            { id: "green", name: "Зелёный", file: "06-by-the-rules-green.png", default: true },
+            { id: "red", name: "Красный", file: "06-by-the-rules-red.png" },
+            { id: "blue", name: "Синий", file: "06-by-the-rules-blue.png" },
+            { id: "yellow", name: "Жёлтый", file: "06-by-the-rules-yellow.png" }
+        ],
+        description: `Встречают по одёжке, а
+провожают обычно к директору.
+Зато форма безупречна.
+Придраться почти не к чему.`
+    }
                         ]
                     }
                 ],
