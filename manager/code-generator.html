@@ -41,7 +41,7 @@ button{cursor:pointer}
 .field label{color:#777;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
 .field input,.field textarea,.field select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;font-size:12px;outline:none}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--pink)}
-.field textarea{min-height:170px;resize:vertical;font-family:monospace;line-height:1.6}
+.field textarea{min-height:150px;resize:vertical;font-family:monospace;line-height:1.6}
 .field-hint{color:#aaa;font-size:10px;line-height:1.6}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .divider{height:1px;background:var(--line);margin:30px 0}
@@ -63,8 +63,8 @@ button{cursor:pointer}
 .bulk-box{margin-top:25px;padding:18px;border:1px dashed var(--line);border-radius:12px}
 .bulk-box h4{margin:0 0 8px;color:var(--green);font-size:13px}
 .bulk-box textarea{min-height:110px}
-.tool-panel{display:none}
-.tool-panel.active{display:block}
+.tool-panel,.order-mode,.asset-mode{display:none}
+.tool-panel.active,.order-mode.active,.asset-mode.active{display:block}
 .mode-switch{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:25px}
 .mode-button{padding:11px 14px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#777;font-size:11px;font-weight:600}
 .mode-button.active{border-color:var(--pink);background:#f8eff4;color:var(--pink)}
@@ -87,6 +87,12 @@ button{cursor:pointer}
 .order-summary p{margin:8px 0 0;color:#777;font-size:11px;line-height:1.7}
 .order-edit-panel{display:none}
 .order-edit-panel.visible{display:block}
+.asset-card{padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--soft);margin-bottom:15px}
+.asset-card h4{margin:0 0 15px;color:var(--green);font-size:13px}
+.asset-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.asset-fields .full{grid-column:1/-1}
+.asset-fields .field{margin:0}
+.asset-preview{max-width:100%;max-height:220px;object-fit:contain;margin-top:12px}
 .result{display:none;margin-top:30px}
 .result.visible{display:block}
 .result-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:10px}
@@ -115,8 +121,8 @@ button{cursor:pointer}
 .header-label{display:none}
 .page-heading{margin:35px 0 25px}
 .panel{padding:18px}
-.form-grid,.person-fields,.item-fields{grid-template-columns:1fr}
-.person-fields .field:first-child,.item-fields .wide{grid-column:auto}
+.form-grid,.person-fields,.item-fields,.asset-fields{grid-template-columns:1fr}
+.person-fields .field:first-child,.item-fields .wide,.asset-fields .full{grid-column:auto}
 }
 </style>
 </head>
@@ -130,96 +136,74 @@ button{cursor:pointer}
     </div>
     <a class="back" href="../">← Workspace</a>
 </header>
-
 <div class="page-heading">
     <div class="eyebrow">MANAGER / TOOLS</div>
     <h2>Генератор кода</h2>
     <p>Обновление файлов проекта без ручного редактирования JavaScript.</p>
 </div>
-
 <div class="generator-layout">
-    <!-- ИНСТРУМЕНТЫ -->
     <aside class="sidebar">
         <div class="sidebar-label">Инструменты</div>
         <button class="tool-button active" data-tool="people" type="button">Люди <span class="tool-status">Доступно</span></button>
         <button class="tool-button" data-tool="orders" type="button">Заказы <span class="tool-status">Доступно</span></button>
+        <button class="tool-button" data-tool="assets" type="button">Карточки и декор <span class="tool-status">Доступно</span></button>
         <button class="tool-button" disabled>Коллекции <span class="tool-status">Позже</span></button>
         <button class="tool-button" disabled>Модели <span class="tool-status">Позже</span></button>
-        <button class="tool-button" disabled>Карточки и декор <span class="tool-status">Позже</span></button>
         <button class="tool-button" disabled>Индивидуальные заказы <span class="tool-status">Позже</span></button>
     </aside>
-
     <main class="panel">
 
-        <!-- =========================
-             PEOPLE
-        ========================= -->
+        <!-- PEOPLE -->
         <section id="tool-people" class="tool-panel active">
             <h3 class="panel-title">База людей</h3>
-            <p class="panel-description">Вставь актуальный people.js, добавь нужных людей и получи полный обновлённый файл.</p>
-
+            <p class="panel-description">Добавление нескольких людей в актуальный people.js.</p>
             <div class="field">
                 <label for="people-source">Актуальный код people.js</label>
                 <textarea id="people-source" spellcheck="false" placeholder="const PEOPLE = [...]"></textarea>
-                <div class="field-hint">Используй последнюю версию из GitHub.</div>
             </div>
-
             <div class="divider"></div>
             <div class="section-label">Новые люди</div>
             <div id="people-list" class="people-list"></div>
-
             <div class="actions">
                 <button class="button" type="button" onclick="addPersonRow()">+ Добавить человека</button>
                 <button class="button" type="button" onclick="clearPeople()">Очистить список</button>
             </div>
-
             <div class="bulk-box">
                 <h4>Массовая вставка</h4>
-                <div class="field-hint">Столбцы: имя, ID Хогсмида, ID главного форума. Разделитель — табуляция.</div>
+                <div class="field-hint">Имя, ID Хогсмида, ID главного форума. Разделитель — табуляция.</div>
                 <div class="field" style="margin-top:14px;margin-bottom:0">
                     <textarea id="bulk-input" spellcheck="false" placeholder="Имя Фамилия	749	2181"></textarea>
                 </div>
                 <div class="actions" style="margin-top:12px">
-                    <button class="button" type="button" onclick="importPeople()">Добавить строки в список</button>
+                    <button class="button" type="button" onclick="importPeople()">Добавить строки</button>
                 </div>
             </div>
-
             <div class="actions">
                 <button class="button primary" type="button" onclick="generatePeopleCode()">Сгенерировать people.js</button>
             </div>
         </section>
 
-        <!-- =========================
-             ORDERS
-        ========================= -->
+        <!-- ORDERS -->
         <section id="tool-orders" class="tool-panel">
             <h3 class="panel-title">Заказы</h3>
-            <p class="panel-description">Добавление, редактирование и обновление заказов SÓLE и EXTRA.</p>
-
+            <p class="panel-description">Добавление, редактирование, изменение статуса и удаление заказов.</p>
             <div class="field">
                 <label for="orders-source">Актуальный код orders.js</label>
                 <textarea id="orders-source" spellcheck="false" placeholder="const ORDERS_DB = {...}"></textarea>
-                <div class="field-hint">Вставь последнюю версию data/orders.js из GitHub.</div>
             </div>
-
             <div class="mode-switch">
-                <button class="mode-button active" data-mode="new" type="button">Новый заказ</button>
-                <button class="mode-button" data-mode="edit" type="button">Редактировать</button>
-                <button class="mode-button" data-mode="status" type="button">Статус</button>
-                <button class="mode-button" data-mode="delete" type="button">Удалить</button>
+                <button class="mode-button active" data-order-mode="new" type="button">Новый заказ</button>
+                <button class="mode-button" data-order-mode="edit" type="button">Редактировать</button>
+                <button class="mode-button" data-order-mode="status" type="button">Статус</button>
+                <button class="mode-button" data-order-mode="delete" type="button">Удалить</button>
             </div>
 
-            <!-- НОВЫЙ ЗАКАЗ -->
-            <div id="order-new" class="order-mode">
+            <div id="order-new" class="order-mode active">
                 <div class="section-label">Основные данные</div>
-
                 <div class="form-grid">
                     <div class="field">
                         <label for="order-store">Магазин</label>
-                        <select id="order-store">
-                            <option value="sole">SÓLE</option>
-                            <option value="extra">EXTRA</option>
-                        </select>
+                        <select id="order-store"><option value="sole">SÓLE</option><option value="extra">EXTRA</option></select>
                     </div>
                     <div class="field">
                         <label for="order-date">Дата заказа</label>
@@ -227,51 +211,37 @@ button{cursor:pointer}
                     </div>
                     <div class="field">
                         <label for="order-delivery">Площадка доставки</label>
-                        <select id="order-delivery">
-                            <option value="hogsmeade">Хогсмид</option>
-                            <option value="hogwarts">Главный форум</option>
-                        </select>
+                        <select id="order-delivery"><option value="hogsmeade">Хогсмид</option><option value="hogwarts">Главный форум</option></select>
                     </div>
                     <div class="field">
                         <label for="order-status">Статус</label>
-                        <select id="order-status">
-                            <option value="new">Новый</option>
-                            <option value="delivered">Доставлен</option>
-                        </select>
+                        <select id="order-status"><option value="new">Новый</option><option value="delivered">Доставлен</option></select>
                     </div>
                 </div>
-
                 <div class="divider"></div>
                 <div class="section-label">Отправитель и получатель</div>
-
                 <div class="sender-options">
                     <label class="sender-option"><input type="radio" name="sender-type" value="person" checked> От человека</label>
                     <label class="sender-option"><input type="radio" name="sender-type" value="self"> Для себя</label>
                     <label class="sender-option"><input type="radio" name="sender-type" value="store"> От магазина</label>
                 </div>
-
                 <div id="sender-person-field" class="field autocomplete">
                     <label for="order-sender">Заказчик</label>
                     <input id="order-sender" autocomplete="off" placeholder="Начни вводить имя...">
                     <div id="sender-suggestions" class="suggestions"></div>
                 </div>
-
                 <div class="field autocomplete">
                     <label for="order-recipient">Получатель</label>
                     <input id="order-recipient" autocomplete="off" placeholder="Начни вводить имя...">
                     <div id="recipient-suggestions" class="suggestions"></div>
                 </div>
-
                 <div class="divider"></div>
                 <div class="section-label">Товары</div>
                 <div id="order-items" class="order-items"></div>
                 <div class="actions">
                     <button class="button" type="button" onclick="addOrderItem()">+ Добавить товар</button>
                 </div>
-
                 <div class="divider"></div>
-                <div class="section-label">Дополнительно</div>
-
                 <div class="form-grid">
                     <div class="field">
                         <label for="order-total">Сумма перевода (G)</label>
@@ -279,24 +249,19 @@ button{cursor:pointer}
                     </div>
                     <div class="field">
                         <label for="order-card">Карточка</label>
-                        <select id="order-card">
-                            <option value="no">Не требуется</option>
-                            <option value="yes">Требуется</option>
-                        </select>
+                        <select id="order-card"><option value="no">Не требуется</option><option value="yes">Требуется</option></select>
                     </div>
                 </div>
                 <div class="order-summary">
                     <strong>Новый заказ</strong>
-                    <p id="order-summary-text">Номер будет присвоен автоматически после генерации.</p>
+                    <p id="order-summary-text">Номер будет присвоен автоматически.</p>
                 </div>
-
                 <div class="actions">
                     <button class="button primary" type="button" onclick="generateNewOrder()">Сгенерировать заказ</button>
                 </div>
             </div>
 
-            <!-- РЕДАКТИРОВАНИЕ -->
-            <div id="order-edit" class="order-mode" style="display:none">
+            <div id="order-edit" class="order-mode">
                 <div class="field">
                     <label for="edit-order-id">Номер заказа</label>
                     <input id="edit-order-id" placeholder="S0001">
@@ -305,38 +270,154 @@ button{cursor:pointer}
                 <div id="order-edit-panel" class="order-edit-panel"></div>
             </div>
 
-            <!-- СТАТУС -->
-            <div id="order-status-mode" class="order-mode" style="display:none">
+            <div id="order-status-mode" class="order-mode">
                 <div class="field">
                     <label for="status-order-id">Номер заказа</label>
                     <input id="status-order-id" placeholder="S0001">
                 </div>
                 <div class="field">
                     <label for="new-order-status">Новый статус</label>
-                    <select id="new-order-status">
-                        <option value="new">Новый</option>
-                        <option value="delivered">Доставлен</option>
-                    </select>
+                    <select id="new-order-status"><option value="new">Новый</option><option value="delivered">Доставлен</option></select>
                 </div>
                 <button class="button primary" type="button" onclick="generateStatusChange()">Сгенерировать изменение</button>
             </div>
 
-            <!-- УДАЛЕНИЕ -->
-            <div id="order-delete" class="order-mode" style="display:none">
+            <div id="order-delete" class="order-mode">
                 <div class="field">
                     <label for="delete-order-id">Номер заказа</label>
                     <input id="delete-order-id" placeholder="S0001">
                 </div>
-                <div class="field-hint">Удаление не освобождает номер заказа. Действие требует подтверждения.</div>
+                <div class="field-hint">Номер удалённого заказа не используется повторно.</div>
                 <div class="actions">
-                    <button class="button" type="button" onclick="generateOrderDeletion()">Удалить из реестра</button>
+                    <button class="button" type="button" onclick="generateOrderDeletion()">Удалить заказ</button>
                 </div>
             </div>
         </section>
 
-        <!-- =========================
-             RESULT
-        ========================= -->
+        <!-- CARDS AND DECOR -->
+        <section id="tool-assets" class="tool-panel">
+            <h3 class="panel-title">Карточки и декор</h3>
+            <p class="panel-description">Обновление other-assets.js: карточки заказов, оформление доставки и локации магазинов.</p>
+            <div class="field">
+                <label for="assets-source">Актуальный код other-assets.js</label>
+                <textarea id="assets-source" spellcheck="false" placeholder="const OTHER_ASSETS = {...}"></textarea>
+            </div>
+            <div class="mode-switch">
+                <button class="mode-button active" data-asset-mode="card" type="button">Карточка</button>
+                <button class="mode-button" data-asset-mode="decor" type="button">Декор</button>
+                <button class="mode-button" data-asset-mode="edit" type="button">Редактировать</button>
+                <button class="mode-button" data-asset-mode="delete" type="button">Удалить</button>
+            </div>
+
+            <div id="asset-card-mode" class="asset-mode active">
+                <div class="field">
+                    <label for="asset-order-id">Номер заказа</label>
+                    <input id="asset-order-id" placeholder="S0001">
+                </div>
+                <div class="field">
+                    <label for="asset-orders-source">Актуальный orders.js (для автозаполнения)</label>
+                    <textarea id="asset-orders-source" spellcheck="false" placeholder="Вставь orders.js, если нужно подтянуть данные заказа"></textarea>
+                </div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="asset-card-date">Дата карточки</label>
+                        <input id="asset-card-date" type="date">
+                    </div>
+                    <div class="field">
+                        <label for="asset-card-collection">Коллекция</label>
+                        <input id="asset-card-collection" placeholder="architecture">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="asset-card-model">Файл модели</label>
+                    <input id="asset-card-model" placeholder="03-astronomy-tower.png">
+                </div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="asset-card-sender">Отправитель (P0001)</label>
+                        <input id="asset-card-sender" placeholder="P0001">
+                    </div>
+                    <div class="field">
+                        <label for="asset-card-recipient">Получатель (P0002)</label>
+                        <input id="asset-card-recipient" placeholder="P0002">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="asset-card-message">Текст карточки</label>
+                    <textarea id="asset-card-message" placeholder="Точный текст на изображении"></textarea>
+                </div>
+                <div class="field">
+                    <label for="asset-card-file">Название изображения</label>
+                    <input id="asset-card-file" placeholder="card-S0001.png">
+                </div>
+                <div class="actions">
+                    <button class="button primary" type="button" onclick="generateAssetCard()">Добавить карточку</button>
+                </div>
+            </div>
+
+            <div id="asset-decor-mode" class="asset-mode">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="decor-store">Магазин</label>
+                        <select id="decor-store"><option value="sole">SÓLE</option><option value="extra">EXTRA</option></select>
+                    </div>
+                    <div class="field">
+                        <label for="decor-type">Раздел</label>
+                        <select id="decor-type"><option value="delivery">Доставка</option><option value="locations">Локации</option></select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="decor-name">Название</label>
+                    <input id="decor-name" placeholder="Заголовок доставки">
+                </div>
+                <div class="field">
+                    <label for="decor-file">Файл изображения</label>
+                    <input id="decor-file" placeholder="sole-delivery-header.jpg">
+                </div>
+                <div class="actions">
+                    <button class="button primary" type="button" onclick="generateDecor()">Добавить изображение</button>
+                </div>
+            </div>
+
+            <div id="asset-edit-mode" class="asset-mode">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="asset-edit-store">Магазин</label>
+                        <select id="asset-edit-store"><option value="sole">SÓLE</option><option value="extra">EXTRA</option></select>
+                    </div>
+                    <div class="field">
+                        <label for="asset-edit-type">Раздел</label>
+                        <select id="asset-edit-type"><option value="cards">Карточки</option><option value="delivery">Доставка</option><option value="locations">Локации</option></select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="asset-edit-key">Номер заказа или название файла</label>
+                    <input id="asset-edit-key" placeholder="S0001 или counter.jpeg">
+                </div>
+                <button class="button" type="button" onclick="loadAssetForEdit()">Найти изображение</button>
+                <div id="asset-edit-fields"></div>
+            </div>
+
+            <div id="asset-delete-mode" class="asset-mode">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="asset-delete-store">Магазин</label>
+                        <select id="asset-delete-store"><option value="sole">SÓLE</option><option value="extra">EXTRA</option></select>
+                    </div>
+                    <div class="field">
+                        <label for="asset-delete-type">Раздел</label>
+                        <select id="asset-delete-type"><option value="cards">Карточки</option><option value="delivery">Доставка</option><option value="locations">Локации</option></select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="asset-delete-key">Номер заказа или файл</label>
+                    <input id="asset-delete-key" placeholder="S0001 или counter.jpeg">
+                </div>
+                <button class="button" type="button" onclick="generateAssetDeletion()">Удалить запись</button>
+            </div>
+        </section>
+
+        <!-- RESULT -->
         <div id="result" class="result">
             <div class="divider"></div>
             <div class="result-heading">
@@ -373,7 +454,11 @@ button{cursor:pointer}
 ========================= */
 const $=id=>document.getElementById(id);
 let originalCode="",generatedCode="",generatedFilename="",toastTimer;
-let activeTool="people",orderMode="new",rowCounter=0;
+let activeTool="people",orderMode="new",assetMode="card",rowCounter=0;
+let selectedSender=null,selectedRecipient=null,editingOrder=null;
+const getPeople=()=>typeof PEOPLE!=="undefined"?PEOPLE:[];
+const getStores=()=>typeof STORES!=="undefined"?STORES:{};
+const orderNumber=(store,n)=>`${store==="sole"?"S":"E"}${String(n).padStart(4,"0")}`;
 
 /* =========================
    HELPERS
@@ -391,10 +476,12 @@ function resetResult(){
     $("result").classList.remove("visible");
     $("output").value="";
 }
+function normalizeName(name){
+    return String(name??"").trim().replace(/\s+/g," ").toLocaleLowerCase("ru-RU");
+}
 function validateName(value){
     const name=String(value??"").trim().replace(/\s+/g," ");
-    if(!name)throw Error("Укажи имя персонажа.");
-    if(name.length>150)throw Error("Имя слишком длинное.");
+    if(!name||name.length>150)throw Error("Укажи корректное имя персонажа.");
     return name;
 }
 function validateForumId(value,label){
@@ -404,9 +491,6 @@ function validateForumId(value,label){
     const number=Number(id);
     if(!Number.isSafeInteger(number))throw Error(`${label}: слишком большой ID.`);
     return number;
-}
-function normalizeName(name){
-    return String(name??"").trim().replace(/\s+/g," ").toLocaleLowerCase("ru-RU");
 }
 function setResult(code,source,filename,status,report){
     originalCode=source;
@@ -425,253 +509,6 @@ function setResult(code,source,filename,status,report){
     $("result").classList.add("visible");
     $("result").scrollIntoView({behavior:"smooth",block:"start"});
 }
-
-/* =========================
-   TOOL SWITCH
-========================= */
-document.querySelectorAll("[data-tool]").forEach(button=>{
-    button.addEventListener("click",()=>{
-        activeTool=button.dataset.tool;
-        document.querySelectorAll("[data-tool]").forEach(b=>
-            b.classList.toggle("active",b===button)
-        );
-        document.querySelectorAll(".tool-panel").forEach(panel=>
-            panel.classList.toggle("active",panel.id===`tool-${activeTool}`)
-        );
-        resetResult();
-    });
-});
-document.querySelectorAll("[data-mode]").forEach(button=>{
-    button.addEventListener("click",()=>{
-        orderMode=button.dataset.mode;
-        document.querySelectorAll("[data-mode]").forEach(b=>
-            b.classList.toggle("active",b===button)
-        );
-        const ids={
-            new:"order-new",
-            edit:"order-edit",
-            status:"order-status-mode",
-            delete:"order-delete"
-        };
-        document.querySelectorAll(".order-mode").forEach(panel=>
-            panel.style.display=panel.id===ids[orderMode]?"block":"none"
-        );
-        resetResult();
-    });
-});
-
-/* =========================
-   PEOPLE ROWS
-========================= */
-function addPersonRow(data={}){
-    rowCounter++;
-    const row=document.createElement("div");
-    row.className="person-row";
-    row.innerHTML=`
-        <div class="person-head">
-            <span class="person-number">Человек ${rowCounter}</span>
-            <button class="remove-person" type="button" title="Удалить">×</button>
-        </div>
-        <div class="person-fields">
-            <div class="field">
-                <label>Имя персонажа</label>
-                <input class="person-name" placeholder="Имя Фамилия">
-            </div>
-            <div class="field">
-                <label>ID Хогсмида</label>
-                <input class="person-hogsmeade" placeholder="Необязательно">
-            </div>
-            <div class="field">
-                <label>ID главного форума</label>
-                <input class="person-hogwarts" placeholder="Необязательно">
-            </div>
-        </div>
-    `;
-    row.querySelector(".person-name").value=data.name||"";
-    row.querySelector(".person-hogsmeade").value=data.hogsmeade??"";
-    row.querySelector(".person-hogwarts").value=data.hogwarts??"";
-    row.querySelector(".remove-person").onclick=()=>{
-        row.remove();
-        renumberRows();
-        resetResult();
-    };
-    row.querySelectorAll("input").forEach(input=>
-        input.addEventListener("input",resetResult)
-    );
-    $("people-list").appendChild(row);
-    renumberRows();
-    resetResult();
-}
-function renumberRows(){
-    document.querySelectorAll(".person-row").forEach((row,i)=>{
-        row.querySelector(".person-number").textContent=`Человек ${i+1}`;
-    });
-}
-function clearPeople(){
-    $("people-list").innerHTML="";
-    addPersonRow();
-}
-function getNewPeople(){
-    const people=[];
-    document.querySelectorAll(".person-row").forEach((row,i)=>{
-        const name=row.querySelector(".person-name").value.trim();
-        const hogsmeade=row.querySelector(".person-hogsmeade").value.trim();
-        const hogwarts=row.querySelector(".person-hogwarts").value.trim();
-        if(!name&&!hogsmeade&&!hogwarts)return;
-        if(!name)throw Error(`Строка ${i+1}: укажи имя персонажа.`);
-        people.push({
-            name:validateName(name),
-            hogsmeade:validateForumId(hogsmeade,`Строка ${i+1}, Хогсмид`),
-            hogwarts:validateForumId(hogwarts,`Строка ${i+1}, главный форум`)
-        });
-    });
-    if(!people.length)throw Error("Добавь хотя бы одного человека.");
-    return people;
-}
-
-/* =========================
-   BULK IMPORT
-========================= */
-function importPeople(){
-    const text=$("bulk-input").value.trim();
-    if(!text)return showError("Вставь строки из таблицы.");
-    const imported=[];
-    try{
-        text.split(/\r?\n/).forEach((line,i)=>{
-            if(!line.trim())return;
-            const parts=line.split("\t");
-            if(parts.length>3)throw Error(`Строка ${i+1}: максимум 3 столбца.`);
-            imported.push({
-                name:validateName(parts[0]||""),
-                hogsmeade:validateForumId(parts[1]||"",`Строка ${i+1}, Хогсмид`),
-                hogwarts:validateForumId(parts[2]||"",`Строка ${i+1}, главный форум`)
-            });
-        });
-        if(!imported.length)throw Error("Нет строк для импорта.");
-        const existing=[...document.querySelectorAll(".person-row")];
-        if(existing.length===1&&
-           [...existing[0].querySelectorAll("input")].every(input=>!input.value.trim())){
-            existing[0].remove();
-        }
-        imported.forEach(addPersonRow);
-        $("bulk-input").value="";
-        showToast(`Добавлено строк: ${imported.length}`);
-    }catch(error){showError(error.message)}
-}
-
-/* =========================
-   PEOPLE SOURCE PARSER
-========================= */
-function parsePeopleSource(source){
-    const text=source.trim();
-    if(!text)throw Error("Вставь актуальный код people.js.");
-    const matches=[...text.matchAll(/\bconst\s+PEOPLE\s*=\s*\[/g)];
-    if(matches.length!==1)throw Error("Ожидается одно объявление const PEOPLE = [...].");
-    const openIndex=matches[0].index+matches[0][0].length-1;
-    let depth=0,closeIndex=-1,quote=null,escaped=false;
-    for(let i=openIndex;i<text.length;i++){
-        const char=text[i];
-        if(quote){
-            if(escaped)escaped=false;
-            else if(char==="\\")escaped=true;
-            else if(char===quote)quote=null;
-            continue;
-        }
-        if(char==='"'||char==="'"||char==="`"){quote=char;continue}
-        if(char==="[")depth++;
-        if(char==="]"){
-            depth--;
-            if(depth===0){closeIndex=i;break}
-        }
-    }
-    if(closeIndex<0)throw Error("Не найдена закрывающая скобка PEOPLE.");
-    const body=text.slice(openIndex+1,closeIndex);
-    if(!/^\s*;?\s*$/.test(text.slice(closeIndex+1)))
-        throw Error("После массива PEOPLE обнаружен неподдерживаемый код.");
-    const ids=[...body.matchAll(/\bid\s*:\s*["'](P\d+)["']/g)].map(m=>m[1]);
-    const names=[...body.matchAll(/\bname\s*:\s*["']([^"']+)["']/g)].map(m=>m[1]);
-    if(new Set(ids).size!==ids.length)throw Error("В исходнике повторяются ID.");
-    if(ids.length!==names.length)throw Error("Не совпадает количество ID и имён.");
-    if(body.trim()&&!ids.length)throw Error("Не удалось распознать записи.");
-    return {text,body,openIndex,closeIndex,ids,names};
-}
-
-/* =========================
-   PEOPLE DUPLICATES
-========================= */
-function checkPeopleDuplicates(parsed,people){
-    const names=new Set(parsed.names.map(normalizeName));
-    const newNames=new Set();
-    const forumIds={hogsmeade:new Set(),hogwarts:new Set()};
-    people.forEach(person=>{
-        const normalized=normalizeName(person.name);
-        if(names.has(normalized)||newNames.has(normalized))
-            throw Error(`Повторяющееся имя: ${person.name}`);
-        newNames.add(normalized);
-        ["hogsmeade","hogwarts"].forEach(key=>{
-            const id=person[key];
-            if(id===null)return;
-            if(forumIds[key].has(id))
-                throw Error(`Повторяется ID ${id} (${key}).`);
-            forumIds[key].add(id);
-        });
-    });
-    ["hogsmeade","hogwarts"].forEach(key=>{
-        const existing=[...parsed.body.matchAll(new RegExp(`\\b${key}\\s*:\\s*(\\d+)`,"g"))]
-            .map(m=>Number(m[1]));
-        people.forEach(person=>{
-            if(person[key]!==null&&existing.includes(person[key]))
-                throw Error(`ID ${person[key]} уже есть в people.js (${key}).`);
-        });
-    });
-}
-
-/* =========================
-   GENERATE PEOPLE
-========================= */
-function generatePeopleCode(){
-    try{
-        resetResult();
-        const parsed=parsePeopleSource($("people-source").value);
-        const people=getNewPeople();
-        checkPeopleDuplicates(parsed,people);
-        const maxId=Math.max(0,...parsed.ids.map(id=>Number(id.slice(1))));
-        const generated=people.map((person,i)=>({
-            id:`P${String(maxId+i+1).padStart(4,"0")}`,
-            name:person.name,
-            accounts:{hogsmeade:person.hogsmeade,hogwarts:person.hogwarts}
-        }));
-        const blocks=generated.map(person=>[
-            "    {",
-            `        id: ${JSON.stringify(person.id)},`,
-            `        name: ${JSON.stringify(person.name)},`,
-            "        accounts: {",
-            `            hogsmeade: ${person.accounts.hogsmeade??"null"},`,
-            `            hogwarts: ${person.accounts.hogwarts??"null"}`,
-            "        }",
-            "    }"
-        ].join("\n"));
-        const oldBody=parsed.body.trimEnd();
-        const separator=parsed.ids.length?(oldBody.endsWith(",")?"":","):"";
-        const newBody=oldBody+separator+"\n"+blocks.join(",\n")+"\n";
-        const result=parsed.text.slice(0,parsed.openIndex+1)+
-            newBody+parsed.text.slice(parsed.closeIndex);
-        const verified=parsePeopleSource(result);
-        if(verified.ids.length!==parsed.ids.length+generated.length)
-            throw Error("Проверка количества записей не пройдена.");
-        setResult(
-            result,parsed.text,"people.js",
-            `Добавлено: ${generated.length}`,
-            generated.map(p=>`${p.id} — ${p.name}`).join("\n")+
-            `\n\nСуществующих записей: ${parsed.ids.length}`+
-            `\nВсего записей: ${verified.ids.length}`
-        );
-    }catch(error){showError(error.message)}
-}
-
-/* =========================
-   COPY & DOWNLOAD
-========================= */
 async function copyCode(){
     if(!generatedCode)return;
     try{
@@ -679,8 +516,7 @@ async function copyCode(){
         showToast("Код скопирован");
     }catch{
         $("output").select();
-        const success=document.execCommand("copy");
-        if(success)showToast("Код скопирован");
+        if(document.execCommand("copy"))showToast("Код скопирован");
         else showError("Не удалось скопировать код.");
     }
 }
@@ -688,11 +524,8 @@ function downloadFile(content,filename){
     const blob=new Blob([content],{type:"text/javascript;charset=utf-8"});
     const url=URL.createObjectURL(blob);
     const link=document.createElement("a");
-    link.href=url;
-    link.download=filename;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    link.href=url;link.download=filename;
+    document.body.appendChild(link);link.click();link.remove();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function downloadCode(){
@@ -707,58 +540,231 @@ function downloadBackup(){
 }
 
 /* =========================
-   INITIAL PEOPLE
+   TOOL SWITCH
 ========================= */
-$("people-source").addEventListener("input",resetResult);
-addPersonRow();
+function bindSwitch(attribute,prefix){
+    document.querySelectorAll(`[${attribute}]`).forEach(button=>{
+        button.onclick=()=>{
+            const value=button.getAttribute(attribute);
+            document.querySelectorAll(`[${attribute}]`).forEach(b=>
+                b.classList.toggle("active",b===button)
+            );
+            if(attribute==="data-tool"){
+                activeTool=value;
+                document.querySelectorAll(".tool-panel").forEach(p=>
+                    p.classList.toggle("active",p.id===`tool-${value}`)
+                );
+            }else{
+                if(attribute==="data-order-mode")orderMode=value;
+                else assetMode=value;
+                document.querySelectorAll(prefix).forEach(p=>
+                    p.classList.toggle("active",p.id===(attribute==="data-order-mode"?
+                        {new:"order-new",edit:"order-edit",status:"order-status-mode",delete:"order-delete"}[value]:
+                        {card:"asset-card-mode",decor:"asset-decor-mode",edit:"asset-edit-mode",delete:"asset-delete-mode"}[value]))
+                );
+            }
+            resetResult();
+        };
+    });
+}
+bindSwitch("data-tool","");
+bindSwitch("data-order-mode",".order-mode");
+bindSwitch("data-asset-mode",".asset-mode");
 
 /* =========================
-   ORDERS — DATA
+   PEOPLE ROWS
 ========================= */
-let selectedSender=null,selectedRecipient=null,editingOrder=null;
-const getPeople=()=>typeof PEOPLE!=="undefined"?PEOPLE:[];
-const getStores=()=>typeof STORES!=="undefined"?STORES:{};
-const clone=value=>JSON.parse(JSON.stringify(value));
-const orderNumber=(store,n)=>`${store==="sole"?"S":"E"}${String(n).padStart(4,"0")}`;
-
-function readOrders(){
-    const source=$("orders-source").value.trim();
-    if(!source)throw Error("Вставь актуальный orders.js.");
-    const match=source.match(/const\s+ORDERS_DB\s*=\s*(\{[\s\S]*\})\s*;?\s*$/);
-    if(!match)throw Error("Не найден const ORDERS_DB = {...}.");
-    const raw=match[1];
-    if(/(?:function\s*\(|=>|`|\b(?:window|document|fetch|eval)\b)/.test(raw))
-        throw Error("В orders.js обнаружены неподдерживаемые конструкции.");
-    let data;
-    try{
-        data=Function(`"use strict";return (${raw})`)();
-    }catch{
-        throw Error("Не удалось прочитать структуру orders.js.");
-    }
-    if(!data||!Array.isArray(data.orders)||!data.counters)
-        throw Error("Некорректная структура ORDERS_DB.");
-    if(!Number.isSafeInteger(data.counters.sole)||!Number.isSafeInteger(data.counters.extra))
-        throw Error("Некорректные счётчики заказов.");
-    if(data.counters.sole<0||data.counters.extra<0)
-        throw Error("Счётчики не могут быть отрицательными.");
-    const ids=data.orders.map(o=>o.id);
-    if(new Set(ids).size!==ids.length)throw Error("В реестре повторяются номера заказов.");
-    for(const id of ids){
-        if(!/^[SE]\d{4,}$/.test(id))throw Error(`Некорректный номер: ${id}`);
-        const key=id[0]==="S"?"sole":"extra";
-        if(Number(id.slice(1))>data.counters[key])
-            throw Error(`Счётчик ${key} меньше номера ${id}.`);
-    }
-    return {source,data};
+function addPersonRow(data={}){
+    rowCounter++;
+    const row=document.createElement("div");
+    row.className="person-row";
+    row.innerHTML=`
+        <div class="person-head">
+            <span class="person-number">Человек</span>
+            <button class="remove-person" type="button">×</button>
+        </div>
+        <div class="person-fields">
+            <div class="field"><label>Имя</label><input class="person-name"></div>
+            <div class="field"><label>ID Хогсмида</label><input class="person-hogsmeade"></div>
+            <div class="field"><label>ID главного форума</label><input class="person-hogwarts"></div>
+        </div>`;
+    row.querySelector(".person-name").value=data.name||"";
+    row.querySelector(".person-hogsmeade").value=data.hogsmeade??"";
+    row.querySelector(".person-hogwarts").value=data.hogwarts??"";
+    row.querySelector(".remove-person").onclick=()=>{
+        row.remove();renumberRows();resetResult();
+    };
+    row.querySelectorAll("input").forEach(i=>i.oninput=resetResult);
+    $("people-list").appendChild(row);
+    renumberRows();resetResult();
 }
-function outputOrders(data,source,description){
-    const code=`const ORDERS_DB = ${JSON.stringify(data,null,4)};\n`;
-    setResult(code,source,"orders.js","Готово",description);
+function renumberRows(){
+    document.querySelectorAll(".person-row").forEach((row,i)=>
+        row.querySelector(".person-number").textContent=`Человек ${i+1}`
+    );
+}
+function clearPeople(){
+    $("people-list").innerHTML="";
+    addPersonRow();
+}
+function getNewPeople(){
+    const people=[];
+    document.querySelectorAll(".person-row").forEach((row,i)=>{
+        const name=row.querySelector(".person-name").value.trim();
+        const hogsmeade=row.querySelector(".person-hogsmeade").value.trim();
+        const hogwarts=row.querySelector(".person-hogwarts").value.trim();
+        if(!name&&!hogsmeade&&!hogwarts)return;
+        if(!name)throw Error(`Строка ${i+1}: укажи имя.`);
+        people.push({
+            name:validateName(name),
+            hogsmeade:validateForumId(hogsmeade,"Хогсмид"),
+            hogwarts:validateForumId(hogwarts,"Главный форум")
+        });
+    });
+    if(!people.length)throw Error("Добавь хотя бы одного человека.");
+    return people;
+}
+function importPeople(){
+    try{
+        const text=$("bulk-input").value.trim();
+        if(!text)throw Error("Вставь строки из таблицы.");
+        const imported=text.split(/\r?\n/).filter(Boolean).map(line=>{
+            const p=line.split("\t");
+            if(p.length>3)throw Error("Ожидается максимум три столбца.");
+            return {
+                name:validateName(p[0]||""),
+                hogsmeade:validateForumId(p[1]||"","Хогсмид"),
+                hogwarts:validateForumId(p[2]||"","Главный форум")
+            };
+        });
+        const rows=[...document.querySelectorAll(".person-row")];
+        if(rows.length===1&&[...rows[0].querySelectorAll("input")].every(i=>!i.value.trim()))
+            rows[0].remove();
+        imported.forEach(addPersonRow);
+        $("bulk-input").value="";
+        showToast(`Добавлено: ${imported.length}`);
+    }catch(e){showError(e.message)}
+}
+
+/* =========================
+   PEOPLE PARSER
+========================= */
+function parsePeopleSource(source){
+    const text=source.trim();
+    if(!text)throw Error("Вставь актуальный people.js.");
+    const matches=[...text.matchAll(/\bconst\s+PEOPLE\s*=\s*\[/g)];
+    if(matches.length!==1)throw Error("Не найден массив PEOPLE.");
+    const openIndex=matches[0].index+matches[0][0].length-1;
+    let depth=0,closeIndex=-1,quote=null,escaped=false;
+    for(let i=openIndex;i<text.length;i++){
+        const ch=text[i];
+        if(quote){
+            if(escaped)escaped=false;
+            else if(ch==="\\")escaped=true;
+            else if(ch===quote)quote=null;
+            continue;
+        }
+        if(ch==='"'||ch==="'"||ch==="`"){quote=ch;continue}
+        if(ch==="[")depth++;
+        if(ch==="]"&&--depth===0){closeIndex=i;break}
+    }
+    if(closeIndex<0)throw Error("Не найдена закрывающая скобка PEOPLE.");
+    const body=text.slice(openIndex+1,closeIndex);
+    if(!/^\s*;?\s*$/.test(text.slice(closeIndex+1)))
+        throw Error("Неподдерживаемый код после PEOPLE.");
+    const ids=[...body.matchAll(/\bid\s*:\s*["'](P\d+)["']/g)].map(m=>m[1]);
+    const names=[...body.matchAll(/\bname\s*:\s*["']([^"']+)["']/g)].map(m=>m[1]);
+    if(ids.length!==names.length||new Set(ids).size!==ids.length)
+        throw Error("Ошибка структуры или дублирующиеся ID.");
+    if(body.trim()&&!ids.length)throw Error("Не удалось прочитать записи.");
+    return {text,body,openIndex,closeIndex,ids,names};
+}
+function generatePeopleCode(){
+    try{
+        const parsed=parsePeopleSource($("people-source").value);
+        const people=getNewPeople();
+        const names=new Set(parsed.names.map(normalizeName));
+        const existingIds={hogsmeade:new Set(),hogwarts:new Set()};
+        ["hogsmeade","hogwarts"].forEach(key=>{
+            [...parsed.body.matchAll(new RegExp(`\\b${key}\\s*:\\s*(\\d+)`,"g"))]
+                .forEach(m=>existingIds[key].add(Number(m[1])));
+        });
+        people.forEach(p=>{
+            if(names.has(normalizeName(p.name)))throw Error(`Повтор имени: ${p.name}`);
+            names.add(normalizeName(p.name));
+            for(const key of ["hogsmeade","hogwarts"]){
+                if(p[key]===null)continue;
+                if(existingIds[key].has(p[key]))throw Error(`Повтор ID: ${p[key]}`);
+                existingIds[key].add(p[key]);
+            }
+        });
+        const max=Math.max(0,...parsed.ids.map(id=>Number(id.slice(1))));
+        const blocks=people.map((p,i)=>[
+            "    {",
+            `        id: "P${String(max+i+1).padStart(4,"0")}",`,
+            `        name: ${JSON.stringify(p.name)},`,
+            "        accounts: {",
+            `            hogsmeade: ${p.hogsmeade??"null"},`,
+            `            hogwarts: ${p.hogwarts??"null"}`,
+            "        }",
+            "    }"
+        ].join("\n"));
+        const old=parsed.body.trimEnd();
+        const result=parsed.text.slice(0,parsed.openIndex+1)+old+
+            (parsed.ids.length&&!old.endsWith(",")?",":"")+
+            "\n"+blocks.join(",\n")+"\n"+
+            parsed.text.slice(parsed.closeIndex);
+        const verified=parsePeopleSource(result);
+        if(verified.ids.length!==parsed.ids.length+people.length)
+            throw Error("Проверка результата не пройдена.");
+        setResult(result,parsed.text,"people.js",`Добавлено: ${people.length}`,
+            people.map((p,i)=>`P${String(max+i+1).padStart(4,"0")} — ${p.name}`).join("\n"));
+    }catch(e){showError(e.message)}
+}
+
+/* =========================
+   ORDERS DATABASE
+========================= */
+function parseDatabase(source,name){
+    const text=source.trim();
+    if(!text)throw Error(`Вставь актуальный ${name}.js.`);
+    const regex=new RegExp(`const\\s+${name}\\s*=\\s*(\\{[\\s\\S]*\\})\\s*;?\\s*$`);
+    const match=text.match(regex);
+    if(!match)throw Error(`Не найден ${name}.`);
+    if(/(?:function\s*\(|=>|`|\b(?:window|document|fetch|eval)\b)/.test(match[1]))
+        throw Error("В файле обнаружены неподдерживаемые конструкции.");
+    try{
+        return {source:text,data:Function(`"use strict";return (${match[1]})`)()};
+    }catch{throw Error(`Не удалось прочитать ${name}.`)}
+}
+function readOrders(){
+    const result=parseDatabase($("orders-source").value,"ORDERS_DB");
+    const data=result.data;
+    if(!data||!data.counters||!Array.isArray(data.orders))
+        throw Error("Некорректная структура orders.js.");
+    for(const key of ["sole","extra"]){
+        if(!Number.isSafeInteger(data.counters[key])||data.counters[key]<0)
+            throw Error(`Некорректный счётчик ${key}.`);
+    }
+    const ids=new Set();
+    data.orders.forEach(o=>{
+        if(!/^[SE]\d{4,}$/.test(o.id)||ids.has(o.id))
+            throw Error(`Ошибка номера заказа: ${o.id}`);
+        ids.add(o.id);
+        const store=o.id[0]==="S"?"sole":"extra";
+        if(Number(o.id.slice(1))>data.counters[store])
+            throw Error(`Счётчик ${store} меньше номера ${o.id}.`);
+    });
+    return result;
 }
 function findOrder(data,id){
-    const order=data.orders.find(o=>o.id===id.trim().toUpperCase());
-    if(!order)throw Error("Заказ с таким номером не найден.");
+    const order=data.orders.find(o=>o.id===String(id).trim().toUpperCase());
+    if(!order)throw Error("Заказ не найден.");
     return order;
+}
+function outputOrders(data,source,report){
+    setResult(`const ORDERS_DB = ${JSON.stringify(data,null,4)};\n`,
+        source,"orders.js","Готово",report);
 }
 
 /* =========================
@@ -766,25 +772,24 @@ function findOrder(data,id){
 ========================= */
 function bindPersonSearch(inputId,listId,callback){
     const input=$(inputId),list=$(listId);
-    input.addEventListener("input",()=>{
+    input.oninput=()=>{
         callback(null);
-        const q=normalizeName(input.value);
         list.innerHTML="";
+        const q=normalizeName(input.value);
         if(!q){list.classList.remove("visible");return}
         const matches=getPeople().filter(p=>normalizeName(p.name).startsWith(q));
         if(!matches.length){
             const empty=document.createElement("div");
             empty.className="suggestion-empty";
-            empty.textContent="Человек не найден в people.js";
+            empty.textContent="Человек не найден в базе.";
             list.appendChild(empty);
         }
         matches.forEach(p=>{
             const button=document.createElement("button");
-            button.type="button";
-            button.className="suggestion";
+            button.type="button";button.className="suggestion";
             button.textContent=p.name;
             const small=document.createElement("small");
-            small.textContent=`${p.id} · Хогсмид: ${p.accounts?.hogsmeade??"—"} · ГФ: ${p.accounts?.hogwarts??"—"}`;
+            small.textContent=`${p.id} · Хогсмид ${p.accounts?.hogsmeade??"—"} · ГФ ${p.accounts?.hogwarts??"—"}`;
             button.appendChild(small);
             button.onclick=()=>{
                 input.value=p.name;
@@ -796,12 +801,11 @@ function bindPersonSearch(inputId,listId,callback){
         });
         list.classList.add("visible");
         resetResult();
-    });
-    input.addEventListener("blur",()=>setTimeout(()=>list.classList.remove("visible"),180));
+    };
+    input.onblur=()=>setTimeout(()=>list.classList.remove("visible"),180);
 }
 bindPersonSearch("order-sender","sender-suggestions",id=>selectedSender=id);
 bindPersonSearch("order-recipient","recipient-suggestions",id=>selectedRecipient=id);
-
 function senderType(){
     return document.querySelector('input[name="sender-type"]:checked').value;
 }
@@ -809,9 +813,7 @@ function updateSenderField(){
     $("sender-person-field").style.display=senderType()==="person"?"flex":"none";
     resetResult();
 }
-document.querySelectorAll('input[name="sender-type"]').forEach(r=>
-    r.addEventListener("change",updateSenderField)
-);
+document.querySelectorAll('input[name="sender-type"]').forEach(r=>r.onchange=updateSenderField);
 
 /* =========================
    PRODUCTS
@@ -824,62 +826,79 @@ function allCollections(storeKey){
         if(c.sections){
             c.sections.forEach(s=>result.push({
                 id:c.id,section:s.id,name:`${c.name} / ${s.name}`,
-                models:s.models||[],folder:s.folder,packaging:s.packaging
+                models:s.models||[],folder:s.folder||c.folder
             }));
         }else if(c.rounds){
             c.rounds.forEach(r=>result.push({
                 id:c.id,section:r.id,name:`${c.name} / ${r.name}`,
-                models:r.models||[],folder:`${c.folder}/${r.folder}`,
-                packaging:c.packaging
+                models:r.models||[],folder:`${c.folder}/${r.folder}`
             }));
         }else result.push({
-            id:c.id,section:null,name:c.name,
-            models:c.models||[],folder:c.folder,packaging:c.packaging
+            id:c.id,section:null,name:c.name,models:c.models||[],folder:c.folder
         });
     });
     return result;
 }
-function addOrderItem(){
-    const container=$("order-items");
+function addOrderItem(data=null){
     const row=document.createElement("div");
     row.className="order-item";
     row.innerHTML=`
-        <div class="item-head">
-            <span class="item-number">Товар</span>
-            <button class="remove-item" type="button">×</button>
-        </div>
+        <div class="item-head"><span class="item-number">Товар</span><button class="remove-item" type="button">×</button></div>
         <div class="item-fields">
+
             <div class="field wide"><label>Коллекция / раздел</label><select class="item-collection"></select></div>
             <div class="field wide"><label>Модель</label><select class="item-model"></select></div>
-            <div class="field"><label>Расцветка</label><select class="item-variant"></select></div>
+            <div class="field item-variant-field" style="display:none"><label>Расцветка</label><select class="item-variant"></select></div>
             <div class="field"><label>Количество</label><input class="item-quantity" type="number" min="1" value="1"></div>
             <div class="field"><label>Цена за единицу (G)</label><input class="item-price" type="number" min="0" step="1"></div>
-        </div>
-    `;
-    container.appendChild(row);
+        </div>`;
+    $("order-items").appendChild(row);
     const col=row.querySelector(".item-collection");
     const model=row.querySelector(".item-model");
     const variant=row.querySelector(".item-variant");
+    const variantField=row.querySelector(".item-variant-field");
+    const price=row.querySelector(".item-price");
     function loadCollections(){
         const collections=allCollections($("order-store").value);
-        col.innerHTML=collections.map((c,i)=>`<option value="${i}">${c.name}</option>`).join("");
+        col.replaceChildren();
+        collections.forEach((c,i)=>col.add(new Option(c.name,String(i))));
+        if(data){
+            const index=collections.findIndex(c=>
+                c.id===data.collection&&(c.section??null)===(data.section??null)
+            );
+            if(index>=0)col.value=String(index);
+        }
         loadModels();
     }
     function loadModels(){
         const c=allCollections($("order-store").value)[Number(col.value)];
-        model.innerHTML=(c?.models||[]).map((m,i)=>`<option value="${i}">${m.name}</option>`).join("");
+        model.replaceChildren();
+        (c?.models||[]).forEach((m,i)=>
+            model.add(new Option(m.name||m.id||m.file||`Модель ${i+1}`,String(i)))
+        );
+        if(data){
+            const index=(c?.models||[]).findIndex(m=>m.file===data.model);
+            if(index>=0)model.value=String(index);
+        }
         loadVariants();
     }
     function loadVariants(){
         const c=allCollections($("order-store").value)[Number(col.value)];
-        const m=c?.models[Number(model.value)];
-        variant.innerHTML='<option value="">Основная</option>';
-        (m?.variants||[]).forEach(v=>variant.add(new Option(v.name,v.id)));
-        row.querySelector(".item-price").value=m?.price??"";
+        const m=c?.models?.[Number(model.value)];
+        const variants=Array.isArray(m?.variants)?m.variants:[];
+        variant.replaceChildren();
+        variantField.style.display=variants.length?"flex":"none";
+        if(variants.length){
+            variants.forEach((v,i)=>
+                variant.add(new Option(v.name||v.id||`Вариант ${i+1}`,v.id||v.name||String(i)))
+            );
+            if(data?.variant)variant.value=data.variant;
+        }
+        price.value=data?.price??m?.price??"";
         resetResult();
     }
-    col.onchange=loadModels;
-    model.onchange=loadVariants;
+    col.onchange=()=>{data=null;loadModels()};
+    model.onchange=()=>{data=null;loadVariants()};
     variant.onchange=resetResult;
     row.querySelectorAll("input").forEach(i=>i.oninput=resetResult);
     row.querySelector(".remove-item").onclick=()=>{
@@ -889,35 +908,45 @@ function addOrderItem(){
     };
     row.reloadCollections=loadCollections;
     loadCollections();
+    if(data){
+        row.querySelector(".item-quantity").value=data.quantity??1;
+        price.value=data.price??"";
+    }
     renumberItems();
 }
 function renumberItems(){
-    document.querySelectorAll(".order-item").forEach((r,i)=>
-        r.querySelector(".item-number").textContent=`Товар ${i+1}`
-    );
+    document.querySelectorAll("#order-items .order-item").forEach((row,i)=>{
+        row.querySelector(".item-number").textContent=`Товар ${i+1}`;
+    });
 }
 function getOrderItems(){
     const collections=allCollections($("order-store").value);
-    const rows=[...document.querySelectorAll(".order-item")];
+    const rows=[...document.querySelectorAll("#order-items .order-item")];
     if(!rows.length)throw Error("Добавь хотя бы один товар.");
     return rows.map(row=>{
         const c=collections[Number(row.querySelector(".item-collection").value)];
-        const m=c?.models[Number(row.querySelector(".item-model").value)];
-        if(!c||!m)throw Error("Не выбрана модель товара.");
+        const m=c?.models?.[Number(row.querySelector(".item-model").value)];
+        if(!c||!m)throw Error("Выбери модель товара.");
         const quantity=Number(row.querySelector(".item-quantity").value);
-        const price=Number(row.querySelector(".item-price").value);
+        const priceText=row.querySelector(".item-price").value.trim();
+        const price=Number(priceText);
         if(!Number.isSafeInteger(quantity)||quantity<1)throw Error("Некорректное количество.");
-        if(!Number.isFinite(price)||price<0)throw Error("Некорректная цена.");
+        if(!priceText||!Number.isFinite(price)||price<0)throw Error("Укажи корректную цену.");
         return {
-            collection:c.id,section:c.section,
-            model:m.file,variant:row.querySelector(".item-variant").value||null,
-            quantity,price
+            collection:c.id,
+            section:c.section??null,
+            model:m.file||m.id,
+            variant:row.querySelector(".item-variant-field").style.display==="none"
+                ?null:row.querySelector(".item-variant").value||null,
+            quantity,
+            price
         };
     });
 }
-$("order-store").addEventListener("change",()=>{
-    document.querySelectorAll(".order-item").forEach(row=>row.reloadCollections());
-});
+$("order-store").onchange=()=>{
+    document.querySelectorAll("#order-items .order-item").forEach(row=>row.reloadCollections());
+    resetResult();
+};
 addOrderItem();
 
 /* =========================
@@ -932,27 +961,28 @@ function generateNewOrder(){
         if(!selectedRecipient)throw Error("Выбери получателя из списка.");
         if(type==="person"&&!selectedSender)throw Error("Выбери заказчика из списка.");
         const date=$("order-date").value;
-        if(!/^\d{4}-\d{2}-\d{2}$/.test(date))throw Error("Укажи дату.");
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(date))throw Error("Укажи дату заказа.");
         const items=getOrderItems();
-        const calculated=items.reduce((sum,i)=>sum+i.price*i.quantity,0);
+        const calculated=items.reduce((sum,item)=>sum+item.price*item.quantity,0);
         const totalText=$("order-total").value.trim();
         const total=totalText===""?calculated:Number(totalText);
         if(!Number.isFinite(total)||total<0)throw Error("Некорректная сумма.");
         const next=data.counters[store]+1;
         const id=orderNumber(store,next);
         const order={
-            id,store,date,status:$("order-status").value,
-            senderType:type,sender:type==="person"?selectedSender:null,
-            recipient:selectedRecipient,delivery:$("order-delivery").value,
-            items,total,cardRequired:$("order-card").value==="yes",
-            giftNote:$("order-gift-note").value.trim(),
-            transferComment:$("order-transfer-comment").value.trim(),
-            privateNotes:$("order-private-notes").value.trim()
+            id,store,date,
+            status:$("order-status").value,
+            senderType:type,
+            sender:type==="person"?selectedSender:null,
+            recipient:selectedRecipient,
+            delivery:$("order-delivery").value,
+            items,total,
+            cardRequired:$("order-card").value==="yes"
         };
         data.counters[store]=next;
         data.orders.push(order);
         outputOrders(data,source,`Добавлен ${id}\nТоваров: ${items.length}\nСумма: ${total} G`);
-    }catch(error){showError(error.message)}
+    }catch(e){showError(e.message)}
 }
 
 /* =========================
@@ -968,19 +998,56 @@ function loadOrderForEdit(){
         panel.innerHTML=`
             <div class="divider"></div>
             <div class="section-label">Редактирование ${order.id}</div>
-            <div class="field"><label>Дата</label><input id="edit-date" type="date"></div>
-            <div class="field"><label>Сумма (G)</label><input id="edit-total" type="number" min="0"></div>
-            <div class="field"><label>Текст карточки</label><textarea id="edit-note"></textarea></div>
-            <div class="field"><label>Комментарий перевода</label><textarea id="edit-comment"></textarea></div>
-            <div class="field"><label>Мои пометки</label><textarea id="edit-private"></textarea></div>
-            <button class="button primary" type="button" onclick="generateOrderEdit()">Сгенерировать изменения</button>
-        `;
+            <div class="form-grid">
+                <div class="field"><label>Дата</label><input id="edit-date" type="date"></div>
+                <div class="field"><label>Сумма (G)</label><input id="edit-total" type="number" min="0" step="1"></div>
+                <div class="field"><label>Площадка доставки</label>
+                    <select id="edit-delivery">
+                        <option value="hogsmeade">Хогсмид</option>
+                        <option value="hogwarts">Главный форум</option>
+                    </select>
+                </div>
+                <div class="field"><label>Карточка</label>
+                    <select id="edit-card">
+                        <option value="no">Не требуется</option>
+                        <option value="yes">Требуется</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field"><label>Тип отправителя</label>
+                <select id="edit-sender-type">
+                    <option value="person">От человека</option>
+                    <option value="self">Для себя</option>
+                    <option value="store">От магазина</option>
+                </select>
+            </div>
+            <div class="field"><label>ID отправителя</label>
+                <select id="edit-sender"></select>
+            </div>
+            <div class="field"><label>Получатель</label>
+                <select id="edit-recipient"></select>
+            </div>
+            <div class="actions">
+                <button class="button primary" type="button" onclick="generateOrderEdit()">Сгенерировать изменения</button>
+            </div>`;
         $("edit-date").value=order.date;
         $("edit-total").value=order.total??0;
-        $("edit-note").value=order.giftNote||"";
-        $("edit-comment").value=order.transferComment||"";
-        $("edit-private").value=order.privateNotes||"";
-    }catch(error){showError(error.message)}
+        $("edit-delivery").value=order.delivery;
+        $("edit-card").value=order.cardRequired?"yes":"no";
+        $("edit-sender-type").value=order.senderType;
+        for(const person of getPeople()){
+            $("edit-sender").add(new Option(person.name,person.id));
+            $("edit-recipient").add(new Option(person.name,person.id));
+        }
+        $("edit-sender").value=order.sender||"";
+        $("edit-recipient").value=order.recipient;
+        const toggle=()=>{
+            $("edit-sender").parentElement.style.display=
+                $("edit-sender-type").value==="person"?"flex":"none";
+        };
+        $("edit-sender-type").onchange=toggle;
+        toggle();
+    }catch(e){showError(e.message)}
 }
 function generateOrderEdit(){
     try{
@@ -988,13 +1055,23 @@ function generateOrderEdit(){
         const order=findOrder(data,editingOrder);
         const total=Number($("edit-total").value);
         if(!Number.isFinite(total)||total<0)throw Error("Некорректная сумма.");
+        if(!$("edit-date").value)throw Error("Укажи дату.");
+        if(!$("edit-recipient").value)throw Error("Выбери получателя.");
+        const type=$("edit-sender-type").value;
+        if(type==="person"&&!$("edit-sender").value)
+            throw Error("Выбери отправителя.");
         order.date=$("edit-date").value;
         order.total=total;
-        order.giftNote=$("edit-note").value.trim();
-        order.transferComment=$("edit-comment").value.trim();
-        order.privateNotes=$("edit-private").value.trim();
+        order.delivery=$("edit-delivery").value;
+        order.cardRequired=$("edit-card").value==="yes";
+        order.senderType=type;
+        order.sender=type==="person"?$("edit-sender").value:null;
+        order.recipient=$("edit-recipient").value;
+        delete order.giftNote;
+        delete order.transferComment;
+        delete order.privateNotes;
         outputOrders(data,source,`Изменён заказ ${order.id}.`);
-    }catch(error){showError(error.message)}
+    }catch(e){showError(e.message)}
 }
 
 /* =========================
@@ -1007,7 +1084,7 @@ function generateStatusChange(){
         const previous=order.status;
         order.status=$("new-order-status").value;
         outputOrders(data,source,`${order.id}: ${previous} → ${order.status}`);
-    }catch(error){showError(error.message)}
+    }catch(e){showError(e.message)}
 }
 function generateOrderDeletion(){
     try{
@@ -1016,17 +1093,260 @@ function generateOrderDeletion(){
         if(!confirm(`Удалить ${order.id}? Номер останется занятым.`))return;
         data.orders=data.orders.filter(o=>o.id!==order.id);
         outputOrders(data,source,`Удалён ${order.id}. Счётчики сохранены.`);
-    }catch(error){showError(error.message)}
+    }catch(e){showError(e.message)}
 }
-
-/* =========================
-   RESET ON SOURCE CHANGE
-========================= */
 $("orders-source").addEventListener("input",resetResult);
 document.addEventListener("click",event=>{
     if(!event.target.closest(".autocomplete"))
         document.querySelectorAll(".suggestions").forEach(s=>s.classList.remove("visible"));
 });
+
+
+/* =========================
+   ASSETS DATABASE
+========================= */
+function readAssets(){
+    const result=parseDatabase($("assets-source").value,"OTHER_ASSETS");
+    if(!result.data||typeof result.data!=="object")
+        throw Error("Некорректный other-assets.js.");
+    for(const store of ["sole","extra"]){
+        if(!result.data[store])result.data[store]={};
+    }
+    return result;
+}
+function outputAssets(data,source,report){
+    setResult(
+        `const OTHER_ASSETS = ${JSON.stringify(data,null,4)};\n`,
+        source,"other-assets.js","Готово",report
+    );
+}
+function validateAssetFile(value){
+    const file=String(value??"").trim();
+    if(!file||!/\.(png|jpe?g|webp|gif)$/i.test(file))
+        throw Error("Укажи название файла с расширением PNG, JPG, JPEG, WEBP или GIF.");
+    if(file.includes("/")||file.includes("\\")||file.includes(".."))
+        throw Error("Указывай только имя файла, без пути.");
+    return file;
+}
+function getAssetArray(data,store,type){
+    if(!["sole","extra"].includes(store))
+        throw Error("Неизвестный магазин.");
+    if(!["cards","delivery","locations"].includes(type))
+        throw Error("Неизвестный раздел.");
+    if(!Array.isArray(data[store][type]))data[store][type]=[];
+    return data[store][type];
+}
+function findAsset(data,store,type,key){
+    const list=getAssetArray(data,store,type);
+    const value=String(key).trim().toUpperCase();
+    const index=list.findIndex(item=>
+        String(item.orderId||"").toUpperCase()===value||
+        String(item.file||"").toUpperCase()===value
+    );
+    if(index<0)throw Error("Изображение не найдено.");
+    return {list,index,item:list[index]};
+}
+
+/* =========================
+   CARD AUTOFILL
+========================= */
+function fillCardFromOrder(){
+    try{
+        const id=$("asset-order-id").value.trim().toUpperCase();
+        if(!/^[SE]\d{4,}$/.test(id))return;
+        $("asset-card-file").value=`card-${id}.png`;
+        const source=$("asset-orders-source").value.trim();
+        if(!source)return;
+        const parsed=parseDatabase(source,"ORDERS_DB");
+        const order=findOrder(parsed.data,id);
+        $("asset-card-date").value=order.date||"";
+        const first=order.items?.[0];
+        $("asset-card-collection").value=first?.collection||"";
+        $("asset-card-model").value=first?.model||"";
+        $("asset-card-sender").value=order.sender||"";
+        $("asset-card-recipient").value=order.recipient||"";
+    }catch(e){
+        showError(e.message);
+    }
+}
+$("asset-order-id").addEventListener("change",fillCardFromOrder);
+$("asset-orders-source").addEventListener("change",fillCardFromOrder);
+
+/* =========================
+   ADD CARD
+========================= */
+function generateAssetCard(){
+    try{
+        const {source,data}=readAssets();
+        const id=$("asset-order-id").value.trim().toUpperCase();
+        if(!/^S\d{4,}$/.test(id))
+            throw Error("Карточки SÓLE должны иметь номер S0001 и далее.");
+        const cards=getAssetArray(data,"sole","cards");
+        if(cards.some(c=>c.orderId===id))
+            throw Error(`Карточка ${id} уже существует.`);
+        const file=validateAssetFile(
+            $("asset-card-file").value||`card-${id}.png`
+        );
+        if(cards.some(c=>c.file.toLowerCase()===file.toLowerCase()))
+            throw Error("Файл с таким именем уже есть.");
+        const date=$("asset-card-date").value;
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(date))
+            throw Error("Укажи дату карточки.");
+        const recipient=$("asset-card-recipient").value.trim();
+        if(!recipient)throw Error("Укажи ID получателя.");
+        const personIds=new Set(getPeople().map(p=>p.id));
+        const sender=$("asset-card-sender").value.trim()||null;
+        if(!personIds.has(recipient))
+            throw Error("Получатель отсутствует в people.js.");
+        if(sender&&!personIds.has(sender))
+            throw Error("Отправитель отсутствует в people.js.");
+        const card={
+            orderId:id,
+            file,
+            date,
+            collection:$("asset-card-collection").value.trim(),
+            model:$("asset-card-model").value.trim(),
+            sender,
+            recipient,
+            message:$("asset-card-message").value.trim()
+        };
+        cards.push(card);
+        outputAssets(data,source,
+            `Добавлена карточка ${id}\nФайл: ${file}\nПолучатель: ${recipient}`);
+    }catch(e){showError(e.message)}
+}
+
+/* =========================
+   ADD DECOR
+========================= */
+function generateDecor(){
+    try{
+        const {source,data}=readAssets();
+        const store=$("decor-store").value;
+        const type=$("decor-type").value;
+        const name=$("decor-name").value.trim();
+        const file=validateAssetFile($("decor-file").value);
+        if(!name)throw Error("Укажи название изображения.");
+        const list=getAssetArray(data,store,type);
+        if(list.some(item=>item.file.toLowerCase()===file.toLowerCase()))
+            throw Error("Файл уже существует в этом разделе.");
+        list.push({file,name});
+        outputAssets(data,source,
+            `Добавлено изображение: ${name}\nМагазин: ${store}\nРаздел: ${type}`);
+    }catch(e){showError(e.message)}
+}
+
+/* =========================
+   EDIT ASSET
+========================= */
+let editingAsset=null;
+function loadAssetForEdit(){
+    try{
+        const {data}=readAssets();
+        const store=$("asset-edit-store").value;
+        const type=$("asset-edit-type").value;
+        const found=findAsset(data,store,type,$("asset-edit-key").value);
+        editingAsset={store,type,key:found.item.orderId||found.item.file};
+        const container=$("asset-edit-fields");
+        container.innerHTML="";
+        const box=document.createElement("div");
+        box.className="asset-card";
+        const title=document.createElement("h4");
+        title.textContent=found.item.orderId||found.item.name||found.item.file;
+        box.appendChild(title);
+        const fields=type==="cards"
+            ?["file","date","collection","model","sender","recipient","message"]
+            :["file","name"];
+        const labels={
+            file:"Название файла",date:"Дата",collection:"Коллекция",
+            model:"Модель",sender:"Отправитель",recipient:"Получатель",
+            message:"Текст карточки",name:"Название"
+        };
+        fields.forEach(key=>{
+            const field=document.createElement("div");
+            field.className="field";
+            const label=document.createElement("label");
+            label.textContent=labels[key];
+            const input=key==="message"
+                ?document.createElement("textarea")
+                :document.createElement("input");
+            input.id=`asset-edit-${key}`;
+            if(key==="date")input.type="date";
+            input.value=found.item[key]??"";
+            field.append(label,input);
+            box.appendChild(field);
+        });
+        const button=document.createElement("button");
+        button.className="button primary";
+        button.type="button";
+        button.textContent="Сгенерировать изменения";
+        button.onclick=generateAssetEdit;
+        box.appendChild(button);
+        container.appendChild(box);
+    }catch(e){showError(e.message)}
+}
+function generateAssetEdit(){
+    try{
+        if(!editingAsset)throw Error("Сначала найди изображение.");
+        const {source,data}=readAssets();
+        const {store,type,key}=editingAsset;
+        const {list,index,item}=findAsset(data,store,type,key);
+        const fields=type==="cards"
+            ?["file","date","collection","model","sender","recipient","message"]
+            :["file","name"];
+        const updated={...item};
+        fields.forEach(field=>{
+            updated[field]=$(`asset-edit-${field}`).value.trim();
+        });
+        updated.file=validateAssetFile(updated.file);
+        if(list.some((a,i)=>i!==index&&a.file.toLowerCase()===updated.file.toLowerCase()))
+            throw Error("Другое изображение уже использует это имя файла.");
+        if(type==="cards"){
+            if(!updated.recipient)throw Error("Укажи получателя.");
+            updated.sender=updated.sender||null;
+        }else if(!updated.name){
+            throw Error("Укажи название.");
+        }
+        list[index]=updated;
+        outputAssets(data,source,`Изменено изображение: ${updated.file}`);
+    }catch(e){showError(e.message)}
+}
+
+/* =========================
+   DELETE ASSET
+========================= */
+function generateAssetDeletion(){
+    try{
+        const {source,data}=readAssets();
+        const store=$("asset-delete-store").value;
+        const type=$("asset-delete-type").value;
+        const {list,index,item}=findAsset(
+            data,store,type,$("asset-delete-key").value
+        );
+        if(!confirm(`Удалить запись ${item.orderId||item.file}?`))return;
+        list.splice(index,1);
+        outputAssets(data,source,
+            `Удалена запись: ${item.orderId||item.file}\nСам файл изображения в GitHub не удалён.`);
+    }catch(e){showError(e.message)}
+}
+
+/* =========================
+   INITIALIZATION
+========================= */
+$("people-source").addEventListener("input",resetResult);
+$("orders-source").addEventListener("input",resetResult);
+$("assets-source").addEventListener("input",resetResult);
+$("asset-orders-source").addEventListener("input",resetResult);
+document.addEventListener("click",event=>{
+    if(!event.target.closest(".autocomplete")){
+        document.querySelectorAll(".suggestions").forEach(s=>
+            s.classList.remove("visible")
+        );
+    }
+});
+addPersonRow();
+addOrderItem();
+$("order-date").value=new Date().toLocaleDateString("en-CA");
 </script>
 </body>
 </html>
