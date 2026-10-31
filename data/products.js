@@ -1167,10 +1167,10 @@ models: [
     }
 ],
 
-decor: []
-                    }
-                ]
-            }
-        ]
-    }
+                        decor: []
+                    } // Ремни
+                ] // sections
+            } // База
+        ] // collections
+    } // EXTRA
 };
