@@ -1,325 +1,459 @@
+
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8f7f5">
 <title>Ananel Coval — Workspace</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-* {
-    box-sizing: border-box;
+:root{
+    --green:#005500;
+    --pink:#D4007E;
+    --ink:#191919;
+    --muted:#8d8a8b;
+    --line:#e4e0e2;
+    --paper:#f8f7f5;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    margin:0;
+    min-height:100vh;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Montserrat,Arial,sans-serif;
+}
+a{color:inherit;text-decoration:none}
+.page{
+    min-height:100vh;
+    max-width:1600px;
+    margin:auto;
+    padding:24px 32px 22px;
+    display:flex;
+    flex-direction:column;
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    background: #f7f5f6;
-    color: #171717;
-    font-family: 'Montserrat', sans-serif;
+/* =========================
+   HEADER
+========================= */
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    padding:19px 0 23px;
+    border-bottom:1px solid var(--ink);
+}
+.brand{
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:-1.2px;
+    color:var(--green);
+}
+.header-meta{
+    display:flex;
+    gap:30px;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+.edition{color:var(--pink)}
+main{flex:1}
+
+/* =========================
+   HERO
+========================= */
+.hero{
+    padding:74px 0 62px;
+    display:grid;
+    grid-template-columns:minmax(0,1.5fr) minmax(210px,.5fr);
+    gap:30px;
+    align-items:end;
+}
+.kicker{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    color:var(--pink);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+}
+.kicker:before{
+    content:"";
+    display:block;
+    width:31px;
+    height:1px;
+    background:var(--pink);
+}
+.hero-title{
+    margin:24px 0 0;
+    font-size:clamp(64px,9.8vw,152px);
+    line-height:.86;
+    font-weight:800;
+    letter-spacing:-.09em;
+    color:var(--green);
+}
+.hero-title span{
+    display:block;
+    color:var(--ink);
+    font-weight:500;
+    letter-spacing:-.075em;
+}
+.hero-aside{
+    border-left:1px solid var(--line);
+    padding:8px 0 5px 25px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+.aside-index{
+    color:var(--pink);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+.aside-heading{
+    font-size:clamp(17px,2vw,25px);
+    font-weight:600;
+    line-height:1.35;
+    letter-spacing:-.8px;
+}
+.aside-foot{
+    font-size:10px;
+    letter-spacing:1.5px;
+    color:var(--muted);
+    font-weight:600;
+    text-transform:uppercase;
 }
 
-.page {
-    min-height: 100vh;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
+/* =========================
+   DIRECTORY
+========================= */
+.directory-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:15px 0;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--line);
+}
+.directory-heading strong{
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+.directory-heading span{
+    color:var(--muted);
+    font-size:10px;
+    letter-spacing:1px;
 }
 
-/* ШАПКА */
-
-.header {
-    padding: 24px 30px;
-    border: 3px solid #D4007E;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #ffffff;
+/* =========================
+   MODULES
+========================= */
+.modules{
+    display:grid;
+    grid-template-columns:1.15fr 1fr 1fr;
+    border-bottom:1px solid var(--ink);
+}
+.module{
+    position:relative;
+    min-height:305px;
+    padding:25px 27px 27px 0;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:background .2s ease,padding .2s ease;
+}
+.module+.module{
+    border-left:1px solid var(--line);
+    padding-left:27px;
+}
+.module:hover,
+.module:focus-visible{
+    background:#fff;
+}
+.module:focus-visible{
+    outline:2px solid var(--pink);
+    outline-offset:-2px;
+}
+.module-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+.module-number{
+    color:var(--pink);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1.5px;
+}
+.module-arrow{
+    width:39px;
+    height:39px;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--line);
+    border-radius:50%;
+    font-size:21px;
+    color:var(--green);
+    transition:transform .2s,border-color .2s,background .2s;
+}
+.module:hover .module-arrow{
+    transform:translate(3px,-3px);
+    border-color:var(--pink);
+    background:#fff;
+}
+.module-word{
+    font-size:clamp(28px,3.5vw,53px);
+    font-weight:700;
+    letter-spacing:-.065em;
+    line-height:1.1;
+    color:var(--green);
+    overflow-wrap:anywhere;
+}
+.module-sub{
+    margin:12px 0 0;
+    font-size:11px;
+    font-weight:600;
+    color:var(--muted);
+    letter-spacing:.4px;
+    line-height:1.6;
+}
+.module-rule{
+    height:1px;
+    background:var(--line);
+    margin:21px 0 13px;
+}
+.module-tag{
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    color:var(--pink);
+    text-transform:uppercase;
 }
 
-.logo {
-    margin: 0;
-    color: #005500;
-    font-size: 32px;
-    font-weight: 700;
+/* =========================
+   FOOTER
+========================= */
+.footer{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding-top:22px;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
 }
 
-.header-label {
-    color: #999;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-/* ОСНОВНОЙ БЛОК */
-
-.hero {
-    flex: 1;
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 90px 0 70px;
-}
-
-.eyebrow {
-    margin-bottom: 15px;
-    color: #D4007E;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
-
-.hero h2 {
-    max-width: 750px;
-    margin: 0;
-    color: #005500;
-    font-size: 54px;
-    line-height: 1.08;
-    letter-spacing: -2px;
-}
-
-.description {
-    max-width: 600px;
-    margin: 24px 0 55px;
-    color: #777;
-    font-size: 16px;
-    line-height: 1.7;
-}
-
-/* МОДУЛИ */
-
-.modules {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.module {
-    min-height: 250px;
-    padding: 30px;
-    border: 1px solid #dedade;
-    border-radius: 20px;
-    background: #ffffff;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition:
-        transform .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
-}
-
-.module.active {
-    cursor: pointer;
-}
-
-.module.active:hover {
-    transform: translateY(-4px);
-    border-color: #D4007E;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, .07);
-}
-
-.module-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.module-number {
-    color: #bbb;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.arrow {
-    color: #D4007E;
-    font-size: 25px;
-    transition: transform .2s ease;
-}
-
-.module:hover .arrow {
-    transform: translate(3px, -3px);
-}
-
-.module h3 {
-    margin: 0 0 10px;
-    color: #005500;
-    font-size: 27px;
-}
-
-.module p {
-    margin: 0;
-    color: #777;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-/* ПОДВАЛ */
-
-.footer {
-    padding: 0 5px;
-    display: flex;
-    justify-content: space-between;
-    color: #aaa;
-    font-size: 11px;
-}
-
-/* МОБИЛЬНАЯ ВЕРСИЯ */
-
-    @media (max-width: 1000px) {
-    .modules {
-        grid-template-columns: repeat(2, 1fr);
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:900px){
+    .hero{
+        grid-template-columns:1fr;
+        padding:60px 0 45px;
+    }
+    .hero-aside{
+        flex-direction:row;
+        justify-content:space-between;
+        align-items:center;
+        border-left:0;
+        border-top:1px solid var(--line);
+        padding:18px 0 0;
+        gap:15px;
+    }
+    .aside-heading{max-width:280px}
+    .modules{grid-template-columns:1fr 1fr}
+    .module:last-child{
+        grid-column:1/-1;
+        border-top:1px solid var(--line);
+        border-left:0;
+        padding-left:0;
+        min-height:230px;
     }
 }
-    
-@media (max-width: 750px) {
-    .page {
-        padding: 12px;
+@media(max-width:620px){
+    .page{padding:15px 18px}
+    .header{padding:12px 0 17px}
+    .brand{font-size:19px}
+    .header-meta{gap:12px;font-size:8px}
+    .header-meta span:first-child{display:none}
+    .hero{padding:55px 0 37px}
+    .hero-title{font-size:clamp(54px,13vw,82px)}
+    .hero-aside{gap:10px}
+    .aside-heading{font-size:15px}
+    .aside-foot{display:none}
+    .directory-heading span{font-size:9px}
+    .modules{grid-template-columns:1fr}
+    .module,
+    .module+.module,
+    .module:last-child{
+        grid-column:auto;
+        min-height:195px;
+        padding:20px 0;
+        border-left:0;
+        border-top:1px solid var(--line);
     }
-
-    .header {
-        padding: 20px;
-    }
-
-    .logo {
-        font-size: 25px;
-    }
-
-    .header-label {
-        display: none;
-    }
-
-    .hero {
-        padding: 60px 5px 40px;
-    }
-
-    .hero h2 {
-        font-size: 38px;
-        letter-spacing: -1px;
-    }
-
-    .modules {
-        grid-template-columns: 1fr;
-    }
-
-    .footer {
-        margin-top: 30px;
-    }
+    .module:first-child{border-top:0}
+    .module-word{font-size:39px}
+    .module-rule{margin:12px 0 8px}
+    .footer{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*:before,*:after{transition:none!important}
 }
 </style>
 </head>
-
 <body>
-
 <div class="page">
 
+    <!-- =========================
+         HEADER
+    ========================= -->
     <header class="header">
-        <h1 class="logo">Ananel Coval</h1>
-        <div class="header-label">Personal Workspace</div>
+        <a class="brand" href="./">Ananel Coval</a>
+
+        <div class="header-meta">
+            <span>Independent Creative Studio</span>
+            <span class="edition">Private Edition / 2026</span>
+        </div>
     </header>
 
-    <main class="hero">
+    <main>
 
-        <div class="eyebrow">Workspace</div>
+        <!-- =========================
+             EDITORIAL HERO
+        ========================= -->
+        <section class="hero">
+            <div>
+                <div class="kicker">Personal Workspace</div>
 
-        <h2>
-            Всё нужное.<br>
-            В одном месте.
-        </h2>
+                <h1 class="hero-title">
+                    THE
+                    <span>WORKSPACE.</span>
+                </h1>
+            </div>
 
-        <p class="description">
-            Рабочее пространство для управления проектами,
-            изображениями и магазинами.
-        </p>
+            <aside class="hero-aside">
+                <span class="aside-index">VOL. 01 — 2026</span>
 
-        <div class="modules">
+                <div class="aside-heading">
+                    A private directory<br>
+                    for creative work.
+                </div>
 
-    <!-- HOSTING -->
+                <span class="aside-foot">
+                    Ananel Coval / Studio Archive
+                </span>
+            </aside>
+        </section>
 
-    <a class="module active" href="hosting/">
+        <!-- =========================
+             DIRECTORY
+        ========================= -->
+        <section class="directory" aria-label="Разделы рабочего пространства">
 
-        <div class="module-top">
-            <span class="module-number">01</span>
-            <span class="arrow">↗</span>
-        </div>
+            <div class="directory-heading">
+                <strong>Index / Directory</strong>
+                <span>Three departments — 01 / 03</span>
+            </div>
 
-        <div>
-            <h3>Hosting</h3>
+            <div class="modules">
 
-            <p>
-                Галерея изображений SÓLE и EXTRA.
-                Коллекции, модели и прямые ссылки.
-            </p>
-        </div>
+                <!-- =========================
+                     01 — HOSTING
+                ========================= -->
+                <a class="module" href="hosting/">
+                    <div class="module-top">
+                        <span class="module-number">01 / ARCHIVE</span>
+                        <span class="module-arrow" aria-hidden="true">↗</span>
+                    </div>
 
-    </a>
+                    <div>
+                        <div class="module-word">Hosting</div>
+                        <p class="module-sub">
+                            Images, collections &amp; assets
+                        </p>
 
+                        <div class="module-rule"></div>
+                        <div class="module-tag">
+                            SÓLE / EXTRA / ARCHIVE
+                        </div>
+                    </div>
+                </a>
 
-    <!-- MANAGER -->
+                <!-- =========================
+                     02 — MANAGER
+                ========================= -->
+                <a class="module" href="manager/">
+                    <div class="module-top">
+                        <span class="module-number">02 / OPERATIONS</span>
+                        <span class="module-arrow" aria-hidden="true">↗</span>
+                    </div>
 
-    <a class="module active" href="manager/">
+                    <div>
+                        <div class="module-word">Manager</div>
+                        <p class="module-sub">
+                            Orders, assortment &amp; production
+                        </p>
 
-        <div class="module-top">
-            <span class="module-number">02</span>
-            <span class="arrow">↗</span>
-        </div>
+                        <div class="module-rule"></div>
+                        <div class="module-tag">
+                            SÓLE / EXTRA / MANAGEMENT
+                        </div>
+                    </div>
+                </a>
 
-        <div>
-            <h3>Manager</h3>
+                <!-- =========================
+                     03 — CALENDAR
+                ========================= -->
+                <a class="module" href="calendar/">
+                    <div class="module-top">
+                        <span class="module-number">03 / PLANNING</span>
+                        <span class="module-arrow" aria-hidden="true">↗</span>
+                    </div>
 
-            <p>
-                Заказы, цены, BBCode,
-                доставка и статистика магазинов.
-            </p>
-        </div>
+                    <div>
+                        <div class="module-word">Calendar</div>
+                        <p class="module-sub">
+                            Releases, events &amp; scheduling
+                        </p>
 
-    </a>
+                        <div class="module-rule"></div>
+                        <div class="module-tag">
+                            SCHEDULE / COLLECTIONS / EVENTS
+                        </div>
+                    </div>
+                </a>
 
-
-    <!-- CALENDAR -->
-
-    <a class="module active" href="calendar/">
-
-        <div class="module-top">
-            <span class="module-number">03</span>
-            <span class="arrow">↗</span>
-        </div>
-
-        <div>
-            <h3>Calendar</h3>
-
-            <p>
-                Выпуски SÓLE и EXTRA,
-                мероприятия Хогвартса
-                и планы по месяцам.
-            </p>
-        </div>
-
-    </a>
-
-</div>
-
-            </a>
-
-        </div>
+            </div>
+        </section>
 
     </main>
 
+    <!-- =========================
+         FOOTER
+    ========================= -->
     <footer class="footer">
-        <span>ANANEL COVAL</span>
-        <span>2026</span>
+        <span>© Ananel Coval</span>
+        <span>Creative Directory — 2026</span>
     </footer>
 
 </div>
-
 </body>
 </html>
