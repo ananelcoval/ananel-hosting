@@ -54,7 +54,7 @@ const ORDERS_DB = {
             "id": "S0003",
             "store": "sole",
             "date": "2026-06-08",
-            "status": "new",
+            "status": "delivered",
             "senderType": "self",
             "sender": null,
             "recipient": "P0004",
