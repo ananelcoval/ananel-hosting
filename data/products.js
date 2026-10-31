@@ -184,12 +184,13 @@ const STORES = {
                 packaging: { bag: "perModel", card: "perModel" },
                 available: false,
                 delivery: {
-                    bag: "07-hufflepuff-day-bag-all.png",
-                    preview: "hufflepuff-day-preview.jpeg"
-                },
+    overview: "07-hufflepuff-day-bag-all.png",
+    preview: "hufflepuff-day-preview.jpeg"
+},
                 models: [
                     {
                         file: "01-herbarium.png",
+                        bag: "01-hufflepuff-day-bag-herbarium.png",
                         name: "Гербарий",
                         type: "резиновые сапоги",
                         modelType: "rubberBoots",
@@ -203,6 +204,7 @@ const STORES = {
                     },
                     {
                         file: "02-cactus.png",
+                        bag: "02-hufflepuff-day-bag-cactus.png",
                         name: "Кактусовая настойка",
                         type: "туфли-слингбэки",
                         modelType: "slingback",
@@ -216,6 +218,7 @@ const STORES = {
                     },
                     {
                         file: "03-caramel.png",
+                        bag: "03-hufflepuff-day-bag-caramel.png",
                         name: "Соленая Карамель",
                         type: "босоножки на платформе",
                         modelType: "platformSandals",
@@ -230,6 +233,7 @@ const STORES = {
                     },
                     {
                         file: "04-oak.png",
+                        bag: "04-hufflepuff-day-bag-oak.png",
                         name: "Дубовая роща",
                         type: "лоферы",
                         modelType: "loafers",
@@ -243,6 +247,7 @@ const STORES = {
                     },
                     {
                         file: "05-cowboy.png",
+                        bag: "05-hufflepuff-day-bag-cowboy.png",
                         name: "Дикий запад",
                         type: "ковбойские сапоги",
                         modelType: "cowboyBoots",
@@ -256,6 +261,7 @@ const STORES = {
                     },
                     {
                         file: "06-bun.png",
+                        bag: "06-hufflepuff-day-bag-bun.png",
                         name: "Плюшки",
                         type: "монки",
                         modelType: "monk",
@@ -294,12 +300,13 @@ const STORES = {
                 packaging: { bag: "perModel", card: "perModel" },
                 available: false,
                 delivery: {
-                    bag: "05-dod-2026-bag-all.png",
-                    preview: "dod-2026-preview.png"
-                },
+    overview: "05-dod-2026-bag-all.png",
+    preview: "dod-2026-preview.png"
+},
                 models: [
                     {
                         file: "01-venom.png",
+                        bag: "01-dod-2026-bag-venom.png",
                         name: "Яд",
                         type: "слингбэки на шпильке",
                         modelType: "slingback",
@@ -313,6 +320,7 @@ const STORES = {
                     },
                     {
                         file: "02-cocoon.png",
+                        bag: "02-dod-2026-bag-cocoon.png",
                         name: "Кокон",
                         type: "туфли Mary Jane на платформе и массивном каблуке",
                         modelType: "maryJane",
@@ -328,6 +336,7 @@ const STORES = {
                     },
                     {
                         file: "03-spiderweb.png",
+                        bag: "03-dod-2026-bag-spiderweb.png",
                         name: "Паутина",
                         type: "ботильоны peep-toe на шпильке",
                         modelType: "ankleBoots",
@@ -342,6 +351,7 @@ const STORES = {
 
                     {
                         file: "04-bunker.png",
+                        bag: "04-dod-2026-bag-bunker.png",
                         name: "Бункер",
                         type: "высокие берцы с ремнём на щиколотке",
                         modelType: "combatBoots",
