@@ -14,5 +14,21 @@ const PEOPLE = [
             hogsmeade: 917,
             hogwarts: 3511
         }
+    },
+    {
+        id: "P0003",
+        name: "Элайза Блекфорд",
+        accounts: {
+            hogsmeade: 738,
+            hogwarts: 2886
+        }
+    },
+    {
+        id: "P0004",
+        name: "Каталина Вульф",
+        accounts: {
+            hogsmeade: 709,
+            hogwarts: 1570
+        }
     }
 ];
