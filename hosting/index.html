@@ -4,597 +4,811 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hosting — Ananel Coval</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-    --green:#005500;
-    --pink:#D4007E;
-    --text:#181818;
-    --muted:#8b878a;
-    --line:#e8e4e7;
-    --soft:#f8f6f7;
+ --green:#005500;--pink:#D4007E;--text:#181818;
+ --muted:#8b878a;--line:#e8e4e7;--soft:#f8f6f7;
 }
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-
-body{
-    margin:0;
-    background:#fff;
-    color:var(--text);
-    font-family:'Montserrat',sans-serif;
-}
-
-.page{
-    max-width:1500px;
-    margin:auto;
-    padding:24px;
-}
+body{margin:0;background:#fff;color:var(--text);font-family:Montserrat,sans-serif}
+button,input,select{font:inherit}
+.page{max-width:1500px;margin:auto;padding:24px}
 
 /* HEADER */
-
 .header{
-    position:relative;
-    z-index:100;
-    padding:22px 28px;
-    border:1px solid var(--line);
-    border-radius:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+ position:relative;z-index:100;padding:22px 28px;
+ border:1px solid var(--line);border-radius:18px;
+ display:flex;justify-content:space-between;align-items:center;gap:20px;
 }
-
-.brand{
-    display:flex;
-    align-items:baseline;
-    gap:14px;
-}
-
-.logo{
-    margin:0;
-    color:var(--green);
-    font-size:30px;
-}
-
+.brand{display:flex;align-items:baseline;gap:14px}
+.logo{margin:0;color:var(--green);font-size:30px}
 .header-label{
-    color:#aaa;
-    font-size:10px;
-    font-weight:600;
-    letter-spacing:2px;
-    text-transform:uppercase;
+ color:#aaa;font-size:10px;font-weight:600;
+ letter-spacing:2px;text-transform:uppercase;
 }
-
-.header-right,.navigation{
-    display:flex;
-    align-items:center;
-}
-
-.header-right{gap:35px}
-.navigation{gap:28px}
-
+.header-right,.navigation{display:flex;align-items:center}
+.header-right{gap:30px}
+.navigation{gap:25px}
 .home-link{
-    color:#999;
-    font-size:12px;
-    font-weight:600;
-    text-decoration:none;
+ color:#999;font-size:12px;font-weight:600;text-decoration:none;
 }
-
 .home-link:hover{color:var(--pink)}
 
-/* DROPDOWN */
-
+/* NAVIGATION */
 .nav-dropdown{position:relative}
-
 .nav-title{
-    display:flex;
-    gap:6px;
-    align-items:center;
-    color:var(--green);
-    font-size:13px;
-    font-weight:700;
-    cursor:default;
+ display:flex;gap:6px;align-items:center;color:var(--green);
+ font-size:13px;font-weight:700;cursor:pointer;
+ background:none;border:0;padding:5px 0;
 }
-
-.nav-title::after{
-    content:"⌄";
-    color:var(--pink);
-    transform:translateY(-2px);
-}
-
+.nav-title::after{content:"⌄";color:var(--pink)}
 .dropdown-menu{
-    position:absolute;
-    top:calc(100% + 12px);
-    right:0;
-    min-width:230px;
-    max-height:400px;
-    overflow:auto;
-    padding:8px;
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:12px;
-    box-shadow:0 14px 40px rgba(0,0,0,.09);
-    opacity:0;
-    visibility:hidden;
-    transform:translateY(-5px);
-    transition:.18s;
+ position:absolute;top:100%;right:0;min-width:230px;
+ max-height:400px;overflow:auto;padding:12px 8px 8px;
+ background:#fff;border:1px solid var(--line);border-radius:12px;
+ box-shadow:0 14px 40px #00000015;
+ opacity:0;visibility:hidden;transform:translateY(-5px);
+ transition:.18s;
 }
-
-.dropdown-menu::before{
-    content:"";
-    position:absolute;
-    top:-14px;
-    left:0;
-    right:0;
-    height:14px;
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu,
+.nav-dropdown.open .dropdown-menu{
+ opacity:1;visibility:visible;transform:none;
 }
-
-.nav-dropdown:hover .dropdown-menu{
-    opacity:1;
-    visibility:visible;
-    transform:none;
-}
-
 .dropdown-menu a,.dropdown-empty{
-    display:block;
-    padding:10px 12px;
-    border-radius:8px;
-    font-size:13px;
-    white-space:nowrap;
+ display:block;padding:10px 12px;border-radius:8px;
+ font-size:12px;text-decoration:none;
 }
-
-.dropdown-menu a{
-    color:#333;
-    font-weight:500;
-    text-decoration:none;
-}
-
-.dropdown-menu a:hover{
-    background:var(--soft);
-    color:var(--pink);
-}
-
+.dropdown-menu a{color:#333}
+.dropdown-menu a:hover{background:var(--soft);color:var(--pink)}
 .dropdown-empty{color:#aaa}
 
+/* FILTERS */
+.filters{
+ display:flex;flex-wrap:wrap;align-items:end;gap:12px;
+ margin:35px 0;padding:18px;border:1px solid var(--line);
+ border-radius:16px;background:#fff;
+}
+.filter-field{display:flex;flex-direction:column;gap:7px;flex:1;min-width:135px}
+.filter-field label{
+ color:#999;font-size:9px;font-weight:700;
+ letter-spacing:1px;text-transform:uppercase;
+}
+.filter-field select,.filter-field input{
+ width:100%;height:40px;padding:0 11px;
+ border:1px solid var(--line);border-radius:9px;
+ background:#fff;color:#333;font-size:11px;outline:none;
+}
+.filter-field select:focus,.filter-field input:focus{border-color:var(--pink)}
+.filter-reset{
+ height:40px;padding:0 15px;border:1px solid var(--line);
+ border-radius:9px;background:var(--soft);color:#555;
+ font-size:11px;font-weight:600;cursor:pointer;
+}
+.filter-reset:hover{border-color:var(--pink)}
+
 /* STORES */
-
-#stores{margin-top:65px}
+#stores{margin-top:55px}
 .store{margin-bottom:110px}
-
 .store-heading{
-    margin-bottom:55px;
-    display:flex;
-    align-items:center;
-    gap:18px;
+ margin-bottom:55px;display:flex;align-items:center;gap:18px;
 }
+.store-heading h2{margin:0;color:var(--green);font-size:21px}
+.store-line{flex:1;height:1px;background:var(--line)}
+.store-count{color:#aaa;font-size:11px}
 
-.store-heading h2{
-    margin:0;
-    color:var(--green);
-    font-size:21px;
-}
-
-.store-line{
-    flex:1;
-    height:1px;
-    background:var(--line);
-}
-
-.store-count{
-    color:#aaa;
-    font-size:11px;
-}
-
-/* COLLECTION */
-
-.collection{
-    margin-bottom:100px;
-    scroll-margin-top:30px;
-}
-
-.collection-heading{
-    margin-bottom:38px;
-    text-align:center;
-}
-
+/* COLLECTIONS */
+.collection{margin-bottom:100px;scroll-margin-top:30px}
+.collection-heading{margin-bottom:38px;text-align:center}
 .collection-number{
-    display:block;
-    margin-bottom:9px;
-    color:var(--pink);
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:2px;
+ display:block;margin-bottom:9px;color:var(--pink);
+ font-size:10px;font-weight:700;letter-spacing:2px;
 }
-
-.collection-title{
-    margin:0;
-    font-size:29px;
-    font-weight:600;
-}
-
+.collection-title{margin:0;font-size:29px;font-weight:600}
 .section-title{
-    margin:42px 0 25px;
-    text-align:center;
-    color:var(--muted);
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
+ margin:42px 0 25px;text-align:center;color:var(--muted);
+ font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+}
+.collection-divider{
+ width:70px;height:1px;margin:90px auto 0;background:#ddd7db;
 }
 
 /* TOURS */
-
-.round{
-    margin:0 auto 55px;
-    max-width:1300px;
-}
-
+.round{margin:0 auto 55px;max-width:1300px}
 .round-heading{
-    margin:45px 0 28px;
-    display:flex;
-    align-items:center;
-    gap:16px;
+ margin:45px 0 28px;display:flex;align-items:center;gap:16px;
 }
-
-.round-heading::before,
-.round-heading::after{
-    content:"";
-    flex:1;
-    height:1px;
-    background:var(--line);
+.round-heading::before,.round-heading::after{
+ content:"";flex:1;height:1px;background:var(--line);
 }
-
 .round-title{
-    margin:0;
-    color:#555;
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
+ margin:0;color:#555;font-size:14px;
+ font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
 }
-
 .round-empty{
-    margin:0 auto 40px;
-    padding:20px;
-    max-width:500px;
-    border:1px dashed var(--line);
-    border-radius:12px;
-    color:#aaa;
-    text-align:center;
-    font-size:11px;
+ margin:0 auto 40px;padding:20px;max-width:500px;
+ border:1px dashed var(--line);border-radius:12px;
+ color:#aaa;text-align:center;font-size:11px;
 }
 
 /* GALLERIES */
-
-.models-gallery,.decor-gallery{
-    display:grid;
-    justify-content:center;
-}
-
+.models-gallery,.decor-gallery{display:grid;justify-content:center}
 .models-gallery{
-    grid-template-columns:repeat(5,minmax(170px,230px));
-    gap:25px 15px;
+ grid-template-columns:repeat(5,minmax(170px,230px));gap:25px 15px;
 }
-
 .decor-gallery{
-    grid-template-columns:repeat(4,minmax(210px,280px));
-    gap:25px;
+ grid-template-columns:repeat(4,minmax(210px,280px));gap:25px;
 }
-
-.model-card,.decor-card{
-    min-width:0;
-    text-align:center;
-}
-
+.model-card,.decor-card{min-width:0;text-align:center}
 .model-image-box,.decor-image-box{
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
-    border-radius:16px;
-    transition:.2s;
+ display:flex;justify-content:center;align-items:flex-end;
+ border-radius:16px;transition:.2s;
 }
-
-.model-image-box{
-    height:230px;
-    padding:12px;
-}
-
-.decor-image-box{
-    height:245px;
-    padding:15px;
-}
-
+.model-image-box{height:230px;padding:12px}
+.decor-image-box{height:245px;padding:15px}
 .model-card:hover .model-image-box,
 .decor-card:hover .decor-image-box{
-    background:var(--soft);
-    transform:translateY(-3px);
+ background:var(--soft);transform:translateY(-3px);
 }
-
 .model-image,.decor-image{
-    max-width:100%;
-    max-height:100%;
-    width:auto;
-    height:auto;
-    cursor:pointer;
+ max-width:100%;max-height:100%;width:auto;height:auto;cursor:pointer;
 }
-
-.item-name{
-    margin:14px 0 0;
-    font-size:13px;
-    font-weight:600;
+.item-name{margin:14px 0 0;font-size:13px;font-weight:600}
+.variant-name{margin:5px 0 0;color:#aaa;font-size:10px}
+.expand-button{
+ margin-top:10px;padding:8px 13px;border:1px solid var(--line);
+ border-radius:20px;background:#fff;color:#777;
+ font-size:10px;font-weight:600;cursor:pointer;
 }
-
-.variant-name{
-    margin:5px 0 0;
-    color:#aaa;
-    font-size:10px;
-    font-weight:500;
+.expand-button:hover{border-color:var(--pink);color:var(--pink)}
+.expand-content{
+ display:none;margin-top:12px;padding:10px;
+ background:var(--soft);border-radius:12px;
 }
-
-.collection-divider{
-    width:70px;
-    height:1px;
-    margin:90px auto 0;
-    background:#ddd7db;
+.expand-content.open{display:block}
+.expand-item{margin-bottom:12px}
+.expand-item:last-child{margin-bottom:0}
+.expand-item img{
+ display:block;max-width:100%;max-height:170px;
+ margin:auto;object-fit:contain;cursor:pointer;
 }
-
+.expand-item p{margin:7px 0;color:#777;font-size:10px}
 .empty-store{
-    padding:50px;
-    border:1px dashed var(--line);
-    border-radius:18px;
-    color:#aaa;
-    text-align:center;
-    font-size:13px;
+ padding:50px;border:1px dashed var(--line);
+ border-radius:18px;color:#aaa;text-align:center;font-size:13px;
 }
+.hidden{display:none!important}
 
 /* TOAST */
-
 .toast{
-    position:fixed;
-    left:50%;
-    bottom:30px;
-    padding:12px 18px;
-    background:#171717;
-    color:#fff;
-    border-radius:30px;
-    font-size:12px;
-    font-weight:600;
-    opacity:0;
-    pointer-events:none;
-    transform:translate(-50%,15px);
-    transition:.25s;
-    z-index:500;
+ position:fixed;left:50%;bottom:30px;padding:12px 18px;
+ background:#171717;color:#fff;border-radius:30px;
+ font-size:12px;font-weight:600;opacity:0;pointer-events:none;
+ transform:translate(-50%,15px);transition:.25s;z-index:500;
 }
+.toast.show{opacity:1;transform:translate(-50%,0)}
 
-.toast.show{
-    opacity:1;
-    transform:translate(-50%,0);
+/* BACK TO TOP */
+.back-to-top{
+ position:fixed;right:25px;bottom:25px;width:46px;height:46px;
+ border:1px solid var(--line);border-radius:50%;
+ background:#fff;color:var(--green);font-size:22px;
+ box-shadow:0 5px 20px #00000012;cursor:pointer;
+ opacity:0;visibility:hidden;transform:translateY(12px);
+ transition:.2s;z-index:400;
 }
+.back-to-top.visible{
+ opacity:1;visibility:visible;transform:none;
+}
+.back-to-top:hover{border-color:var(--pink);color:var(--pink)}
 
 /* RESPONSIVE */
-
 @media(max-width:1200px){
-    .models-gallery{grid-template-columns:repeat(4,220px)}
-    .decor-gallery{grid-template-columns:repeat(3,270px)}
+ .models-gallery{grid-template-columns:repeat(4,220px)}
+ .decor-gallery{grid-template-columns:repeat(3,270px)}
 }
-
 @media(max-width:950px){
-    .models-gallery{grid-template-columns:repeat(3,220px)}
-    .decor-gallery{grid-template-columns:repeat(2,270px)}
+ .models-gallery{grid-template-columns:repeat(3,220px)}
+ .decor-gallery{grid-template-columns:repeat(2,270px)}
 }
-
 @media(max-width:700px){
-    .page{padding:12px}
-    .header{padding:18px}
-    .header-label,.home-link{display:none}
-    .logo{font-size:24px}
-    .header-right{gap:18px}
-    .navigation{gap:18px}
-    #stores{margin-top:45px}
-    .models-gallery{grid-template-columns:repeat(2,minmax(145px,1fr))}
-    .model-image-box{height:190px}
-    .decor-gallery{grid-template-columns:1fr}
+ .page{padding:12px}
+ .header{padding:18px;flex-wrap:wrap}
+ .header-label{display:none}
+ .logo{font-size:24px}
+ .header-right{gap:16px;flex-wrap:wrap}
+ .navigation{gap:15px}
+ #stores{margin-top:35px}
+ .models-gallery{grid-template-columns:repeat(2,minmax(145px,1fr))}
+ .model-image-box{height:190px}
+ .decor-gallery{grid-template-columns:1fr}
+ .filters{padding:12px}
+ .filter-field{min-width:125px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="page">
-
 <header class="header">
-    <div class="brand">
-        <h1 class="logo">Ananel Coval</h1>
-        <span class="header-label">Image Hosting</span>
-    </div>
-
-    <div class="header-right">
-        <nav id="navigation" class="navigation"></nav>
-        <a class="home-link" href="../">← Workspace</a>
-    </div>
+ <div class="brand">
+  <h1 class="logo">Ananel Coval</h1>
+  <span class="header-label">Image Hosting</span>
+ </div>
+ <div class="header-right">
+  <nav id="navigation" class="navigation"></nav>
+  <a class="home-link" href="other.html">Другое</a>
+  <a class="home-link" href="../">← Workspace</a>
+ </div>
 </header>
 
-<main id="stores"></main>
+<div class="filters" id="filters">
+ <div class="filter-field">
+  <label>Магазин</label>
+  <select id="filterStore">
+   <option value="">Все магазины</option>
+   <option value="sole">SÓLE</option>
+   <option value="extra">EXTRA</option>
+  </select>
+ </div>
+ <div class="filter-field">
+  <label>Тип выпуска</label>
+  <select id="filterType">
+   <option value="">Все типы</option>
+   <option value="base">Базовая линия</option>
+   <option value="seasonal">Сезонная коллекция</option>
+   <option value="special">Специальный выпуск</option>
+   <option value="holiday">Праздничный выпуск</option>
+  </select>
+ </div>
+ <div class="filter-field">
+  <label>Год</label>
+  <select id="filterYear"><option value="">Все годы</option></select>
+ </div>
+ <div class="filter-field">
+  <label>Месяц</label>
+  <select id="filterMonth"><option value="">Все месяцы</option></select>
+ </div>
+ <div class="filter-field">
+  <label>Категория</label>
+  <select id="filterCategory"><option value="">Все категории</option></select>
+ </div>
+ <div class="filter-field">
+  <label>Поиск</label>
+  <input id="filterSearch" placeholder="Модель или коллекция">
+ </div>
+ <button class="filter-reset" id="resetFilters">Сбросить</button>
+</div>
 
+<main id="stores"></main>
 </div>
 
 <div id="toast" class="toast">Ссылка скопирована</div>
+<button id="backToTop" class="back-to-top" title="Наверх">↑</button>
 
 <script src="../data/products.js"></script>
-
+<script src="../data/custom-orders.js"></script>
 <script>
-const STORE_ORDER=["sole","extra"];
-const $=id=>document.getElementById(id);
-
 /* =========================
-   START
+   CONFIG
 ========================= */
 
-function buildHosting(){
-    STORE_ORDER.forEach(key=>{
-        const store=STORES[key];
-        if(!store)return;
+const STORE_ORDER = ["sole", "extra"];
+const $ = id => document.getElementById(id);
 
-        buildNav(key,store);
-        buildStore(key,store);
-    });
+const MONTHS = [
+    "Январь", "Февраль", "Март", "Апрель",
+    "Май", "Июнь", "Июль", "Август",
+    "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+];
+
+const TYPE_NAMES = {
+    base: "Базовая линия",
+    seasonal: "Сезонная коллекция",
+    special: "Специальный выпуск",
+    holiday: "Праздничный выпуск"
+};
+
+/* =========================
+   HELPERS
+========================= */
+
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function word(n) {
+    if (n % 100 >= 11 && n % 100 <= 14) return "коллекций";
+    if (n % 10 === 1) return "коллекция";
+    if (n % 10 >= 2 && n % 10 <= 4) return "коллекции";
+    return "коллекций";
+}
+
+function addTitle(container, text) {
+    const title = document.createElement("h4");
+    title.className = "section-title";
+    title.textContent = text;
+    container.appendChild(title);
+}
+
+function createGallery(container, className) {
+    const gallery = document.createElement("div");
+    gallery.className = className;
+    container.appendChild(gallery);
+    return gallery;
+}
+
+/* =========================
+   PATHS
+========================= */
+
+function modelPath(storeKey, collection) {
+    return `../${storeKey}/products/${collection.folder}/models`;
+}
+
+function decorPath(storeKey, collection) {
+    return `../${storeKey}/products/${collection.folder}/decor`;
+}
+
+function roundModelPath(storeKey, collection, round) {
+    return `../${storeKey}/products/${collection.folder}/${round.folder}/models`;
+}
+
+function roundDecorPath(storeKey, collection, round) {
+    return `../${storeKey}/products/${collection.folder}/${round.folder}/decor`;
+}
+
+function customPath(storeKey, collection, model) {
+    return `../${storeKey}/products/${collection.folder}/${model.customFolder || "custom"}`;
+}
+
+/* =========================
+   CUSTOM ORDERS
+========================= */
+
+function getCustomOrders(storeKey, collection, model) {
+    if (typeof CUSTOM_ORDERS === "undefined") return [];
+
+    const store = CUSTOM_ORDERS[storeKey];
+    if (!store) return [];
+
+    const collectionData = store[collection.id];
+    if (!collectionData) return [];
+
+    const orders = collectionData[model.id];
+
+    return Array.isArray(orders) ? orders : [];
+}
+
+/* =========================
+   COPY IMAGE LINK
+========================= */
+
+let toastTimer;
+
+function copyLink(img) {
+    const url = img.src;
+
+    navigator.clipboard.writeText(url)
+        .then(() => {
+            const toast = $("toast");
+
+            toast.classList.add("show");
+
+            clearTimeout(toastTimer);
+
+            toastTimer = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 1500);
+        })
+        .catch(() => {
+            alert("Не удалось скопировать ссылку.");
+        });
 }
 
 /* =========================
    NAVIGATION
 ========================= */
 
-function buildNav(key,store){
-    const el=document.createElement("div");
-    el.className="nav-dropdown";
+function buildNav(key, store) {
+    const element = document.createElement("div");
+    element.className = "nav-dropdown";
 
-    const links=(store.collections||[])
-        .map(c=>`
-            <a href="#${key}-${c.id}">
-                ${c.name}
-            </a>
-        `)
-        .join("");
+    const button = document.createElement("button");
+    button.className = "nav-title";
+    button.type = "button";
+    button.textContent = store.name;
 
-    el.innerHTML=`
-        <span class="nav-title">${store.name}</span>
+    button.onclick = () => {
+        element.classList.toggle("open");
+    };
 
-        <div class="dropdown-menu">
-            ${links||'<span class="dropdown-empty">Пока пусто</span>'}
-        </div>
-    `;
+    const menu = document.createElement("div");
+    menu.className = "dropdown-menu";
 
-    $("navigation").appendChild(el);
+    const collections = store.collections || [];
+
+    if (!collections.length) {
+        menu.innerHTML = `
+            <span class="dropdown-empty">
+                Пока пусто
+            </span>
+        `;
+    } else {
+        collections.forEach(collection => {
+            const link = document.createElement("a");
+
+            link.href = `#${key}-${collection.id}`;
+            link.textContent = collection.name;
+
+            link.onclick = () => {
+                element.classList.remove("open");
+            };
+
+            menu.appendChild(link);
+        });
+    }
+
+    element.appendChild(button);
+    element.appendChild(menu);
+
+    $("navigation").appendChild(element);
+}
+
+document.addEventListener("click", event => {
+    document.querySelectorAll(".nav-dropdown.open")
+        .forEach(dropdown => {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove("open");
+            }
+        });
+});
+
+/* =========================
+   FILTER DATA
+========================= */
+
+function getAllCollections() {
+    const result = [];
+
+    STORE_ORDER.forEach(storeKey => {
+        const store = STORES[storeKey];
+        if (!store) return;
+
+        (store.collections || []).forEach(collection => {
+            result.push({
+                storeKey,
+                store,
+                collection
+            });
+        });
+    });
+
+    return result;
+}
+
+function getCollectionYear(collection) {
+    const date = collection.dates?.[0];
+
+    if (date && /^\d{4}/.test(date)) {
+        return date.slice(0, 4);
+    }
+
+    const match = collection.folder?.match(/\d{4}/);
+
+    return match ? match[0] : "";
+}
+
+function getCollectionMonth(collection) {
+    const date = collection.dates?.[0];
+
+    if (date && /^\d{4}-\d{2}/.test(date)) {
+        return date.slice(5, 7);
+    }
+
+    const match = collection.folder?.match(/\d{4}-(\d{2})/);
+
+    return match ? match[1] : "";
+}
+
+function getCollectionModels(collection) {
+    const models = [...(collection.models || [])];
+
+    (collection.rounds || []).forEach(round => {
+        models.push(...(round.models || []));
+    });
+
+    return models;
+}
+
+function getCollectionCategories(collection) {
+    const categories = new Set();
+
+    if (collection.category) {
+        categories.add(collection.category);
+    }
+
+    getCollectionModels(collection).forEach(model => {
+        if (model.category) {
+            categories.add(model.category);
+        }
+    });
+
+    return [...categories];
+}
+
+function getCategoryName(id) {
+    for (const key of STORE_ORDER) {
+        const categories = STORES[key]?.categories || [];
+        const category = categories.find(item => item.id === id);
+
+        if (category) return category.name;
+    }
+
+    return id;
+}
+
+/* =========================
+   INITIAL FILTER OPTIONS
+========================= */
+
+function populateFilters() {
+    const collections = getAllCollections();
+
+    const years = new Set();
+    const months = new Set();
+    const categories = new Set();
+
+    collections.forEach(({collection}) => {
+        const year = getCollectionYear(collection);
+        const month = getCollectionMonth(collection);
+
+        if (year) years.add(year);
+        if (month) months.add(month);
+
+        getCollectionCategories(collection).forEach(category => {
+            categories.add(category);
+        });
+    });
+
+    [...years]
+        .sort((a, b) => b.localeCompare(a))
+        .forEach(year => {
+            $("filterYear").add(new Option(year, year));
+        });
+
+    [...months]
+        .sort()
+        .forEach(month => {
+            const name = MONTHS[Number(month) - 1];
+
+            $("filterMonth").add(
+                new Option(name || month, month)
+            );
+        });
+
+    [...categories]
+        .sort((a, b) =>
+            getCategoryName(a).localeCompare(getCategoryName(b), "ru")
+        )
+        .forEach(category => {
+            $("filterCategory").add(
+                new Option(getCategoryName(category), category)
+            );
+        });
+}
+
+/* =========================
+   FILTER LOGIC
+========================= */
+
+function getFilters() {
+    return {
+        store: $("filterStore").value,
+        type: $("filterType").value,
+        year: $("filterYear").value,
+        month: $("filterMonth").value,
+        category: $("filterCategory").value,
+        search: $("filterSearch").value.trim().toLowerCase()
+    };
+}
+
+function matchesCollection(storeKey, collection, filters) {
+    if (filters.store && storeKey !== filters.store) {
+        return false;
+    }
+
+    if (filters.type && collection.type !== filters.type) {
+        return false;
+    }
+
+    if (filters.year && getCollectionYear(collection) !== filters.year) {
+        return false;
+    }
+
+    if (filters.month && getCollectionMonth(collection) !== filters.month) {
+        return false;
+    }
+
+    if (
+        filters.category &&
+        !getCollectionCategories(collection).includes(filters.category)
+    ) {
+        return false;
+    }
+
+    if (filters.search) {
+        const names = [
+            collection.name,
+            ...getCollectionModels(collection).map(model => model.name)
+        ].join(" ").toLowerCase();
+
+        if (!names.includes(filters.search)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/* =========================
+   BUILD HOSTING
+========================= */
+
+function buildHosting() {
+    $("navigation").innerHTML = "";
+    $("stores").innerHTML = "";
+
+    const filters = getFilters();
+
+    STORE_ORDER.forEach(key => {
+        const store = STORES[key];
+        if (!store) return;
+
+        buildNav(key, store);
+        buildStore(key, store, filters);
+    });
 }
 
 /* =========================
    STORE
 ========================= */
 
-function buildStore(key,store){
-    const collections=store.collections||[];
+function buildStore(key, store, filters) {
+    const allCollections = store.collections || [];
 
-    const el=document.createElement("section");
-    el.className="store";
+    const collections = allCollections.filter(collection =>
+        matchesCollection(key, collection, filters)
+    );
 
-    el.innerHTML=`
+    if (!collections.length && allCollections.length) {
+        return;
+    }
+
+    if (filters.store && filters.store !== key) {
+        return;
+    }
+
+    const element = document.createElement("section");
+    element.className = "store";
+
+    element.innerHTML = `
         <div class="store-heading">
-            <h2>${store.name}</h2>
+            <h2>${escapeHTML(store.name)}</h2>
             <div class="store-line"></div>
-
             <span class="store-count">
-                ${collections.length}
-                ${word(collections.length)}
+                ${collections.length} ${word(collections.length)}
             </span>
         </div>
-
         <div class="store-content"></div>
     `;
 
-    const content=el.querySelector(".store-content");
+    const content = element.querySelector(".store-content");
 
-    if(!collections.length){
-        content.innerHTML=`
+    if (!collections.length) {
+        content.innerHTML = `
             <div class="empty-store">
                 Коллекции пока не добавлены.
             </div>
         `;
-    }else{
-        collections.forEach((collection,index)=>{
+    } else {
+        collections.forEach(collection => {
+            const originalIndex = allCollections.indexOf(collection);
+
             buildCollection(
                 key,
                 collection,
-                index,
+                originalIndex,
                 content
             );
         });
     }
 
-    $("stores").appendChild(el);
+    $("stores").appendChild(element);
 }
 
 /* =========================
    COLLECTION
 ========================= */
 
-function buildCollection(storeKey,c,index,container){
-    const el=document.createElement("section");
+function buildCollection(storeKey, collection, index, container) {
+    const element = document.createElement("section");
 
-    el.className="collection";
-    el.id=`${storeKey}-${c.id}`;
+    element.className = "collection";
+    element.id = `${storeKey}-${collection.id}`;
 
-    el.innerHTML=`
+    element.innerHTML = `
         <div class="collection-heading">
             <span class="collection-number">
-                COLLECTION ${String(index+1).padStart(2,"0")}
+                COLLECTION ${String(index + 1).padStart(2, "0")}
             </span>
 
             <h3 class="collection-title">
-                ${c.name}
+                ${escapeHTML(collection.name)}
             </h3>
         </div>
 
         <div class="collection-content"></div>
-
         <div class="collection-divider"></div>
     `;
 
-    container.appendChild(el);
+    container.appendChild(element);
 
-    const content=
-        el.querySelector(".collection-content");
+    const content = element.querySelector(".collection-content");
 
-    if(c.rounds?.length){
-        buildRoundCollection(
-            storeKey,
-            c,
-            content
-        );
-    }else{
-        buildRegularCollection(
-            storeKey,
-            c,
-            content
-        );
+    if (collection.rounds?.length) {
+        buildRoundCollection(storeKey, collection, content);
+    } else {
+        buildRegularCollection(storeKey, collection, content);
     }
 }
+
 /* =========================
    REGULAR COLLECTION
 ========================= */
 
-function buildRegularCollection(storeKey,c,container){
-    const models=c.models||[];
+function buildRegularCollection(storeKey, collection, container) {
+    const models = collection.models || [];
 
-    if(models.length){
-        addTitle(container,"Модели");
+    if (models.length) {
+        addTitle(container, "Модели");
 
-        const gallery=createGallery(
+        const gallery = createGallery(
             container,
             "models-gallery"
         );
 
         buildModels(
             gallery,
-            modelPath(storeKey,c),
-            models
+            modelPath(storeKey, collection),
+            models,
+            storeKey,
+            collection
         );
     }
 
-    if(c.decor?.length){
-        addTitle(container,"Декор");
+    if (collection.decor?.length) {
+        addTitle(container, "Декор");
 
-        const gallery=createGallery(
+        const gallery = createGallery(
             container,
             "decor-gallery"
         );
 
         buildDecor(
             gallery,
-            decorPath(storeKey,c),
-            c.decor
+            decorPath(storeKey, collection),
+            collection.decor
         );
     }
 }
@@ -603,315 +817,384 @@ function buildRegularCollection(storeKey,c,container){
    ROUND COLLECTION
 ========================= */
 
-function buildRoundCollection(storeKey,c,container){
+function buildRoundCollection(storeKey, collection, container) {
+    collection.rounds.forEach(round => {
+        const section = document.createElement("section");
+        section.className = "round";
 
-    /* СНАЧАЛА ВСЕ ТУРЫ */
-
-    c.rounds.forEach(round=>{
-        const section=document.createElement("section");
-        section.className="round";
-
-        section.innerHTML=`
+        section.innerHTML = `
             <div class="round-heading">
                 <h4 class="round-title">
-                    ${round.name}
+                    ${escapeHTML(round.name)}
                 </h4>
             </div>
         `;
 
         container.appendChild(section);
 
-        const models=round.models||[];
+        const models = round.models || [];
 
-        if(models.length){
-            addTitle(section,"Модели");
+        if (models.length) {
+            addTitle(section, "Модели");
 
-            const gallery=createGallery(
+            const gallery = createGallery(
                 section,
                 "models-gallery"
             );
 
             buildModels(
                 gallery,
-                roundModelPath(
-                    storeKey,
-                    c,
-                    round
-                ),
-                models
+                roundModelPath(storeKey, collection, round),
+                models,
+                storeKey,
+                collection
             );
-        }else{
-            const empty=document.createElement("div");
+        } else {
+            const empty = document.createElement("div");
 
-            empty.className="round-empty";
-            empty.textContent="Пока не открыт";
+            empty.className = "round-empty";
+            empty.textContent = "Пока не открыт";
 
             section.appendChild(empty);
         }
 
-        /* ДЕКОР КОНКРЕТНОГО ТУРА */
+        /* Декор конкретного тура */
 
-        const roundDecor=[];
+        const roundDecor = [];
 
-        if(round.delivery?.bag){
+        if (round.delivery?.bag) {
             roundDecor.push({
-                file:round.delivery.bag,
-                name:"Пакет"
+                file: round.delivery.bag,
+                name: "Пакет"
             });
         }
 
-        if(round.decor?.length){
-            roundDecor.push(
-                ...round.decor
-            );
+        if (round.decor?.length) {
+            roundDecor.push(...round.decor);
         }
 
-        if(roundDecor.length){
-            addTitle(section,"Декор");
+        if (roundDecor.length) {
+            addTitle(section, "Декор");
 
-            const gallery=createGallery(
+            const gallery = createGallery(
                 section,
                 "decor-gallery"
             );
 
             buildDecor(
                 gallery,
-                roundDecorPath(
-                    storeKey,
-                    c,
-                    round
-                ),
+                roundDecorPath(storeKey, collection, round),
                 roundDecor
             );
         }
     });
 
-    /* ПОСЛЕ ВСЕХ ТУРОВ — ОБЩИЙ ДЕКОР */
+    /* Общий декор всегда после всех туров */
 
-    if(c.decor?.length){
-        addTitle(container,"Декор");
+    if (collection.decor?.length) {
+        addTitle(container, "Декор");
 
-        const gallery=createGallery(
+        const gallery = createGallery(
             container,
             "decor-gallery"
         );
 
         buildDecor(
             gallery,
-            decorPath(storeKey,c),
-            c.decor
+            decorPath(storeKey, collection),
+            collection.decor
         );
     }
 }
-
 /* =========================
    MODELS
 ========================= */
 
-function buildModels(container,path,models){
-    models.forEach((model,index)=>{
-        const number=
-            String(index+1).padStart(2,"0");
+function buildModels(container, path, models, storeKey, collection) {
+    models.forEach((model, index) => {
+        const number = String(index + 1).padStart(2, "0");
 
-        /*
-        Если вариантов нет —
-        обычная карточка модели.
-        */
-
-        if(!model.variants?.length){
-            addModelCard(
-                container,
-                `${path}/${model.file}`,
-                model.name,
-                number
-            );
-
-            return;
-        }
-
-        /*
-        Если есть variants —
-        каждая картинка показывается отдельно,
-        но номер модели остаётся одним.
-        */
-
-        model.variants.forEach((variant,variantIndex)=>{
-            addModelCard(
-                container,
-                `${path}/${variant.file}`,
-                model.name,
-                variantIndex===0
-                    ?number
-                    :"",
-                variant.name
-            );
-        });
+        addModelCard(
+            container,
+            path,
+            model,
+            number,
+            storeKey,
+            collection
+        );
     });
 }
 
-function addModelCard(
-    container,
-    src,
-    name,
-    number="",
-    variant=""
-){
-    const card=document.createElement("div");
-    card.className="model-card";
+/* =========================
+   MODEL CARD
+========================= */
 
-    card.innerHTML=`
+function addModelCard(container, path, model, number, storeKey, collection) {
+    const card = document.createElement("div");
+    card.className = "model-card";
+
+    const variants = model.variants || [];
+
+    const mainVariant =
+        variants.find(variant => variant.default) ||
+        variants[0] ||
+        null;
+
+    const mainFile = mainVariant?.file || model.file;
+    const mainName = mainVariant?.name || "";
+
+    const mainSrc = `${path}/${mainFile}`;
+
+    card.innerHTML = `
         <div class="model-image-box">
             <img
                 class="model-image"
-                src="${src}"
-                alt="${name}${variant?" — "+variant:""}"
+                src="${escapeHTML(mainSrc)}"
+                alt="${escapeHTML(model.name)}"
                 title="Нажмите, чтобы скопировать ссылку"
+                loading="lazy"
             >
         </div>
 
         <p class="item-name">
-            ${number?number+". ":""}${name}
+            ${number}. ${escapeHTML(model.name)}
         </p>
 
-        ${variant
-            ?`<p class="variant-name">${variant}</p>`
-            :""
+        ${
+            mainName
+                ? `<p class="variant-name">${escapeHTML(mainName)}</p>`
+                : ""
         }
     `;
 
-    card.querySelector("img")
-        .onclick=e=>
-            copyLink(e.currentTarget);
+    const mainImage = card.querySelector(".model-image");
+
+    mainImage.onclick = () => copyLink(mainImage);
+
+    /* =========================
+       VARIANTS
+    ========================= */
+
+    if (variants.length > 1) {
+        const otherVariants = variants.filter(
+            variant => variant !== mainVariant
+        );
+
+        addExpandableSection(
+            card,
+            `Расцветки (${variants.length})`,
+            otherVariants.map(variant => ({
+                name: variant.name,
+                src: `${path}/${variant.file}`
+            }))
+        );
+    }
+
+    /* =========================
+       CUSTOM ORDERS
+    ========================= */
+
+    if (model.customizable && model.id) {
+        const orders = getCustomOrders(
+            storeKey,
+            collection,
+            model
+        );
+
+        if (orders.length) {
+            const basePath = customPath(
+                storeKey,
+                collection,
+                model
+            );
+
+            addExpandableSection(
+                card,
+                `Индивидуальные заказы (${orders.length})`,
+                orders.map(order => ({
+                    name: order.name || "Индивидуальный заказ",
+                    src: `${basePath}/${order.file}`
+                }))
+            );
+        }
+    }
 
     container.appendChild(card);
+}
+
+/* =========================
+   EXPANDABLE SECTION
+========================= */
+
+function addExpandableSection(container, label, items) {
+    if (!items.length) return;
+
+    const button = document.createElement("button");
+    button.className = "expand-button";
+    button.type = "button";
+    button.textContent = `${label} ▾`;
+    button.setAttribute("aria-expanded", "false");
+
+    const content = document.createElement("div");
+    content.className = "expand-content";
+
+    items.forEach(item => {
+        const element = document.createElement("div");
+        element.className = "expand-item";
+
+        const image = document.createElement("img");
+
+        image.src = item.src;
+        image.alt = item.name || "";
+        image.loading = "lazy";
+        image.title = "Нажмите, чтобы скопировать ссылку";
+
+        image.onclick = () => copyLink(image);
+
+        const name = document.createElement("p");
+        name.textContent = item.name || "";
+
+        element.appendChild(image);
+        element.appendChild(name);
+
+        content.appendChild(element);
+    });
+
+    button.onclick = () => {
+        const isOpen = content.classList.toggle("open");
+
+        button.textContent = `${label} ${isOpen ? "▴" : "▾"}`;
+        button.setAttribute("aria-expanded", String(isOpen));
+    };
+
+    container.appendChild(button);
+    container.appendChild(content);
 }
 
 /* =========================
    DECOR
 ========================= */
 
-function buildDecor(container,path,items){
-    items.forEach(item=>{
-        const card=document.createElement("div");
-        card.className="decor-card";
+function buildDecor(container, path, items) {
+    items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "decor-card";
 
-        card.innerHTML=`
-            <div class="decor-image-box">
-                <img
-                    class="decor-image"
-                    src="${path}/${item.file}"
-                    alt="${item.name}"
-                    title="Нажмите, чтобы скопировать ссылку"
-                >
-            </div>
+        const imageBox = document.createElement("div");
+        imageBox.className = "decor-image-box";
 
-            <p class="item-name">
-                ${item.name}
-            </p>
-        `;
+        const image = document.createElement("img");
 
-        card.querySelector("img")
-            .onclick=e=>
-                copyLink(e.currentTarget);
+        image.className = "decor-image";
+        image.src = `${path}/${item.file}`;
+        image.alt = item.name || "";
+        image.loading = "lazy";
+        image.title = "Нажмите, чтобы скопировать ссылку";
+
+        image.onclick = () => copyLink(image);
+
+        imageBox.appendChild(image);
+
+        const name = document.createElement("p");
+        name.className = "item-name";
+        name.textContent = item.name || "";
+
+        card.appendChild(imageBox);
+        card.appendChild(name);
 
         container.appendChild(card);
     });
 }
 
 /* =========================
-   ELEMENT HELPERS
+   FILTER EVENTS
 ========================= */
 
-function addTitle(container,text){
-    const title=document.createElement("h4");
+[
+    "filterStore",
+    "filterType",
+    "filterYear",
+    "filterMonth",
+    "filterCategory"
+].forEach(id => {
+    $(id).addEventListener("change", buildHosting);
+});
 
-    title.className="section-title";
-    title.textContent=text;
+$("filterSearch").addEventListener("input", buildHosting);
 
-    container.appendChild(title);
-}
+$("resetFilters").onclick = () => {
+    $("filterStore").value = "";
+    $("filterType").value = "";
+    $("filterYear").value = "";
+    $("filterMonth").value = "";
+    $("filterCategory").value = "";
+    $("filterSearch").value = "";
 
-function createGallery(container,className){
-    const gallery=document.createElement("div");
-
-    gallery.className=className;
-    container.appendChild(gallery);
-
-    return gallery;
-}
+    buildHosting();
+};
 
 /* =========================
-   PATHS
+   BACK TO TOP
 ========================= */
 
-/* Обычная коллекция — модели */
-function modelPath(storeKey,c){
-    return `../${storeKey}/products/${c.folder}/models`;
+const backToTop = $("backToTop");
+
+function updateBackToTop() {
+    backToTop.classList.toggle(
+        "visible",
+        window.scrollY > 350
+    );
 }
 
-/* Обычная коллекция / общий декор */
-function decorPath(storeKey,c){
-    return `../${storeKey}/products/${c.folder}/decor`;
-}
+window.addEventListener(
+    "scroll",
+    updateBackToTop,
+    { passive: true }
+);
 
-/* Модели конкретного тура */
-function roundModelPath(storeKey,c,round){
-    return `../${storeKey}/products/${c.folder}/${round.folder}/models`;
-}
+backToTop.onclick = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+};
 
-/* Декор конкретного тура */
-function roundDecorPath(storeKey,c,round){
-    return `../${storeKey}/products/${c.folder}/${round.folder}/decor`;
-}
+updateBackToTop();
 
 /* =========================
-   COPY LINK
+   IMAGE ERROR HANDLING
 ========================= */
 
-function copyLink(img){
-    navigator.clipboard
-        .writeText(img.src)
-        .then(()=>{
-            const toast=$("toast");
+document.addEventListener("error", event => {
+    const image = event.target;
 
-            toast.classList.add("show");
+    if (!(image instanceof HTMLImageElement)) return;
 
-            clearTimeout(window.toastTimer);
+    image.style.opacity = "0.25";
+    image.title = "Изображение не найдено — проверьте путь";
 
-            window.toastTimer=setTimeout(()=>{
-                toast.classList.remove("show");
-            },1500);
-        })
-        .catch(()=>{
-            alert("Не удалось скопировать ссылку.");
-        });
-}
+}, true);
 
 /* =========================
-   COLLECTION WORD
+   INITIALIZATION
 ========================= */
 
-function word(n){
-    if(n%100>=11&&n%100<=14){
-        return "коллекций";
+function initializeHosting() {
+    if (typeof STORES === "undefined") {
+        $("stores").innerHTML = `
+            <div class="empty-store">
+                Не удалось загрузить products.js.
+                Проверьте файл данных.
+            </div>
+        `;
+        return;
     }
 
-    if(n%10===1){
-        return "коллекция";
-    }
-
-    if(n%10>=2&&n%10<=4){
-        return "коллекции";
-    }
-
-    return "коллекций";
+    populateFilters();
+    buildHosting();
 }
 
-/* =========================
-   BUILD
-========================= */
-
-buildHosting();
+initializeHosting();
 
 </script>
 </body>
