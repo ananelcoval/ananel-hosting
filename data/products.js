@@ -1023,13 +1023,146 @@ const STORES = {
     },
 
 
+
     /* =========================
        EXTRA
     ========================= */
 
     extra: {
         name: "EXTRA",
-        collections: []
-    }
 
+        categories: [
+            { id: "belts", name: "Ремни" },
+            { id: "scarves", name: "Платки" },
+            { id: "ties", name: "Галстуки" },
+            { id: "gloves", name: "Перчатки" },
+            { id: "hats", name: "Шляпы" },
+            { id: "headbands", name: "Ободки" },
+            { id: "neck-scarves", name: "Шарфы" }
+        ],
+
+        collections: [
+
+            /* =========================
+               БАЗА — РЕМНИ
+            ========================= */
+
+            {
+                id: "base-belts",
+                name: "Ремни",
+                folder: "base/belts",
+                type: "base",
+                category: "belts",
+                season: "allSeason",
+                dates: [null, null],
+                available: true,
+
+                packaging: {
+                    bag: "collection",
+                    card: "none"
+                },
+
+                delivery: {},
+
+                models: [
+                    {
+                        id: "no-money",
+                        file: "01-no-money.png",
+                        name: "ДЕНЕГ НЕТ",
+                        type: "ремень",
+                        category: "belts",
+                        price: 7
+                    },
+                    {
+                        id: "all-with-me",
+                        file: "02-all-with-me.png",
+                        name: "ВСЁ С СОБОЙ",
+                        type: "ремень",
+                        category: "belts",
+                        price: 12
+                    },
+                    {
+                        id: "no-panic",
+                        file: "03-no-panic.png",
+                        name: "БЕЗ ПАНИКИ!",
+                        type: "ремень",
+                        category: "belts",
+                        price: 12
+                    },
+                    {
+                        id: "together",
+                        file: "04-together-all.png",
+                        name: "НЕ ОТВЯЖЕШЬСЯ",
+                        type: "ремень",
+                        category: "belts",
+                        price: 15,
+
+                        variants: [
+                            {
+                                id: "all",
+                                name: "Общее фото",
+                                file: "04-together-all.png",
+                                default: true
+                            },
+                            {
+                                id: "red",
+                                name: "Красный",
+                                file: "04-together-red.png"
+                            },
+                            {
+                                id: "black",
+                                name: "Чёрный",
+                                file: "04-together-black.png"
+                            }
+                        ]
+                    },
+                    {
+                        id: "winnings",
+                        file: "05-winnings.png",
+                        name: "НА ВЫИГРАННЫЕ",
+                        type: "ремень",
+                        category: "belts",
+                        price: 25,
+
+                        customizable: true,
+                        customFolder: "custom"
+                    },
+                    {
+                        id: "by-the-rules",
+                        file: "06-by-the-rules-green.png",
+                        name: "ПО УСТАВУ",
+                        type: "ремень",
+                        category: "belts",
+                        price: 12,
+
+                        variants: [
+                            {
+                                id: "green",
+                                name: "Зелёный",
+                                file: "06-by-the-rules-green.png",
+                                default: true
+                            },
+                            {
+                                id: "red",
+                                name: "Красный",
+                                file: "06-by-the-rules-red.png"
+                            },
+                            {
+                                id: "blue",
+                                name: "Синий",
+                                file: "06-by-the-rules-blue.png"
+                            },
+                            {
+                                id: "yellow",
+                                name: "Жёлтый",
+                                file: "06-by-the-rules-yellow.png"
+                            }
+                        ]
+                    }
+                ],
+
+                decor: []
+            }
+        ]
+    }
 };
