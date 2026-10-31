@@ -1,1 +1,733 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Other Assets — Ananel Coval</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --green:#005500;
+    --pink:#D4007E;
+    --text:#181818;
+    --muted:#999;
+    --line:#e8e4e7;
+    --soft:#f8f6f7;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    margin:0;background:#fff;color:var(--text);
+    font-family:Montserrat,sans-serif;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.page{max-width:1500px;margin:auto;padding:24px}
+
+/* HEADER */
+.header{
+    padding:22px 28px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    display:flex;align-items:center;
+    justify-content:space-between;gap:20px;
+}
+.brand{display:flex;align-items:baseline;gap:14px}
+.logo{margin:0;color:var(--green);font-size:30px}
+.header-label{
+    color:#aaa;font-size:10px;font-weight:600;
+    letter-spacing:2px;text-transform:uppercase;
+}
+.header-links{display:flex;gap:25px}
+.header-links a{
+    color:#999;text-decoration:none;
+    font-size:12px;font-weight:600;
+}
+.header-links a:hover{color:var(--pink)}
+
+/* PAGE TITLE */
+.page-heading{
+    margin:55px 0 35px;text-align:center;
+}
+.page-heading .eyebrow{
+    color:var(--pink);font-size:10px;
+    font-weight:700;letter-spacing:2px;
+}
+.page-heading h2{
+    margin:12px 0 8px;font-size:32px;
+}
+.page-heading p{
+    margin:0;color:#aaa;font-size:11px;
+}
+
+/* STORE SWITCH */
+.store-switch{
+    display:flex;justify-content:center;
+    gap:10px;margin-bottom:50px;
+}
+.store-button{
+    min-width:150px;padding:13px 30px;
+    background:#fff;color:#888;
+    border:1px solid var(--line);
+    border-radius:12px;
+    font-size:13px;font-weight:700;
+    transition:.2s;
+}
+.store-button.active{
+    color:var(--green);
+    border-color:var(--pink);
+    background:var(--soft);
+}
+.store-button:hover{border-color:var(--pink)}
+
+/* SECTIONS */
+.asset-section{margin:0 0 65px}
+.section-heading{
+    display:flex;align-items:center;
+    gap:15px;margin-bottom:25px;
+}
+.section-heading::before,
+.section-heading::after{
+    content:"";flex:1;height:1px;
+    background:var(--line);
+}
+.section-heading h3{
+    margin:0;color:var(--green);
+    font-size:18px;font-weight:600;
+}
+.section-count{
+    color:#aaa;font-size:11px;
+    text-align:center;margin:-12px 0 25px;
+}
+
+/* FILTERS */
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:12px;margin-bottom:25px;
+}
+.filter-field{display:flex;flex-direction:column;gap:7px}
+.filter-field label{
+    color:#999;font-size:9px;font-weight:700;
+    letter-spacing:1px;text-transform:uppercase;
+}
+.filter-field input,.filter-field select{
+    width:100%;height:42px;padding:0 12px;
+    border:1px solid var(--line);
+    border-radius:10px;background:#fff;
+    color:#333;font-size:11px;outline:none;
+}
+.filter-field input:focus,
+.filter-field select:focus{border-color:var(--pink)}
+
+/* CARD LIST */
+.card-list{
+    display:flex;flex-direction:column;gap:10px;
+    max-width:1000px;margin:auto;
+}
+.card-entry{
+    border:1px solid var(--line);
+    border-radius:13px;overflow:hidden;
+    background:#fff;
+}
+.card-toggle{
+    width:100%;padding:17px 20px;
+    background:#fff;border:0;
+    display:flex;align-items:center;
+    justify-content:space-between;gap:15px;
+    text-align:left;
+}
+.card-toggle:hover{background:var(--soft)}
+.card-main{display:flex;align-items:center;gap:20px}
+.card-id{
+    color:var(--pink);font-size:12px;
+    font-weight:700;min-width:65px;
+}
+.card-name{font-size:12px;font-weight:600}
+.card-meta{
+    margin-top:5px;color:#999;font-size:10px;
+}
+.card-arrow{
+    color:var(--green);font-size:18px;
+    transition:transform .2s;
+}
+.card-entry.open .card-arrow{transform:rotate(180deg)}
+.card-content{
+    display:none;padding:25px;
+    border-top:1px solid var(--line);
+    background:#fdfcfd;
+}
+.card-entry.open .card-content{display:block}
+.card-image{
+    display:block;max-width:100%;
+    max-height:430px;width:auto;height:auto;
+    margin:0 auto 20px;object-fit:contain;
+    cursor:pointer;
+}
+.card-message{
+    max-width:650px;margin:0 auto;
+    text-align:center;color:#666;
+    font-size:12px;line-height:1.8;
+}
+.card-hint{
+    margin-top:15px;color:#aaa;
+    font-size:10px;text-align:center;
+}
+
+/* OTHER ASSETS */
+.asset-list{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(180px,260px));
+    justify-content:center;gap:20px;
+}
+.asset-item{text-align:center}
+.asset-image-box{
+    height:230px;padding:15px;
+    display:flex;align-items:center;
+    justify-content:center;border-radius:14px;
+}
+.asset-item:hover .asset-image-box{background:var(--soft)}
+.asset-image{
+    max-width:100%;max-height:100%;
+    object-fit:contain;cursor:pointer;
+}
+.asset-name{
+    margin:12px 0;color:#333;
+    font-size:12px;font-weight:600;
+}
+
+/* EMPTY */
+.empty{
+    max-width:600px;margin:20px auto;
+    padding:25px;border:1px dashed var(--line);
+    border-radius:12px;color:#aaa;
+    text-align:center;font-size:12px;
+}
+
+/* TOAST */
+.toast{
+    position:fixed;left:50%;bottom:30px;
+    padding:12px 18px;border-radius:25px;
+    background:#171717;color:#fff;
+    font-size:12px;opacity:0;
+    pointer-events:none;
+    transform:translate(-50%,15px);
+    transition:.2s;z-index:500;
+}
+.toast.show{
+    opacity:1;transform:translate(-50%,0);
+}
+
+/* BACK TO TOP */
+.back-to-top{
+    position:fixed;right:25px;bottom:25px;
+    width:46px;height:46px;
+    border:1px solid var(--line);
+    border-radius:50%;background:#fff;
+    color:var(--green);font-size:22px;
+    box-shadow:0 5px 20px #00000012;
+    opacity:0;visibility:hidden;
+    transform:translateY(12px);
+    transition:.2s;
+}
+.back-to-top.visible{
+    opacity:1;visibility:visible;
+    transform:none;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .filters{grid-template-columns:1fr 1fr}
+    .asset-list{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+    .page{padding:12px}
+    .header{padding:18px;flex-wrap:wrap}
+    .logo{font-size:23px}
+    .header-label{display:none}
+    .page-heading{margin:40px 0 25px}
+    .filters{grid-template-columns:1fr}
+    .store-button{min-width:120px}
+    .card-main{gap:10px}
+    .card-toggle{padding:15px 12px}
+    .card-id{min-width:55px}
+    .card-content{padding:15px}
+    .asset-list{grid-template-columns:1fr 1fr}
+    .asset-image-box{height:170px}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<header class="header">
+    <div class="brand">
+        <h1 class="logo">Ananel Coval</h1>
+        <span class="header-label">Other Assets</span>
+    </div>
+    <nav class="header-links">
+        <a href="./">← Hosting</a>
+        <a href="../">Workspace</a>
+    </nav>
+</header>
+
+<div class="page-heading">
+    <span class="eyebrow">IMAGE ARCHIVE</span>
+    <h2>Другое</h2>
+    <p>Карточки, оформление и дополнительные материалы</p>
+</div>
+
+<div class="store-switch">
+    <button class="store-button active" data-store="sole">SÓLE</button>
+    <button class="store-button" data-store="extra">EXTRA</button>
+</div>
+
+<main id="content"></main>
+</div>
+
+<div id="toast" class="toast">Ссылка скопирована</div>
+<button id="backToTop" class="back-to-top">↑</button>
+
+<script src="../data/products.js"></script>
+<script src="../data/people.js"></script>
+<script src="../data/other-assets.js"></script>
+<script>
+
+/* =========================
+   CONFIG
+========================= */
+
+const $ = id => document.getElementById(id);
+const BASE = "../";
+let activeStore = "sole";
+let toastTimer;
+
+/* =========================
+   HELPERS
+========================= */
+
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function getPeople() {
+    return typeof PEOPLE !== "undefined" ? PEOPLE : [];
+}
+
+function getPerson(id) {
+    if (!id) return "Не указано";
+
+    const person = getPeople().find(p => p.id === id);
+    return person ? person.name : id;
+}
+
+function getCollectionName(id) {
+    if (!id || typeof STORES === "undefined") {
+        return "Без коллекции";
+    }
+
+    const collection = (STORES.sole?.collections || [])
+        .find(item => item.id === id);
+
+    return collection ? collection.name : id;
+}
+
+function formatDate(value) {
+    if (!value) return "Дата не указана";
+
+    const parts = value.split("-");
+    if (parts.length !== 3) return value;
+
+    return `${parts[2]}.${parts[1]}.${parts[0]}`;
+}
+
+function copyLink(image) {
+    const url = image.src;
+
+    navigator.clipboard.writeText(url)
+        .then(() => {
+            const toast = $("toast");
+            toast.classList.add("show");
+
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 1500);
+        })
+        .catch(() => alert("Не удалось скопировать ссылку."));
+}
+
+/* =========================
+   DATA
+========================= */
+
+function getStoreData() {
+    if (typeof OTHER_ASSETS === "undefined") {
+        return {};
+    }
+
+    return OTHER_ASSETS[activeStore] || {};
+}
+
+function getCards() {
+    return getStoreData().cards || [];
+}
+
+function getAssetPath(type, file) {
+    return `${BASE}${activeStore}/other/${type}/${file}`;
+}
+
+/* =========================
+   STORE SWITCH
+========================= */
+
+document.querySelectorAll(".store-button").forEach(button => {
+    button.onclick = () => {
+        activeStore = button.dataset.store;
+
+        document.querySelectorAll(".store-button")
+            .forEach(item => {
+                item.classList.toggle(
+                    "active",
+                    item.dataset.store === activeStore
+                );
+            });
+
+        buildPage();
+    };
+});
+
+/* =========================
+   SECTIONS
+========================= */
+
+function createSection(title, count = null) {
+    const section = document.createElement("section");
+    section.className = "asset-section";
+
+    section.innerHTML = `
+        <div class="section-heading">
+            <h3>${escapeHTML(title)}</h3>
+        </div>
+        ${count !== null
+            ? `<div class="section-count">${count} материалов</div>`
+            : ""}
+    `;
+
+    $("content").appendChild(section);
+    return section;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+function buildCards() {
+    const cards = getCards();
+    const section = createSection("Карточки", cards.length);
+
+    if (!cards.length) {
+        section.innerHTML += `
+            <div class="empty">
+                Карточки пока не добавлены.
+            </div>
+        `;
+        return;
+    }
+
+    const filters = document.createElement("div");
+    filters.className = "filters";
+
+    filters.innerHTML = `
+        <div class="filter-field">
+            <label>Поиск</label>
+            <input id="cardSearch"
+                placeholder="Имя, номер заказа или текст">
+        </div>
+
+        <div class="filter-field">
+            <label>Коллекция</label>
+            <select id="cardCollection">
+                <option value="">Все коллекции</option>
+            </select>
+        </div>
+
+        <div class="filter-field">
+            <label>Сортировка</label>
+            <select id="cardSort">
+                <option value="newest">Сначала новые</option>
+                <option value="oldest">Сначала старые</option>
+                <option value="name">По имени</option>
+                <option value="number">По номеру</option>
+            </select>
+        </div>
+    `;
+
+    section.appendChild(filters);
+
+    const collectionSelect = filters.querySelector("#cardCollection");
+    const collectionIds = [...new Set(
+        cards.map(card => card.collection).filter(Boolean)
+    )];
+
+    collectionIds.forEach(id => {
+        const option = new Option(getCollectionName(id), id);
+        collectionSelect.add(option);
+    });
+
+    const list = document.createElement("div");
+    list.className = "card-list";
+    section.appendChild(list);
+
+    function renderCards() {
+        const query = filters.querySelector("#cardSearch")
+            .value.trim().toLowerCase();
+
+        const collection = collectionSelect.value;
+        const sort = filters.querySelector("#cardSort").value;
+
+        let result = cards.filter(card => {
+            if (collection && card.collection !== collection) {
+                return false;
+            }
+
+            const searchable = [
+                card.orderId,
+                getPerson(card.sender),
+                getPerson(card.recipient),
+                getCollectionName(card.collection),
+                card.message
+            ].join(" ").toLowerCase();
+
+            return searchable.includes(query);
+        });
+
+        result = [...result].sort((a, b) => {
+            if (sort === "name") {
+                return getPerson(a.recipient)
+                    .localeCompare(getPerson(b.recipient), "ru");
+            }
+
+            if (sort === "number") {
+                return (a.orderId || "")
+                    .localeCompare(b.orderId || "");
+            }
+
+            const aDate = a.date || "";
+            const bDate = b.date || "";
+
+            return sort === "oldest"
+                ? aDate.localeCompare(bDate)
+                : bDate.localeCompare(aDate);
+        });
+
+        list.innerHTML = "";
+
+        if (!result.length) {
+            list.innerHTML = `
+                <div class="empty">
+                    Ничего не найдено.
+                </div>
+            `;
+            return;
+        }
+
+        result.forEach(card => addCard(list, card));
+    }
+
+    filters.querySelector("#cardSearch")
+        .addEventListener("input", renderCards);
+
+    collectionSelect.addEventListener("change", renderCards);
+
+    filters.querySelector("#cardSort")
+        .addEventListener("change", renderCards);
+
+    renderCards();
+}
+
+/* =========================
+   SINGLE CARD
+========================= */
+
+function addCard(container, card) {
+    const entry = document.createElement("div");
+    entry.className = "card-entry";
+
+    const sender = getPerson(card.sender);
+    const recipient = getPerson(card.recipient);
+    const collection = getCollectionName(card.collection);
+
+    entry.innerHTML = `
+        <button class="card-toggle" type="button"
+                aria-expanded="false">
+            <div class="card-main">
+                <span class="card-id">
+                    ${escapeHTML(card.orderId)}
+                </span>
+                <div>
+                    <div class="card-name">
+                        ${escapeHTML(recipient)}
+                    </div>
+                    <div class="card-meta">
+                        От: ${escapeHTML(sender)}
+                        · ${escapeHTML(collection)}
+                        · ${escapeHTML(formatDate(card.date))}
+                    </div>
+                </div>
+            </div>
+            <span class="card-arrow">⌄</span>
+        </button>
+
+        <div class="card-content"></div>
+    `;
+
+    const button = entry.querySelector(".card-toggle");
+    const content = entry.querySelector(".card-content");
+
+    let loaded = false;
+
+    button.onclick = () => {
+        const isOpen = entry.classList.toggle("open");
+        button.setAttribute("aria-expanded", String(isOpen));
+
+        if (isOpen && !loaded) {
+            const image = document.createElement("img");
+            image.className = "card-image";
+            image.src = getAssetPath("cards", card.file);
+            image.alt = `Карточка ${card.orderId}`;
+            image.title = "Нажмите, чтобы скопировать ссылку";
+            image.onclick = () => copyLink(image);
+
+            content.appendChild(image);
+
+            if (card.message) {
+                const message = document.createElement("p");
+                message.className = "card-message";
+                message.textContent = card.message;
+                content.appendChild(message);
+            }
+
+            const hint = document.createElement("p");
+            hint.className = "card-hint";
+            hint.textContent = "Нажмите на изображение, чтобы скопировать ссылку";
+            content.appendChild(hint);
+
+            loaded = true;
+        }
+    };
+
+    container.appendChild(entry);
+}
+
+/* =========================
+   OTHER ASSETS
+========================= */
+
+function buildAssetSection(title, type) {
+    const items = getStoreData()[type] || [];
+    const section = createSection(title, items.length);
+
+    if (!items.length) {
+        section.innerHTML += `
+            <div class="empty">
+                Материалы пока не добавлены.
+            </div>
+        `;
+        return;
+    }
+
+    const gallery = document.createElement("div");
+    gallery.className = "asset-list";
+
+    items.forEach(item => {
+        const element = document.createElement("div");
+        element.className = "asset-item";
+
+        const imageBox = document.createElement("div");
+        imageBox.className = "asset-image-box";
+
+        const image = document.createElement("img");
+        image.className = "asset-image";
+        image.src = getAssetPath(type, item.file);
+        image.alt = item.name || "";
+        image.loading = "lazy";
+        image.title = "Нажмите, чтобы скопировать ссылку";
+        image.onclick = () => copyLink(image);
+
+        imageBox.appendChild(image);
+
+        const name = document.createElement("p");
+        name.className = "asset-name";
+        name.textContent = item.name || "";
+
+        element.appendChild(imageBox);
+        element.appendChild(name);
+        gallery.appendChild(element);
+    });
+
+    section.appendChild(gallery);
+}
+
+/* =========================
+   PAGE BUILD
+========================= */
+
+function buildPage() {
+    $("content").innerHTML = "";
+
+    if (activeStore === "sole") {
+        buildCards();
+        buildAssetSection("Доставка", "delivery");
+        buildAssetSection("Локации", "locations");
+    } else {
+        buildAssetSection("Локации", "locations");
+    }
+}
+
+/* =========================
+   BACK TO TOP
+========================= */
+
+const backToTop = $("backToTop");
+
+function updateBackToTop() {
+    backToTop.classList.toggle(
+        "visible",
+        window.scrollY > 350
+    );
+}
+
+window.addEventListener(
+    "scroll",
+    updateBackToTop,
+    { passive: true }
+);
+
+backToTop.onclick = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+};
+
+/* =========================
+   INITIALIZATION
+========================= */
+
+buildPage();
+updateBackToTop();
+
+</script>
+</body>
+</html>
