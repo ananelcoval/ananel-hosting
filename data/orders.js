@@ -1,6 +1,6 @@
 const ORDERS_DB = {
     "counters": {
-        "sole": 2,
+        "sole": 1,
         "extra": 0
     },
     "orders": [
