@@ -4,11 +4,11 @@ const OTHER_ASSETS = {
             {
                 orderId: "S0001",
                 file: "card-S0001.png",
-                date: null,
+                date: "2026-06-07",
                 collection: "architecture",
                 model: "03-astronomy-tower.png",
-                senderId: "P0001",
-                recipientId: "P0002",
+                sender: "P0001",
+                recipient: "P0002",
                 message: "Для неожиданных официальных встреч под звёздным небом"
             }
         ],
