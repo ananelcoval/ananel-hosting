@@ -12,7 +12,12 @@ const OTHER_ASSETS = {
                 message: "Для неожиданных официальных встреч под звёздным небом"
             }
         ],
-        delivery: [],
+        delivery: [
+            {
+        file: "sole-delivery-header.jpg",
+        name: "Заголовок доставки"
+            }
+        ],
         locations: []
     },
     extra: {
