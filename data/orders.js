@@ -1,6 +1,6 @@
 const ORDERS_DB = {
     "counters": {
-        "sole": 1,
+        "sole": 2,
         "extra": 0
     },
     "orders": [
@@ -26,6 +26,29 @@ const ORDERS_DB = {
             "total": 19,
             "cardRequired": true,
             "cardText": "Для неожиданных официальных встреч под звёздным небом"
+        },
+        {
+            "id": "S0002",
+            "store": "sole",
+            "date": "2026-06-08",
+            "status": "delivered",
+            "senderType": "person",
+            "sender": "P0003",
+            "recipient": "P0005",
+            "delivery": "hogwarts",
+            "items": [
+                {
+                    "collection": "hufflepuff-day",
+                    "section": null,
+                    "model": "05-cowboy.png",
+                    "variant": null,
+                    "quantity": 1,
+                    "price": 32
+                }
+            ],
+            "total": 32,
+            "cardRequired": true,
+            "cardText": "Я борюсь с желанием подарить тебе сапожки на каблуке, поэтому хватай эти ковбойские тапки и беги. P.S. Почти казаки. Шпорами можно портить чужие наряды, а в крайнем случае снять и метнуть."
         }
     ]
 };
