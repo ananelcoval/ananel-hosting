@@ -1021,12 +1021,10 @@ const STORES = {
 
         ]
     },
-
-
-
-    /* =========================
+  
+/* =========================
        EXTRA
-    ========================= */
+========================= */
 
     extra: {
         name: "EXTRA",
@@ -1044,26 +1042,35 @@ const STORES = {
         collections: [
 
             /* =========================
-               БАЗА — РЕМНИ
+               БАЗОВАЯ КОЛЛЕКЦИЯ
             ========================= */
 
             {
-                id: "base-belts",
-                name: "Ремни",
-                folder: "base/belts",
+                id: "base",
+                name: "База",
                 type: "base",
-                category: "belts",
                 season: "allSeason",
                 dates: [null, null],
                 available: true,
 
-                packaging: {
-                    bag: "collection",
-                    card: "none"
-                },
+                sections: [
 
-                delivery: {},
+                    /* =========================
+                       РЕМНИ
+                    ========================= */
 
+                    {
+                        id: "belts",
+                        name: "Ремни",
+                        folder: "base/belts",
+                        category: "belts",
+
+                        packaging: {
+                            bag: "collection",
+                            card: "none"
+                        },
+
+                        delivery: {},
                 
 models: [
     {
