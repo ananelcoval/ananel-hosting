@@ -1,6 +1,6 @@
 const ORDERS_DB = {
     "counters": {
-        "sole": 3,
+        "sole": 4,
         "extra": 0
     },
     "orders": [
@@ -72,6 +72,29 @@ const ORDERS_DB = {
             "total": 24,
             "cardRequired": false,
             "cardText": ""
+        },
+        {
+            "id": "S0004",
+            "store": "sole",
+            "date": "2026-06-08",
+            "status": "new",
+            "senderType": "person",
+            "sender": "P0007",
+            "recipient": "P0006",
+            "delivery": "hogwarts",
+            "items": [
+                {
+                    "collection": "hufflepuff-day",
+                    "section": null,
+                    "model": "05-cowboy.png",
+                    "variant": null,
+                    "quantity": 1,
+                    "price": 32
+                }
+            ],
+            "total": 32,
+            "cardRequired": true,
+            "cardText": "Пусть жизнь и несётся галопом, но ты успевай осматривать прерии"
         }
     ]
 };
