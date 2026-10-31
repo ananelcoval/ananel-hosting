@@ -1,4 +1,3 @@
-
 const OTHER_ASSETS = {
     sole: {
         cards: [
