@@ -1,6 +1,6 @@
 const ORDERS_DB = {
     "counters": {
-        "sole": 2,
+        "sole": 3,
         "extra": 0
     },
     "orders": [
@@ -8,7 +8,7 @@ const ORDERS_DB = {
             "id": "S0001",
             "store": "sole",
             "date": "2026-06-07",
-            "status": "new",
+            "status": "delivered",
             "senderType": "person",
             "sender": "P0001",
             "recipient": "P0002",
@@ -31,7 +31,7 @@ const ORDERS_DB = {
             "id": "S0002",
             "store": "sole",
             "date": "2026-06-08",
-            "status": "new",
+            "status": "delivered",
             "senderType": "person",
             "sender": "P0003",
             "recipient": "P0005",
@@ -49,6 +49,29 @@ const ORDERS_DB = {
             "total": 32,
             "cardRequired": true,
             "cardText": "Я борюсь с желанием подарить тебе сапожки на каблуке, поэтому хватай эти ковбойские тапки и беги. P.S. Почти казаки. Шпорами можно портить чужие наряды, а в крайнем случае снять и метнуть."
+        },
+        {
+            "id": "S0003",
+            "store": "sole",
+            "date": "2026-06-08",
+            "status": "new",
+            "senderType": "self",
+            "sender": null,
+            "recipient": "P0004",
+            "delivery": "hogwarts",
+            "items": [
+                {
+                    "collection": "architecture",
+                    "section": null,
+                    "model": "10-hat.png",
+                    "variant": null,
+                    "quantity": 1,
+                    "price": 24
+                }
+            ],
+            "total": 24,
+            "cardRequired": false,
+            "cardText": ""
         }
     ]
 };
