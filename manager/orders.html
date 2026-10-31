@@ -4,943 +4,570 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Orders — Ananel Manager</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-:root{
-    --green:#005500;--pink:#D4007E;--bg:#f7f5f6;
-    --text:#171717;--muted:#888;--line:#e2dee1;--soft:#faf8f9
-}
+:root{--green:#005500;--pink:#D4007E;--text:#181818;--muted:#8b878a;--line:#e8e4e7;--soft:#f8f6f7}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif}
+body{margin:0;background:#f7f5f6;color:var(--text);font-family:Montserrat,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
 .page{max-width:1400px;margin:auto;padding:24px}
-button{font-family:inherit;cursor:pointer}
-
-/* ОСНОВА */
-
-.header,.form-panel,.stat,.order-card,.modal-box{background:#fff;border:1px solid var(--line)}
-
-.header{
-    padding:22px 30px;border-radius:18px;
-    display:flex;justify-content:space-between;align-items:center
-}
+.header{padding:22px 28px;border:1px solid var(--line);border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:baseline;gap:14px}
 .logo{margin:0;color:var(--green);font-size:30px}
-.back{color:#999;font-size:12px;font-weight:600;text-decoration:none}
+.header-label{color:#aaa;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.back{color:#999;font-size:12px;font-weight:600}
 .back:hover{color:var(--pink)}
-
-.top{
-    margin:55px 0 30px;display:flex;
-    justify-content:space-between;align-items:end
+.heading{margin:45px 0 30px}
+.eyebrow{color:var(--pink);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.heading h2{margin:10px 0;color:var(--green);font-size:38px;letter-spacing:-1px}
+.heading p{margin:0;color:var(--muted);font-size:12px}
+.store-tabs{display:flex;gap:8px;margin-bottom:25px;flex-wrap:wrap}
+.store-tab{padding:12px 20px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#777;font-size:12px;font-weight:700}
+.store-tab.active{background:var(--green);border-color:var(--green);color:#fff}
+.store-tab:hover:not(.active){border-color:var(--pink);color:var(--pink)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:25px}
+.stat{padding:23px;background:#fff;border:1px solid var(--line);border-radius:15px;min-width:0}
+.stat-label{color:#999;font-size:10px;font-weight:700;letter-spacing:.4px}
+.stat-value{margin:13px 0 7px;color:var(--green);font-size:30px;font-weight:700;letter-spacing:-1px;overflow-wrap:anywhere}
+.stat-sub{color:#aaa;font-size:10px;line-height:1.5}
+.analytics{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-bottom:25px}
+.panel{padding:24px;background:#fff;border:1px solid var(--line);border-radius:16px;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}
+.panel-title{margin:0;color:var(--green);font-size:17px;font-weight:700}
+.panel-sub{color:#aaa;font-size:10px}
+.chart{height:230px;display:flex;align-items:flex-end;gap:9px;border-bottom:1px solid var(--line);padding:0 0 25px}
+.chart-col{height:100%;flex:1;min-width:0;display:flex;align-items:flex-end;justify-content:center;position:relative}
+.chart-bar{width:65%;max-width:45px;min-height:2px;background:var(--green);border-radius:5px 5px 0 0;transition:height .2s}
+.chart-bar:hover{background:var(--pink)}
+.chart-label{position:absolute;top:100%;margin-top:7px;color:#999;font-size:9px;white-space:nowrap}
+.chart-empty{width:100%;align-self:center;text-align:center;color:#aaa;font-size:12px}
+.rank-list{display:flex;flex-direction:column;gap:17px}
+.rank-item{display:grid;grid-template-columns:25px minmax(0,1fr) auto;gap:12px;align-items:center}
+.rank-number{color:var(--pink);font-size:11px;font-weight:700}
+.rank-name{color:#555;font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-sub{margin-top:5px;color:#aaa;font-size:10px;font-weight:400}
+.rank-value{color:var(--green);font-size:12px;font-weight:700;white-space:nowrap}
+.rank-track{height:4px;margin-top:9px;background:#f1edf0;border-radius:5px;overflow:hidden}
+.rank-fill{height:100%;background:var(--pink);border-radius:5px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:30px 0 18px}
+.section-head h3{margin:0;color:var(--green);font-size:22px}
+.section-count{color:#aaa;font-size:11px}
+.filters{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:12px;margin-bottom:17px}
+.filter-input,.filter-select{width:100%;min-width:0;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#555;font-size:11px;outline:none}
+.filter-input:focus,.filter-select:focus{border-color:var(--pink)}
+.orders-list{display:flex;flex-direction:column;gap:10px}
+.order{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.order[open]{border-color:#d9cbd3}
+.order-head{list-style:none;padding:19px 22px;display:grid;grid-template-columns:90px 105px minmax(0,1fr) 115px 110px 20px;gap:12px;align-items:center;cursor:pointer}
+.order-head::-webkit-details-marker{display:none}
+.order-head:hover{background:#fcfafb}
+.order-id{color:var(--green);font-size:13px;font-weight:700}
+.order-date{color:#999;font-size:10px}
+.order-person{min-width:0;color:#555;font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.order-person small{display:block;margin-top:5px;color:#aaa;font-size:10px;font-weight:400}
+.order-total{color:var(--green);font-size:13px;font-weight:700;text-align:right}
+.status{display:inline-flex;align-items:center;justify-content:center;padding:7px 9px;border-radius:7px;background:#f1f5f0;color:var(--green);font-size:10px;font-weight:700;white-space:nowrap}
+.status.new{background:#fff1f7;color:var(--pink)}
+.order-arrow{color:var(--pink);font-size:18px;transition:transform .2s}
+.order[open] .order-arrow{transform:rotate(90deg)}
+.order-body{padding:22px;border-top:1px solid var(--line)}
+.order-details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:23px}
+.detail-label{margin-bottom:7px;color:#aaa;font-size:10px}
+.detail-value{color:#555;font-size:12px;font-weight:600;line-height:1.6;overflow-wrap:anywhere}
+.items-table{width:100%;border-collapse:collapse;font-size:11px}
+.items-table th{text-align:left;color:#aaa;font-weight:600;padding:12px;border-bottom:1px solid var(--line)}
+.items-table td{padding:13px 12px;border-bottom:1px solid #f1eef0;color:#555}
+.items-table td:last-child,.items-table th:last-child{text-align:right}
+.card-note{margin-top:20px;padding:17px;background:var(--soft);border-radius:10px}
+.card-note strong{display:block;margin-bottom:9px;color:var(--green);font-size:11px}
+.card-note p{margin:0;color:#666;font-size:12px;line-height:1.7;white-space:pre-wrap}
+.empty{padding:55px 20px;text-align:center;color:#aaa;font-size:12px;background:#fff;border:1px solid var(--line);border-radius:13px}
+.footer{display:flex;justify-content:space-between;margin-top:45px;color:#aaa;font-size:10px}
+@media(max-width:1100px){
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.filters{grid-template-columns:repeat(2,minmax(0,1fr))}
+.order-head{grid-template-columns:80px 90px minmax(0,1fr) 95px 20px}
+.order-head .order-date{display:none}
 }
-.top h2{margin:0;color:var(--green);font-size:38px}
-.top p{margin:8px 0 0;color:var(--muted);font-size:13px}
-
-.add-button{
-    padding:13px 19px;border:0;border-radius:11px;
-    background:var(--green);color:#fff;font-weight:600
+@media(max-width:750px){
+.page{padding:12px}
+.header{padding:18px}
+.logo{font-size:24px}
+.header-label{display:none}
+.heading{margin:35px 0 25px}
+.heading h2{font-size:30px}
+.analytics{grid-template-columns:1fr}
+.panel{padding:18px}
+.order-head{grid-template-columns:70px minmax(0,1fr) 75px 20px;padding:16px;gap:8px}
+.order-head .status{display:none}
+.order-details{grid-template-columns:1fr 1fr}
+.order-body{padding:15px}
+.items-table{font-size:10px}
 }
-.add-button:hover{background:var(--pink)}
-
-/* ФОРМА */
-
-.form-panel{display:none;margin-bottom:30px;padding:28px;border-radius:18px}
-.form-panel.open{display:block}
-.form-panel h3{margin:0 0 24px}
-
-.form-grid,.product-fields,.builder-grid{
-    display:grid;grid-template-columns:repeat(2,1fr);gap:18px
-}
-.product-fields{
-    grid-column:1/-1;padding:20px;background:#faf9fa;border-radius:13px
-}
-
-.field{display:flex;flex-direction:column;gap:7px}
-.full{grid-column:1/-1}
-
-label{
-    color:#777;font-size:11px;font-weight:600;
-    letter-spacing:1px;text-transform:uppercase
-}
-input,select,textarea{
-    width:100%;padding:12px 13px;border:1px solid #d8d4d7;
-    border-radius:9px;background:#fff;font:inherit;font-size:14px
-}
-textarea{min-height:80px;resize:vertical}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
-
-.form-actions{margin-top:22px;display:flex;gap:10px}
-.save,.cancel,.generate,.copy{
-    padding:11px 17px;border-radius:9px;font-weight:600
-}
-.save,.copy{border:0;background:var(--pink);color:#fff}
-.cancel{border:1px solid var(--line);background:#fff;color:#666}
-.generate{border:1px solid var(--pink);background:#fff;color:var(--pink)}
-
-/* СТАТИСТИКА */
-
-.stats{
-    margin-bottom:32px;display:grid;
-    grid-template-columns:repeat(4,1fr);gap:14px
-}
-.stat{padding:18px;border-radius:14px;text-align:left}
-.stat-number{color:var(--green);font-size:27px;font-weight:700}
-.stat-label{margin-top:4px;color:var(--muted);font-size:11px}
-
-.stats-button{font-family:inherit;transition:.18s}
-.stats-button:hover{border-color:var(--pink);transform:translateY(-2px)}
-.stats-button .stat-number{color:var(--pink)}
-
-/* ЗАКАЗЫ */
-
-.orders{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.order-card{position:relative;padding:21px;border-radius:16px}
-
-.order-card.active{
-    border-color:rgba(212,0,126,.28);
-    box-shadow:0 5px 22px rgba(212,0,126,.05)
-}
-.order-card.active::before{
-    content:"";position:absolute;top:-1px;left:22px;
-    width:38px;height:3px;background:var(--pink);border-radius:0 0 5px 5px
-}
-
-.order-head{display:flex;justify-content:space-between}
-.shop{color:var(--pink);font-size:10px;font-weight:700;letter-spacing:1px}
-.price{color:var(--green);font-weight:700}
-
-.collection-name{
-    margin-top:16px;color:#999;font-size:10px;
-    font-weight:600;letter-spacing:1px;text-transform:uppercase
-}
-.order-card h3{margin:5px 0;font-size:18px}
-.recipient{color:#777;font-size:13px}
-
-.note{
-    margin-top:14px;padding:11px 12px;background:var(--soft);
-    border-radius:9px;color:#666;font-size:12px;line-height:1.5
-}
-.meta{
-    margin-top:17px;display:flex;justify-content:space-between;
-    gap:10px;color:#999;font-size:11px
-}
-
-.order-actions{
-    margin-top:17px;padding-top:14px;border-top:1px solid #eee;
-    display:flex;align-items:center;gap:8px
-}
-.order-actions select{width:auto;margin-left:auto;padding:7px 8px;font-size:11px}
-
-.build{
-    padding:8px 11px;border:1px solid var(--pink);
-    border-radius:8px;background:#fff;color:var(--pink);
-    font-size:11px;font-weight:600
-}
-.build:hover{background:var(--pink);color:#fff}
-
-.delete{border:0;background:none;color:#aaa;font-size:11px}
-.delete:hover{color:var(--pink)}
-
-/* АРХИВ */
-
-.archive{margin-top:75px}
-.archive-heading{
-    margin-bottom:28px;display:flex;align-items:center;gap:16px
-}
-.archive-heading h3{
-    margin:0;color:#999;font-size:11px;font-weight:700;
-    letter-spacing:2px;text-transform:uppercase
-}
-.archive-line{height:1px;flex:1;background:var(--line)}
-.archive-count{color:#aaa;font-size:11px}
-.archive .order-card{opacity:.68}
-.archive .order-card:hover{opacity:1}
-.empty{grid-column:1/-1;padding:60px;text-align:center;color:#aaa}
-
-/* BUILDER */
-
-.modal{
-    display:none;position:fixed;inset:0;z-index:1000;
-    background:rgba(20,20,20,.42);padding:30px;
-    align-items:center;justify-content:center
-}
-.modal.open{display:flex}
-
-.modal-box{
-    width:min(900px,100%);max-height:90vh;overflow:auto;
-    padding:30px;border-radius:20px;
-    box-shadow:0 25px 80px rgba(0,0,0,.18)
-}
-.modal-head{
-    display:flex;justify-content:space-between;
-    align-items:flex-start;margin-bottom:25px
-}
-.modal-head h2{margin:0;color:var(--green);font-size:25px}
-.modal-sub{margin-top:6px;color:#888;font-size:12px}
-.close{border:0;background:none;color:#aaa;font-size:25px}
-
-.builder-note{
-    grid-column:1/-1;padding:15px;background:var(--soft);
-    border-radius:11px;color:#666;font-size:13px;line-height:1.6
-}
-.builder-note strong{
-    display:block;margin-bottom:5px;color:#999;
-    font-size:10px;letter-spacing:1px;text-transform:uppercase
-}
-
-.bb-result{grid-column:1/-1}
-.bb-result textarea{
-    min-height:300px;font-family:monospace;font-size:12px;line-height:1.5
-}
-.builder-actions{
-    grid-column:1/-1;display:flex;justify-content:flex-end;gap:10px
-}
-
-/* TOAST */
-
-.toast{
-    position:fixed;left:50%;bottom:30px;z-index:2000;
-    padding:11px 17px;border-radius:30px;background:#171717;color:#fff;
-    font-size:12px;font-weight:600;opacity:0;pointer-events:none;
-    transform:translate(-50%,15px);transition:.2s
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
-@media(max-width:900px){
-    .orders{grid-template-columns:repeat(2,1fr)}
-    .stats{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:650px){
-    .page{padding:12px}
-    .form-grid,.product-fields,.builder-grid,.orders{grid-template-columns:1fr}
-    .modal{padding:12px}
+@media(max-width:450px){
+.stats{gap:9px}
+.stat{padding:16px}
+.stat-value{font-size:24px}
+.filters{grid-template-columns:1fr}
+.order-details{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
-
 <div class="page">
-
 <header class="header">
-    <h1 class="logo">Ananel Manager</h1>
-    <a class="back" href="../">← Workspace</a>
+    <div class="brand">
+        <h1 class="logo">Ananel Coval</h1>
+        <span class="header-label">Manager / Orders</span>
+    </div>
+    <a class="back" href="./">← Manager</a>
 </header>
 
-<div class="top">
-    <div>
-        <h2>Заказы</h2>
-        <p>SÓLE · EXTRA</p>
+<main>
+    <div class="heading">
+        <div class="eyebrow">SÓLE / EXTRA</div>
+        <h2>Заказы и статистика</h2>
+        <p>Продажи, история заказов и аналитика магазинов.</p>
     </div>
-    <button class="add-button" onclick="toggleForm()">+ Новый заказ</button>
-</div>
 
-<!-- НОВЫЙ ЗАКАЗ -->
+    <!-- STORES -->
+    <div class="store-tabs">
+        <button class="store-tab active" data-store="all" type="button">Все магазины</button>
+        <button class="store-tab" data-store="sole" type="button">SÓLE</button>
+        <button class="store-tab" data-store="extra" type="button">EXTRA</button>
+    </div>
 
-<div id="form-panel" class="form-panel">
-<h3>Новый заказ</h3>
+    <!-- STATISTICS -->
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-label">ОБЩАЯ ВЫРУЧКА</div>
+            <div class="stat-value" id="stat-revenue">0 G</div>
+            <div class="stat-sub">Все оплаченные заказы</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">ВСЕГО ЗАКАЗОВ</div>
+            <div class="stat-value" id="stat-orders">0</div>
+            <div class="stat-sub">За всё время</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">ОЖИДАЮТ ДОСТАВКИ</div>
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-sub">Новые заказы</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">ПРОДАНО ТОВАРОВ</div>
+            <div class="stat-value" id="stat-items">0</div>
+            <div class="stat-sub">С учётом количества</div>
+        </div>
+    </section>
 
-<div class="form-grid">
+    <!-- ANALYTICS -->
+    <section class="analytics">
+        <div class="panel">
+            <div class="panel-head">
+                <h3 class="panel-title">Продажи по месяцам</h3>
+                <span class="panel-sub">Галеоны</span>
+            </div>
+            <div id="monthly-chart" class="chart"></div>
+        </div>
 
-    <div class="field">
-        <label>Магазин</label>
-        <select id="shop" onchange="loadCollections()">
-            <option value="">Выберите магазин</option>
+        <div class="panel">
+            <div class="panel-head">
+                <h3 class="panel-title">Популярные коллекции</h3>
+                <span class="panel-sub">По количеству товаров</span>
+            </div>
+            <div id="top-collections" class="rank-list"></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-head">
+                <h3 class="panel-title">Популярные модели</h3>
+                <span class="panel-sub">По количеству продаж</span>
+            </div>
+            <div id="top-models" class="rank-list"></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-head">
+                <h3 class="panel-title">Покупатели</h3>
+                <span class="panel-sub">По сумме покупок</span>
+            </div>
+            <div id="top-buyers" class="rank-list"></div>
+        </div>
+    </section>
+
+    <!-- ORDER HISTORY -->
+    <div class="section-head">
+        <h3>История заказов</h3>
+        <span class="section-count" id="orders-count">0 заказов</span>
+    </div>
+
+    <div class="filters">
+        <input class="filter-input" id="search" placeholder="Номер, имя, модель...">
+        <select class="filter-select" id="filter-status">
+            <option value="all">Все статусы</option>
+            <option value="new">Новые</option>
+            <option value="delivered">Доставленные</option>
+        </select>
+        <select class="filter-select" id="filter-collection">
+            <option value="all">Все коллекции</option>
+        </select>
+        <select class="filter-select" id="sort-orders">
+            <option value="date-desc">Сначала новые</option>
+            <option value="date-asc">Сначала старые</option>
+            <option value="total-desc">По сумме ↓</option>
+            <option value="total-asc">По сумме ↑</option>
+            <option value="id-desc">По номеру ↓</option>
+            <option value="id-asc">По номеру ↑</option>
         </select>
     </div>
 
-    <div class="field">
-        <label>Сумма</label>
-        <input
-            id="price"
-            type="number"
-            min="0"
-            placeholder="Подставится автоматически">
+    <div id="orders-list" class="orders-list">
+        <div class="empty">Загрузка заказов...</div>
     </div>
+</main>
 
-    <div class="field">
-        <label>Заказчик</label>
-        <input
-            id="customer"
-            type="text"
-            placeholder="Кто оформил заказ">
-    </div>
-
-    <div class="field">
-        <label>Получатель</label>
-        <input
-            id="recipient"
-            type="text"
-            placeholder="Кому доставить заказ">
-    </div>
-
-    <div class="product-fields">
-
-        <div class="field">
-            <label>Коллекция</label>
-            <select id="collection" onchange="loadModels()">
-                <option value="">Выберите коллекцию</option>
-            </select>
-        </div>
-
-        <div class="field">
-            <label>Модель</label>
-            <select id="model" onchange="fillPrice()">
-                <option value="">Выберите модель</option>
-            </select>
-        </div>
-
-    </div>
-
-    <div class="field">
-        <label>Куда доставить</label>
-        <select id="delivery">
-            <option value="Хогсмид">Хогсмид</option>
-            <option value="ГФ">ГФ</option>
-        </select>
-    </div>
-
-    <div class="field">
-        <label>Дата заказа</label>
-        <input id="date" type="date">
-    </div>
-
-    <div class="field full">
-        <label>Записка получателю</label>
-        <textarea
-            id="gift-note"
-            placeholder="Текст записки. Если записки нет — оставить пустым"></textarea>
-    </div>
-
-    <div class="field full">
-        <label>Мои пометки</label>
-        <textarea
-            id="private-notes"
-            placeholder="Внутренние заметки: что учесть, что проверить, особенности заказа"></textarea>
-    </div>
-
+<footer class="footer">
+    <span>ANANEL COVAL</span>
+    <span>MANAGER / 2026</span>
+</footer>
 </div>
 
-<div class="form-actions">
-
-    <button class="save" onclick="saveOrder()">
-        Сохранить заказ
-    </button>
-
-    <button class="cancel" onclick="toggleForm(false)">
-        Отмена
-    </button>
-
-</div>
-</div>
-
-<!-- СТАТИСТИКА -->
-
-<div class="stats">
-
-    <div class="stat">
-        <div id="new-count" class="stat-number">0</div>
-        <div class="stat-label">Новые</div>
-    </div>
-
-    <div class="stat">
-        <div id="delivered-count" class="stat-number">0</div>
-        <div class="stat-label">Доставлено</div>
-    </div>
-
-    <div class="stat">
-        <div id="cancelled-count" class="stat-number">0</div>
-        <div class="stat-label">Отменено</div>
-    </div>
-
-    <button class="stat stats-button" onclick="openStatistics()">
-        <div class="stat-number">↗</div>
-        <div class="stat-label">Статистика продаж</div>
-    </button>
-
-</div>
-
-<div id="orders" class="orders"></div>
-
-<section id="archive-section" class="archive">
-    <div class="archive-heading">
-        <h3>Архив</h3>
-        <div class="archive-line"></div>
-        <span id="archive-count" class="archive-count"></span>
-    </div>
-    <div id="archive-orders" class="orders"></div>
-</section>
-
-</div>
-
-<!-- BBCODE BUILDER -->
-
-<div id="builder" class="modal">
-<div class="modal-box">
-
-    <div class="modal-head">
-        <div>
-            <h2>Собрать заказ</h2>
-            <div id="builder-sub" class="modal-sub"></div>
-        </div>
-        <button class="close" onclick="closeBuilder()">×</button>
-    </div>
-
-    <div class="builder-grid">
-
-        <div id="builder-note" class="builder-note"></div>
-
-        <div id="sender-field" class="field">
-            <label>ID заказчика</label>
-            <input id="sender-id" placeholder="2181">
-        </div>
-
-        <div class="field">
-            <label>ID получателя</label>
-            <input id="recipient-id" placeholder="3511">
-        </div>
-
-        <div class="field full">
-            <label>Карточка</label>
-            <select id="has-card">
-                <option value="yes">С карточкой</option>
-                <option value="no">Без карточки</option>
-            </select>
-        </div>
-
-        <div class="builder-actions">
-            <button class="generate" onclick="generateBBCode()">Сформировать</button>
-            <button class="copy" onclick="copyBBCode()">Скопировать BBCode</button>
-        </div>
-
-        <div class="field bb-result">
-            <label>Готовый BBCode</label>
-            <textarea id="bbcode"></textarea>
-        </div>
-
-    </div>
-
-</div>
-</div>
-
-<div id="toast" class="toast">BBCode скопирован</div>
-
+<script src="../data/people.js"></script>
 <script src="../data/products.js"></script>
-
+<script src="../data/orders.js"></script>
 <script>
+
+/* =========================
+   CONFIG
+========================= */
 const $=id=>document.getElementById(id);
-const statuses=["Новый","Доставлен","Отменён"];
+const ORDERS=typeof ORDERS_DB!=="undefined"&&Array.isArray(ORDERS_DB.orders)?ORDERS_DB.orders:[];
+const PERSONS=typeof PEOPLE!=="undefined"?PEOPLE:[];
+const STORES_DATA=typeof STORES!=="undefined"?STORES:{};
+let activeStore="all";
+const money=n=>`${Number(n||0).toLocaleString("ru-RU",{maximumFractionDigits:2})} G`;
+const number=n=>Number(n||0).toLocaleString("ru-RU");
+const normalize=s=>String(s??"").toLocaleLowerCase("ru-RU").trim();
+const escapeHTML=s=>String(s??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+const dateText=s=>{
+    if(!s)return "—";
+    const [y,m,d]=s.split("-");
+    return `${d}.${m}.${y}`;
+};
 
-const HOST="https://ananelcoval.github.io/ananel-hosting";
-const HEADER="https://s10.iimage.su/s/07/uMWS4r2xp376YQgg6CQyNc6ytSzzruqy0BIyMWOSh.jpg";
-const ORDER_URL="https://hogsmeade.dhog.org/viewtopic.php?t=743&";
-
-let orders=JSON.parse(localStorage.getItem("ananelOrders"))||[];
-let builderOrder=null;
-
-/* СТАРЫЕ СТАТУСЫ */
-
-orders.forEach(o=>{
-    if(!statuses.includes(o.status))o.status="Новый";
-});
-saveOrders();
-
-/* КАТАЛОГ */
-
-function initCatalog(){
-    $("shop").innerHTML=Object.entries(STORES)
-        .map(([key,s])=>`<option value="${key}">${s.name}</option>`).join("");
-    loadCollections();
+/* =========================
+   LOOKUPS
+========================= */
+function personName(id){
+    if(!id)return "—";
+    return PERSONS.find(p=>p.id===id)?.name||id;
 }
-
-function loadCollections(){
-    const list=STORES[$("shop").value]?.collections||[];
-
-    $("collection").innerHTML=list.length
-        ?list.map(c=>`
-            <option value="${c.id}">
-                ${c.name}${c.available===false?" (архив)":""}
-            </option>`).join("")
-        :'<option value="">Нет коллекций</option>';
-
-    loadModels();
+function senderName(order){
+    if(order.senderType==="store")return order.store==="sole"?"SÓLE":"EXTRA";
+    if(order.senderType==="self")return "Для себя";
+    return personName(order.sender);
 }
-
-function selectedCollection(){
-    return STORES[$("shop").value]?.collections
-        .find(c=>c.id===$("collection").value);
+function storeName(key){
+    return key==="sole"?"SÓLE":key==="extra"?"EXTRA":key;
 }
-
-function selectedModel(){
-    return selectedCollection()?.models?.[Number($("model").value)];
+function collectionsOf(storeKey){
+    return STORES_DATA[storeKey]?.collections||[];
 }
-
-function loadModels(){
-    const models=selectedCollection()?.models||[];
-
-    $("model").innerHTML=models.length
-        ?models.map((m,i)=>`<option value="${i}">${m.name}</option>`).join("")
-        :'<option value="">Нет моделей</option>';
-
-    fillPrice();
+function findCollection(order,item){
+    return collectionsOf(order.store).find(c=>c.id===item.collection);
 }
-
-function fillPrice(){
-    $("price").value=selectedModel()?.price??"";
-}
-
-/* ФОРМА */
-
-function today(){
-    return new Date().toISOString().split("T")[0];
-}
-
-$("date").value=today();
-initCatalog();
-
-function toggleForm(force){
-    const form=$("form-panel");
-
-    if(force===false){
-        form.classList.remove("open");
-        return;
+function collectionName(order,item){
+    const c=findCollection(order,item);
+    const base=c?.name||item.collection||"Без коллекции";
+    if(item.section){
+        const section=[...(c?.sections||[]),...(c?.rounds||[])]
+            .find(s=>s.id===item.section);
+        return section?`${base} / ${section.name}`:base;
     }
-
-    form.classList.toggle("open");
+    return base;
 }
-
-function clearForm(){
-    ["price","customer","recipient","gift-note","private-notes"]
-        .forEach(id=>$(id).value="");
-
-    $("date").value=today();
-    $("shop").selectedIndex=0;
-    loadCollections();
+function modelName(order,item){
+    const c=findCollection(order,item);
+    const sections=[...(c?.sections||[]),...(c?.rounds||[])];
+    const section=sections.find(s=>s.id===item.section);
+    const models=section?.models||c?.models||[];
+    const model=models.find(m=>(m.file||m.id)===item.model);
+    return model?.name||item.model||"Неизвестная модель";
 }
-
-/* СОХРАНЕНИЕ ЗАКАЗА */
-
-function saveOrder(){
-    const storeKey=$("shop").value;
-    const store=STORES[storeKey];
-    const collection=selectedCollection();
-    const model=selectedModel();
-
-    if(!$("customer").value.trim()){
-        alert("Укажи заказчика.");
-        return;
-    }
-
-    if(!$("recipient").value.trim()){
-        alert("Укажи получателя.");
-        return;
-    }
-
-    if(!collection||!model){
-        alert("Выбери коллекцию и модель.");
-        return;
-    }
-
-    orders.unshift({
-        id:Date.now(),
-        storeKey,
-        shop:store.name,
-
-        customer:$("customer").value.trim(),
-        recipient:$("recipient").value.trim(),
-
-        price:Number($("price").value)||0,
-        delivery:$("delivery").value,
-        date:$("date").value,
-
-        collectionId:collection.id,
-        collection:collection.name,
-        collectionFolder:collection.folder,
-
-        modelFile:model.file,
-        model:model.name,
-
-        giftNote:$("gift-note").value.trim(),
-        privateNotes:$("private-notes").value.trim(),
-
-        status:"Новый"
-    });
-
-    saveOrders();
-    clearForm();
-    toggleForm(false);
-    renderOrders();
-}
-
-/* STORAGE */
-
-function saveOrders(){
-    localStorage.setItem(
-        "ananelOrders",
-        JSON.stringify(orders)
-    );
-}
-
-function changeStatus(id,status){
-    const order=orders.find(o=>o.id===id);
-    if(!order)return;
-
-    order.status=status;
-    saveOrders();
-    renderOrders();
-}
-
-function deleteOrder(id){
-    if(!confirm("Удалить этот заказ?"))return;
-
-    orders=orders.filter(o=>o.id!==id);
-    saveOrders();
-    renderOrders();
-}
-
-/* СТАТИСТИКА — ПОКА ЗАГЛУШКА */
-
-function openStatistics(){
-    alert("Статистику продаж сделаем следующим разделом.");
+function itemName(order,item){
+    const name=modelName(order,item);
+    return item.variant?`${name} · ${item.variant}`:name;
 }
 
 /* =========================
-   BBCODE BUILDER
+   DATA
 ========================= */
-
-function isSelfOrder(order){
-    return order.customer.trim().toLowerCase()===
-           order.recipient.trim().toLowerCase();
+function storeOrders(){
+    return activeStore==="all"?ORDERS:ORDERS.filter(o=>o.store===activeStore);
 }
-
-function buildOrder(id){
-    const order=orders.find(o=>o.id===id);
-    if(!order)return;
-
-    if(order.storeKey!=="sole"){
-        alert("Для EXTRA шаблон доставки пока не настроен.");
-        return;
-    }
-
-    builderOrder=order;
-
-    const self=isSelfOrder(order);
-
-    $("builder-sub").textContent=
-        `${order.collection} · ${order.model}`;
-
-    $("builder-note").innerHTML=`
-        <strong>Записка для карточки</strong>
-        ${order.giftNote||"Без записки"}
-    `;
-
-    /* Если заказ себе — ID отправителя не нужен */
-    $("sender-field").style.display=self?"none":"flex";
-
-    $("sender-id").value="";
-    $("recipient-id").value="";
-    $("has-card").value=order.giftNote?"yes":"no";
-    $("bbcode").value="";
-
-    $("builder").classList.add("open");
+function sumItems(order){
+    return (order.items||[]).reduce((sum,item)=>sum+Number(item.quantity||0),0);
 }
-
-function closeBuilder(){
-    $("builder").classList.remove("open");
-    builderOrder=null;
+function sumRevenue(orders){
+    return orders.reduce((sum,order)=>sum+Number(order.total||0),0);
 }
-
-function getBuilderData(){
-    if(!builderOrder)return null;
-
-    const store=STORES[builderOrder.storeKey];
-
-    const collection=store?.collections.find(
-        c=>c.id===builderOrder.collectionId
-    );
-
-    const model=collection?.models.find(
-        m=>m.file===builderOrder.modelFile
-    );
-
-    if(!collection||!model)return null;
-
-    return {
-        order:builderOrder,
-        collection,
-        model
-    };
-}
-
-/* СОЗДАНИЕ BBCODE */
-
-function generateBBCode(){
-    const data=getBuilderData();
-
-    if(!data){
-        alert("Не удалось найти данные модели.");
-        return;
-    }
-
-    const {order,collection,model}=data;
-
-    const self=isSelfOrder(order);
-    const senderId=$("sender-id").value.trim();
-    const recipientId=$("recipient-id").value.trim();
-    const hasCard=$("has-card").value==="yes";
-
-    if(!recipientId){
-        alert("Укажи ID получателя.");
-        return;
-    }
-
-    if(!self&&!senderId){
-        alert("Укажи ID заказчика.");
-        return;
-    }
-
-    const modelUrl=
-        `${HOST}/sole/products/${collection.folder}/models/${model.file}`;
-
-    const bagFile=
-        collection.delivery?.bag || "base-bag.png";
-
-    const bagUrl=
-        `${HOST}/sole/products/${collection.folder}/decor/${bagFile}`;
-
-    /* КТО КОМУ */
-
-    const people=self
-        ?`[b][left]Для:[/b] [mention=${recipientId}]${order.recipient}[/mention][/left]`
-        :`[b][left]От: [/b][mention=${senderId}]${order.customer}[/mention]
-[b]Для:[/b] [mention=${recipientId}]${order.recipient}[/mention][/left]`;
-
-    /*
-       С КАРТОЧКОЙ:
-       оставляем заметное место, куда на форуме
-       вставляется готовый attachment.
-    */
-
-    const productRow=hasCard
-        ?`[tr][td]
-[quote][size=100]${model.description}
-[/size]
-[/quote]
-[td][width=300]<<< ВСТАВИТЬ КАРТОЧКУ >>>[/width]
-[/tr]`
-        :`[tr][td colspan=2]
-[quote][size=100]${model.description}
-[/size]
-[/quote]
-[/tr]`;
-
-    const code=`[center][width=900][table][tr][td colspan=3][center][img]${HEADER}[/img][/center][/tr]
-[tr][td]${people}
-[td]
-[center][size=110]Коллекция[/size]
-[size=150][b]${order.collection}[/b][/size][/center]
-[td v=middle h=right]Ателье открыто
-для [b][url=${ORDER_URL}]новых заказов[/url]![/b][tr]
-
-[tr][td colspan=3]
-[center][width=400][img]${bagUrl}[/img][/width]
-
-[more=Открыть пакет]
-
-[center][width=800][table]
-[tr][td colspan=2][size=210][b]${model.name}[/b][/size][/tr]
-[tr][td colspan=2]
-[size=120][color=#625c54]• ${model.type} •[/color][/size][/tr]
-${productRow}
-[tr][td colspan=2]
-[center][width=400][img]${modelUrl}[/img][/width]
-[/center][/td][/tr]
-[/table][/center]
-
-[/more]
-[/center][/tr]
-[/table][/width][/center]`;
-
-    $("bbcode").value=code;
-}
-
-/* КОПИРОВАНИЕ */
-
-function copyBBCode(){
-    if(!$("bbcode").value){
-        generateBBCode();
-    }
-
-    const code=$("bbcode").value;
-    if(!code)return;
-
-    navigator.clipboard.writeText(code)
-        .then(showToast)
-        .catch(()=>{
-            alert("Не удалось скопировать BBCode.");
+function groupSum(orders,keyFn,valueFn){
+    const map=new Map();
+    orders.forEach(order=>{
+        (order.items||[]).forEach(item=>{
+            const key=keyFn(order,item);
+            map.set(key,(map.get(key)||0)+valueFn(order,item));
         });
+    });
+    return [...map].sort((a,b)=>b[1]-a[1]);
 }
 
-function showToast(){
-    const toast=$("toast");
-
-    toast.classList.add("show");
-
-    clearTimeout(window.toastTimer);
-
-    window.toastTimer=setTimeout(()=>{
-        toast.classList.remove("show");
-    },1500);
+/* =========================
+   STATISTICS
+========================= */
+function renderStats(){
+    const orders=storeOrders();
+    $("stat-revenue").textContent=money(sumRevenue(orders));
+    $("stat-orders").textContent=number(orders.length);
+    $("stat-pending").textContent=number(orders.filter(o=>o.status==="new").length);
+    $("stat-items").textContent=number(orders.reduce((sum,o)=>sum+sumItems(o),0));
 }
 
-/* КЛИК ПО ФОНУ ЗАКРЫВАЕТ BUILDER */
-
-$("builder").addEventListener("click",event=>{
-    if(event.target===$("builder")){
-        closeBuilder();
+/* =========================
+   MONTHLY CHART
+========================= */
+function renderMonthlyChart(){
+    const chart=$("monthly-chart");
+    chart.replaceChildren();
+    const orders=storeOrders();
+    if(!orders.length){
+        chart.innerHTML='<div class="chart-empty">Пока нет данных</div>';
+        return;
     }
-});
-
-/* =========================
-   КАРТОЧКА ЗАКАЗА
-========================= */
-
-function orderCard(order,active){
-    return `
-        <article class="order-card ${active?"active":""}">
-
-            <div class="order-head">
-                <span class="shop">${order.shop}</span>
-                <span class="price">${order.price||0} G</span>
-            </div>
-
-            <div class="collection-name">
-                ${order.collection||""}
-            </div>
-
-            <h3>${order.model||"Без названия"}</h3>
-
-            <div class="recipient">
-                ${order.recipient
-                    ?"Для: "+order.recipient
-                    :"Для себя"}
-            </div>
-
-            ${order.giftNote?`
-                <div class="note">
-                    «${order.giftNote}»
-                </div>
-            `:""}
-
-            ${order.privateNotes?`
-                <div class="note">
-                    <strong>Пометка:</strong>
-                    ${order.privateNotes}
-                </div>
-            `:""}
-
-            <div class="meta">
-                <span>${order.customer}</span>
-                <span>${order.delivery}</span>
-                <span>${formatDate(order.date)}</span>
-            </div>
-
-            <div class="order-actions">
-
-                ${active?`
-                    <button
-                        class="build"
-                        onclick="buildOrder(${order.id})">
-                        Собрать заказ
-                    </button>
-                `:""}
-
-                <select onchange="changeStatus(${order.id},this.value)">
-                    ${statuses.map(status=>`
-                        <option
-                            ${status===order.status?"selected":""}>
-                            ${status}
-                        </option>
-                    `).join("")}
-                </select>
-
-                <button
-                    class="delete"
-                    onclick="deleteOrder(${order.id})">
-                    Удалить
-                </button>
-
-            </div>
-
-        </article>
-    `;
+    const totals=new Map();
+    orders.forEach(order=>{
+        const month=String(order.date||"").slice(0,7);
+        if(!/^\d{4}-\d{2}$/.test(month))return;
+        totals.set(month,(totals.get(month)||0)+Number(order.total||0));
+    });
+    const months=[...totals.keys()].sort();
+    if(!months.length){
+        chart.innerHTML='<div class="chart-empty">Нет дат для диаграммы</div>';
+        return;
+    }
+    const first=new Date(`${months[0]}-01T12:00:00`);
+    const last=new Date(`${months[months.length-1]}-01T12:00:00`);
+    const timeline=[];
+    for(let d=new Date(first);d<=last;d.setMonth(d.getMonth()+1)){
+        const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+        timeline.push({key,value:totals.get(key)||0});
+    }
+    const data=timeline.slice(-12);
+    const max=Math.max(1,...data.map(d=>d.value));
+    data.forEach(d=>{
+        const col=document.createElement("div");
+        col.className="chart-col";
+        const bar=document.createElement("div");
+        bar.className="chart-bar";
+        bar.style.height=`${d.value?Math.max(2,d.value/max*100):0}%`;
+        bar.title=`${d.key}: ${money(d.value)}`;
+        const label=document.createElement("span");
+        label.className="chart-label";
+        const [year,month]=d.key.split("-");
+        label.textContent=`${month}.${year.slice(2)}`;
+        col.append(bar,label);
+        chart.appendChild(col);
+    });
 }
 
 /* =========================
-   ВЫВОД
+   RANKINGS
 ========================= */
+function renderRanking(id,entries,formatValue){
+    const root=$(id);
+    root.replaceChildren();
+    if(!entries.length){
+        root.innerHTML='<div class="chart-empty">Пока нет данных</div>';
+        return;
+    }
+    const max=Math.max(1,...entries.map(e=>e[1]));
+    entries.slice(0,5).forEach(([name,value],i)=>{
+        const row=document.createElement("div");
+        row.className="rank-item";
+        row.innerHTML=`
+            <div class="rank-number">${String(i+1).padStart(2,"0")}</div>
+            <div>
+                <div class="rank-name" title="${escapeHTML(name)}">${escapeHTML(name)}</div>
+                <div class="rank-track"><div class="rank-fill" style="width:${value/max*100}%"></div></div>
+            </div>
+            <div class="rank-value">${escapeHTML(formatValue(value))}</div>`;
+        root.appendChild(row);
+    });
+}
+function renderRankings(){
+    const orders=storeOrders();
+    const collections=groupSum(
+        orders,
+        (o,i)=>collectionName(o,i),
+        (o,i)=>Number(i.quantity||0)
+    );
+    const models=groupSum(
+        orders,
+        (o,i)=>itemName(o,i),
+        (o,i)=>Number(i.quantity||0)
+    );
+    const buyers=new Map();
+    orders.forEach(o=>{
+        const buyer=o.senderType==="person"?personName(o.sender):
+            o.senderType==="self"?personName(o.recipient):storeName(o.store);
+        buyers.set(buyer,(buyers.get(buyer)||0)+Number(o.total||0));
+    });
+    renderRanking("top-collections",collections,v=>`${number(v)} шт.`);
+    renderRanking("top-models",models,v=>`${number(v)} шт.`);
+    renderRanking("top-buyers",[...buyers].sort((a,b)=>b[1]-a[1]),money);
+}
 
+/* =========================
+   FILTERS
+========================= */
+function fillCollectionFilter(){
+    const select=$("filter-collection");
+    const current=select.value;
+    select.innerHTML='<option value="all">Все коллекции</option>';
+    const names=new Set();
+    storeOrders().forEach(order=>(order.items||[]).forEach(item=>
+        names.add(collectionName(order,item))
+    ));
+    [...names].sort((a,b)=>a.localeCompare(b,"ru")).forEach(name=>
+        select.add(new Option(name,name))
+    );
+    select.value=[...select.options].some(o=>o.value===current)?current:"all";
+}
+function filteredOrders(){
+    const q=normalize($("search").value);
+    const status=$("filter-status").value;
+    const collection=$("filter-collection").value;
+    const sort=$("sort-orders").value;
+    const result=storeOrders().filter(order=>{
+        if(status!=="all"&&order.status!==status)return false;
+        if(collection!=="all"&&!(order.items||[]).some(i=>collectionName(order,i)===collection))
+            return false;
+        const searchable=[
+            order.id,storeName(order.store),senderName(order),
+            personName(order.recipient),order.date,
+            ...(order.items||[]).flatMap(i=>[
+                collectionName(order,i),itemName(order,i)
+            ])
+        ].join(" ");
+        return !q||normalize(searchable).includes(q);
+    });
+    result.sort((a,b)=>{
+        if(sort==="date-desc")return b.date.localeCompare(a.date)||b.id.localeCompare(a.id);
+        if(sort==="date-asc")return a.date.localeCompare(b.date)||a.id.localeCompare(b.id);
+        if(sort==="total-desc")return Number(b.total||0)-Number(a.total||0);
+        if(sort==="total-asc")return Number(a.total||0)-Number(b.total||0);
+        if(sort==="id-desc")return b.id.localeCompare(a.id);
+        return a.id.localeCompare(b.id);
+    });
+    return result;
+}
+
+/* =========================
+   ORDER CARDS
+========================= */
+function renderOrder(order){
+    const details=document.createElement("details");
+    details.className="order";
+    const sender=senderName(order);
+    const recipient=personName(order.recipient);
+    const status=order.status==="delivered"?"Доставлен":"Новый";
+    const items=(order.items||[]).map(item=>`
+        <tr>
+            <td>
+                <strong>${escapeHTML(itemName(order,item))}</strong>
+                <div class="rank-sub">${escapeHTML(collectionName(order,item))}</div>
+            </td>
+            <td>${number(item.quantity)}</td>
+            <td>${money(item.price)}</td>
+            <td>${money(Number(item.price||0)*Number(item.quantity||0))}</td>
+        </tr>
+    `).join("");
+    details.innerHTML=`
+        <summary class="order-head">
+            <span class="order-id">${escapeHTML(order.id)}</span>
+            <span class="order-date">${escapeHTML(dateText(order.date))}</span>
+            <span class="order-person">
+                ${escapeHTML(recipient)}
+                <small>${escapeHTML(sender)}</small>
+            </span>
+            <span class="order-total">${money(order.total)}</span>
+            <span class="status ${order.status==="new"?"new":""}">${status}</span>
+            <span class="order-arrow">›</span>
+        </summary>
+        <div class="order-body">
+            <div class="order-details">
+                <div><div class="detail-label">Магазин</div><div class="detail-value">${escapeHTML(storeName(order.store))}</div></div>
+                <div><div class="detail-label">Дата заказа</div><div class="detail-value">${escapeHTML(dateText(order.date))}</div></div>
+                <div><div class="detail-label">Площадка доставки</div><div class="detail-value">${order.delivery==="hogsmeade"?"Хогсмид":"Главный форум"}</div></div>
+                <div><div class="detail-label">Отправитель</div><div class="detail-value">${escapeHTML(sender)}</div></div>
+                <div><div class="detail-label">Получатель</div><div class="detail-value">${escapeHTML(recipient)}</div></div>
+                <div><div class="detail-label">Статус</div><div class="detail-value">${status}</div></div>
+            </div>
+            <table class="items-table">
+                <thead><tr><th>Товар</th><th>Кол-во</th><th>Цена</th><th>Сумма</th></tr></thead>
+                <tbody>${items}</tbody>
+            </table>
+            ${order.cardRequired?`
+                <div class="card-note">
+                    <strong>Текст карточки</strong>
+                    <p>${escapeHTML(order.cardText||"Текст пока не указан")}</p>
+                </div>`:""}
+        </div>`;
+    return details;
+}
 function renderOrders(){
-    const newest=(a,b)=>
-        new Date(b.date||0)-new Date(a.date||0)
-        || b.id-a.id;
-
-    const active=orders
-        .filter(o=>o.status==="Новый")
-        .sort(newest);
-
-    const archive=orders
-        .filter(o=>
-            o.status==="Доставлен" ||
-            o.status==="Отменён"
-        )
-        .sort(newest);
-
-    $("orders").innerHTML=active.length
-        ?active.map(o=>orderCard(o,true)).join("")
-        :'<div class="empty">Активных заказов нет.</div>';
-
-    if(archive.length){
-        $("archive-section").style.display="block";
-        $("archive-count").textContent=archive.length;
-
-        $("archive-orders").innerHTML=
-            archive
-                .map(o=>orderCard(o,false))
-                .join("");
-    }else{
-        $("archive-section").style.display="none";
+    const orders=filteredOrders();
+    const root=$("orders-list");
+    root.replaceChildren();
+    $("orders-count").textContent=`${number(orders.length)} заказов`;
+    if(!orders.length){
+        root.innerHTML='<div class="empty">Заказы не найдены</div>';
+        return;
     }
-
-    updateStats();
+    orders.forEach(order=>root.appendChild(renderOrder(order)));
 }
 
-function formatDate(date){
-    if(!date)return"";
-
-    return new Date(date+"T00:00:00")
-        .toLocaleDateString("ru-RU");
+/* =========================
+   RENDER & EVENTS
+========================= */
+function renderAll(){
+    renderStats();
+    renderMonthlyChart();
+    renderRankings();
+    fillCollectionFilter();
+    renderOrders();
 }
-
-/* СЧЁТЧИКИ */
-
-function updateStats(){
-    $("new-count").textContent=
-        orders.filter(o=>o.status==="Новый").length;
-
-    $("delivered-count").textContent=
-        orders.filter(o=>o.status==="Доставлен").length;
-
-    $("cancelled-count").textContent=
-        orders.filter(o=>o.status==="Отменён").length;
-}
-
-/* START */
-
-renderOrders();
-
+document.querySelectorAll("[data-store]").forEach(button=>{
+    button.onclick=()=>{
+        activeStore=button.dataset.store;
+        document.querySelectorAll("[data-store]").forEach(b=>
+            b.classList.toggle("active",b===button)
+        );
+        renderAll();
+    };
+});
+["search","filter-status","filter-collection","sort-orders"].forEach(id=>{
+    $(id).addEventListener(id==="search"?"input":"change",renderOrders);
+});
+renderAll();
 </script>
 </body>
 </html>
