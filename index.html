@@ -11,6 +11,8 @@
 :root{
     --green:#005500;
     --pink:#D4007E;
+    --sole:#5b1f1d;
+    --extra:#634c58;
     --text:#171717;
     --muted:#999;
     --line:#dedade;
@@ -23,24 +25,23 @@ a{text-decoration:none;color:inherit}
 .header{padding:24px 30px;border:3px solid var(--pink);border-radius:18px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px}
 .logo{margin:0;color:var(--green);font-size:32px;font-weight:700}
 .header-label{color:var(--muted);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
-.hero{flex:1;width:100%;max-width:1100px;margin:auto;padding:65px 0}
+.hero{flex:1;width:100%;max-width:1100px;margin:auto;padding:60px 0}
 .eyebrow{margin-bottom:12px;color:var(--pink);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase}
-.hero h2{margin:0 0 43px;color:var(--green);font-size:48px;font-weight:700;letter-spacing:-2px}
-.section-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}
-.section-heading h3{margin:0;color:var(--green);font-size:18px;font-weight:700}
-.section-caption{color:#aaa;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.section-line{height:1px;background:var(--line);flex:1;margin-left:15px}
+.hero h2{margin:0 0 35px;color:var(--green);font-size:48px;font-weight:700;letter-spacing:-2px}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:0 0 17px}
+.section-heading h3{margin:0;color:var(--green);font-size:14px;font-weight:700}
+.section-note{color:#aaa;font-size:10px}
 .modules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.module{min-height:390px;padding:26px;border:1px solid var(--line);border-radius:20px;background:#fff;display:flex;flex-direction:column;justify-content:flex-start;transition:transform .2s,border-color .2s,box-shadow .2s}
+.module{min-width:0;min-height:340px;padding:26px;border:1px solid var(--line);border-radius:20px;background:#fff;display:flex;flex-direction:column;transition:transform .2s,border-color .2s,box-shadow .2s}
 .module:hover{transform:translateY(-3px);border-color:var(--pink);box-shadow:0 12px 30px #00000009}
 .module-top{display:flex;justify-content:space-between;align-items:center;min-height:40px;margin-bottom:28px}
-.module-number{color:#bbb;font-size:12px;font-weight:600}
+.module-number{color:#bbb;font-size:11px;font-weight:600;letter-spacing:.5px}
 .module-icon{width:40px;height:40px;border:1px solid #eae5e8;border-radius:12px;display:grid;place-items:center;color:var(--green)}
 .module-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .module h3{margin:0;color:var(--green);font-size:28px;font-weight:700;letter-spacing:-.8px}
-.module-sub{margin:9px 0 0;color:var(--muted);font-size:11px;line-height:1.5;min-height:17px}
-.module-arrow{margin-top:18px;color:var(--pink);font-size:21px;font-weight:600}
-.hosting-links{display:flex;flex-direction:column;gap:7px;margin-top:17px}
+.module-sub{margin:9px 0 0;color:var(--muted);font-size:11px;line-height:1.6}
+.module-arrow{margin-top:auto;padding-top:20px;color:var(--pink);font-size:21px;font-weight:600}
+.hosting-links{display:flex;flex-direction:column;gap:7px;margin-top:18px}
 .hosting-link{padding:10px 12px;border:1px solid #eee9ec;border-radius:9px;background:#faf9fa;color:#555;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:space-between;transition:.2s}
 .hosting-link:hover{border-color:var(--pink);background:#fff;color:var(--green)}
 .hosting-link span:last-child{color:var(--pink)}
@@ -48,26 +49,27 @@ a{text-decoration:none;color:inherit}
 .hosting-link.disabled:hover{border-color:#eee9ec;background:#faf9fa;color:#bbb}
 .hosting-link.disabled span:last-child{color:#bbb}
 
-/* NEW SYSTEM */
-.new-modules{margin-bottom:52px}
-.new-module{min-height:270px;position:relative;overflow:hidden}
-.new-module:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--green)}
-.new-module.extra:before{background:var(--pink)}
-.new-module.shared:before{background:linear-gradient(90deg,var(--green) 50%,var(--pink) 50%)}
+/* NEW WORKSPACE */
+.new-modules{margin-bottom:45px}
+.new-module{min-height:250px;position:relative;overflow:hidden}
+.new-module::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent)}
+.new-module:hover{border-color:var(--accent)}
+.new-module .module-icon{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 20%,white);background:color-mix(in srgb,var(--accent) 5%,white)}
+.new-module h3{color:var(--accent)}
+.new-module .module-arrow{color:var(--accent)}
+.new-module .module-number{color:var(--accent);opacity:.7}
+.new-module.shared{--accent:var(--green)}
+.new-module.sole{--accent:var(--sole)}
+.new-module.extra{--accent:var(--extra)}
 .new-module .module-top{margin-bottom:25px}
-.new-module .module-sub{min-height:auto}
-.new-module-bottom{margin-top:auto;padding-top:30px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.new-module-status{color:#aaa;font-size:10px;font-weight:600}
-.new-module-arrow{color:var(--pink);font-size:21px;font-weight:600}
-.new-module.inactive{cursor:default}
-.new-module.inactive:hover{transform:none;border-color:var(--line);box-shadow:none}
-.new-module.inactive .new-module-arrow{color:#ccc}
-.new-module.inactive .new-module-status{color:#aaa}
-.new-module.ready .new-module-status{color:var(--green)}
-.legacy-heading{margin-top:5px}
-.legacy-label{display:inline-block;margin-bottom:8px;color:#aaa;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.new-module .module-sub{max-width:230px}
+.module-bottom{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:25px}
+.module-caption{font-size:10px;color:#aaa;font-weight:600}
+.module-bottom .module-arrow{margin:0;padding:0}
+.legacy-section{padding-top:30px;border-top:1px solid var(--line)}
+.legacy-section .module{min-height:390px}
+.legacy-section .module-number{color:#bbb}
 .footer{padding:0 5px;display:flex;justify-content:space-between;color:#aaa;font-size:11px}
-
 @media(max-width:1000px){
     .modules{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -76,13 +78,13 @@ a{text-decoration:none;color:inherit}
     .header{padding:20px}
     .logo{font-size:25px}
     .header-label{display:none}
-    .hero{padding:55px 5px}
+    .hero{padding:45px 5px}
     .hero h2{font-size:38px}
     .modules{grid-template-columns:1fr}
     .module{min-height:230px}
-    .new-module{min-height:230px}
-    .new-modules{margin-bottom:40px}
-    .section-line{display:none}
+    .new-module{min-height:215px}
+    .legacy-section .module{min-height:230px}
+    .section-heading{align-items:flex-start}
     .footer{margin-top:25px}
 }
 </style>
@@ -100,177 +102,183 @@ a{text-decoration:none;color:inherit}
     <h2>Рабочее пространство.</h2>
 
     <!-- NEW SYSTEM -->
-    <div class="section-heading">
-        <h3>Магазины и инструменты</h3>
-        <div class="section-line"></div>
-        <span class="section-caption">Новая система</span>
-    </div>
+    <section class="new-modules">
+        <div class="section-heading">
+            <h3>Рабочие пространства</h3>
+            <span class="section-note">Новая система</span>
+        </div>
 
-    <div class="modules new-modules">
+        <div class="modules">
 
-        <!-- SHARED -->
-        <section class="module new-module shared inactive">
-            <div class="module-top">
-                <span class="module-number">01 / SHARED</span>
-                <div class="module-icon">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="9" cy="8" r="3"/>
-                        <path d="M3 20v-2a6 6 0 0 1 12 0v2"/>
-                        <circle cx="17" cy="9" r="2"/>
-                        <path d="M17 15a5 5 0 0 1 4 5"/>
-                    </svg>
+            <!-- SHARED -->
+            <a class="module new-module shared" href="manager/shared/">
+                <div class="module-top">
+                    <span class="module-number">01 / SHARED</span>
+                    <div class="module-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="9" cy="8" r="3"/>
+                            <path d="M3 20v-2a6 6 0 0 1 12 0v2"/>
+                            <path d="M17 5a3 3 0 0 1 0 6"/>
+                            <path d="M18 14a5 5 0 0 1 3 5v1"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <h3>Общее</h3>
-                <p class="module-sub">База людей и общие инструменты</p>
-            </div>
-            <div class="new-module-bottom">
-                <span class="new-module-status">В разработке</span>
-                <span class="new-module-arrow">↗</span>
-            </div>
-        </section>
-
-        <!-- SOLE -->
-        <section class="module new-module inactive">
-            <div class="module-top">
-                <span class="module-number">02 / STORE</span>
-                <div class="module-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M4 9h16l-1 12H5L4 9Z"/>
-                        <path d="M8 9V6a4 4 0 0 1 8 0v3"/>
-                    </svg>
+                <div>
+                    <h3>Общее</h3>
+                    <p class="module-sub">Люди, справочники и инструменты для всех магазинов.</p>
                 </div>
-            </div>
-            <div>
-                <h3>SÓLE</h3>
-                <p class="module-sub">Обувь, заказы и коллекции</p>
-            </div>
-            <div class="new-module-bottom">
-                <span class="new-module-status">В разработке</span>
-                <span class="new-module-arrow">↗</span>
-            </div>
-        </section>
-
-        <!-- EXTRA -->
-        <section class="module new-module extra inactive">
-            <div class="module-top">
-                <span class="module-number">03 / STORE</span>
-                <div class="module-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M3 9l4-5h10l4 5-9 12L3 9Z"/>
-                        <path d="M3 9h18M7 4l5 17M17 4l-5 17"/>
-                    </svg>
+                <div class="module-bottom">
+                    <span class="module-caption">SHARED TOOLS</span>
+                    <span class="module-arrow">↗</span>
                 </div>
-            </div>
-            <div>
-                <h3>EXTRA</h3>
-                <p class="module-sub">Аксессуары, новинки и дропы</p>
-            </div>
-            <div class="new-module-bottom">
-                <span class="new-module-status">В разработке</span>
-                <span class="new-module-arrow">↗</span>
-            </div>
-        </section>
+            </a>
 
-    </div>
-
-    <!-- LEGACY SYSTEM -->
-    <div class="section-heading legacy-heading">
-        <h3>Рабочие инструменты</h3>
-        <div class="section-line"></div>
-        <span class="section-caption">Текущая система</span>
-    </div>
-
-    <div class="modules">
-
-        <!-- HOSTING -->
-        <section class="module">
-            <div class="module-top">
-                <span class="module-number">01 / HOSTING</span>
-                <div class="module-icon">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="18" height="18" rx="3"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <path d="m3 17 5-5 4 4 3-3 6 6"/>
-                    </svg>
+            <!-- SOLE -->
+            <a class="module new-module sole" href="manager/sole/">
+                <div class="module-top">
+                    <span class="module-number">02 / SÓLE</span>
+                    <div class="module-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 15c3 0 5-1 7-4l3-4 3 6c1 2 3 3 5 3v4H3z"/>
+                            <path d="M3 20h18"/>
+                            <path d="M10 11l3 2"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <h3>Hosting</h3>
-                <p class="module-sub">Изображения и файлы</p>
-                <nav class="hosting-links" aria-label="Разделы Hosting">
-                    <a class="hosting-link" href="hosting/">
-                        <span>Магазины</span><span>↗</span>
-                    </a>
-                    <span class="hosting-link disabled">
-                        <span>Общее</span><span>Скоро</span>
-                    </span>
-                    <span class="hosting-link disabled">
-                        <span>Ивенты</span><span>Скоро</span>
-                    </span>
-                </nav>
-            </div>
-        </section>
-
-        <!-- MANAGER -->
-        <section class="module">
-            <div class="module-top">
-                <span class="module-number">02 / MANAGER</span>
-                <div class="module-icon">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="18" height="18" rx="3"/>
-                        <path d="M3 9h18M9 9v12"/>
-                        <path d="M13 14h4M13 18h4"/>
-                    </svg>
+                <div>
+                    <h3>SÓLE</h3>
+                    <p class="module-sub">Ассортимент обуви, заказы, доставки, специальные выпуски и аукционы.</p>
                 </div>
-            </div>
-            <div>
-                <h3>Manager</h3>
-                <p class="module-sub">Управление магазинами</p>
-                <nav class="hosting-links" aria-label="Разделы Manager">
-                    <a class="hosting-link" href="manager/assortment.html">
-                        <span>Ассортимент</span><span>↗</span>
-                    </a>
-                    <a class="hosting-link" href="manager/orders.html">
-                        <span>Заказы</span><span>↗</span>
-                    </a>
-                    <a class="hosting-link" href="manager/release-builder.html">
-                        <span>Конструктор</span><span>↗</span>
-                    </a>
-                    <a class="hosting-link" href="manager/code-generator.html">
-                        <span>Генератор кода</span><span>↗</span>
-                    </a>
-                </nav>
-            </div>
-        </section>
-
-        <!-- CALENDAR -->
-        <a class="module" href="calendar/">
-            <div class="module-top">
-                <span class="module-number">03 / CALENDAR</span>
-                <div class="module-icon">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="3" y="5" width="18" height="16" rx="3"/>
-                        <path d="M7 3v4M17 3v4M3 10h18"/>
-                        <path d="M8 14h3M14 14h2M8 18h3"/>
-                    </svg>
+                <div class="module-bottom">
+                    <span class="module-caption">SHOE ATELIER</span>
+                    <span class="module-arrow">↗</span>
                 </div>
-            </div>
-            <div>
-                <h3>Calendar</h3>
-                <p class="module-sub">События и планы</p>
-                <div class="module-arrow">↗</div>
-            </div>
-        </a>
+            </a>
 
-    </div>
+            <!-- EXTRA -->
+            <a class="module new-module extra" href="manager/extra/">
+                <div class="module-top">
+                    <span class="module-number">03 / EXTRA</span>
+                    <div class="module-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 8h16l-8 12z"/>
+                            <path d="M4 8l4-5h8l4 5"/>
+                            <path d="M8 3l4 5 4-5"/>
+                            <path d="M8 8l4 12 4-12"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3>EXTRA</h3>
+                    <p class="module-sub">Аксессуары, категории, упаковка, новинки и отдельные дропы.</p>
+                </div>
+                <div class="module-bottom">
+                    <span class="module-caption">ACCESSORIES & DETAILS</span>
+                    <span class="module-arrow">↗</span>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- EXISTING SYSTEM -->
+    <section class="legacy-section">
+        <div class="section-heading">
+            <h3>Текущие инструменты</h3>
+            <span class="section-note">Рабочая версия · Без изменений</span>
+        </div>
+
+        <div class="modules">
+
+            <!-- HOSTING -->
+            <section class="module">
+                <div class="module-top">
+                    <span class="module-number">01 / HOSTING</span>
+                    <div class="module-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="3"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <path d="m3 17 5-5 4 4 3-3 6 6"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3>Hosting</h3>
+                    <p class="module-sub">Изображения и файлы</p>
+                    <nav class="hosting-links" aria-label="Разделы Hosting">
+                        <a class="hosting-link" href="hosting/">
+                            <span>Магазины</span><span>↗</span>
+                        </a>
+                        <span class="hosting-link disabled">
+                            <span>Общее</span><span>Скоро</span>
+                        </span>
+                        <span class="hosting-link disabled">
+                            <span>Ивенты</span><span>Скоро</span>
+                        </span>
+                    </nav>
+                </div>
+            </section>
+
+            <!-- MANAGER -->
+            <section class="module">
+                <div class="module-top">
+                    <span class="module-number">02 / MANAGER</span>
+                    <div class="module-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="3"/>
+                            <path d="M3 9h18M9 9v12"/>
+                            <path d="M13 14h4M13 18h4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3>Manager</h3>
+                    <p class="module-sub">Управление магазинами</p>
+                    <nav class="hosting-links" aria-label="Разделы Manager">
+                        <a class="hosting-link" href="manager/assortment.html">
+                            <span>Ассортимент</span><span>↗</span>
+                        </a>
+                        <a class="hosting-link" href="manager/orders.html">
+                            <span>Заказы</span><span>↗</span>
+                        </a>
+                        <a class="hosting-link" href="manager/release-builder.html">
+                            <span>Конструктор</span><span>↗</span>
+                        </a>
+                        <a class="hosting-link" href="manager/code-generator.html">
+                            <span>Генератор кода</span><span>↗</span>
+                        </a>
+                    </nav>
+                </div>
+            </section>
+
+            <!-- CALENDAR -->
+            <a class="module" href="calendar/">
+                <div class="module-top">
+                    <span class="module-number">03 / CALENDAR</span>
+                    <div class="module-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="5" width="18" height="16" rx="3"/>
+                            <path d="M7 3v4M17 3v4M3 10h18"/>
+                            <path d="M8 14h3M14 14h2M8 18h3"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3>Calendar</h3>
+                    <p class="module-sub">События и планы</p>
+                    <div class="module-arrow">↗</div>
+                </div>
+            </a>
+
+        </div>
+    </section>
 </main>
 
 <footer class="footer">
     <span>ANANEL COVAL</span>
     <span>2026</span>
 </footer>
+
 </div>
 </body>
 </html>
